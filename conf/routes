@@ -4,6 +4,15 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET     /protected                           controllers.Application.protectedIndex()
+
+#OAuth
+GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
+POST  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
+GET   /oauth2callback                             org.pac4j.play.CallbackController.callback()
+POST  /oauth2callback                             org.pac4j.play.CallbackController.callback()
+GET   /logout                                     org.pac4j.play.CallbackController.logoutAndRedirect()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
