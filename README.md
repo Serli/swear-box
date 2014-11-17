@@ -3,5 +3,5 @@
 
 ##To start quickly :
 
-cd swear-box
-activator run
+    cd swear-box
+    activator run
