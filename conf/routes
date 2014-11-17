@@ -4,7 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /protected                           controllers.Application.protectedIndex()
+GET     /user                       controllers.Application.user()
 
 #OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()

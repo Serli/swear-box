@@ -23,13 +23,13 @@ public class Application extends JavaController {
         	return ok(index.render(urlGoogle));
     	}
     	else {
-    		return redirect(routes.Application.protectedIndex());
+    		return redirect(routes.Application.user());
     	}
     }
 
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result protectedIndex() {
-        return ok(views.html.protectedIndex.render());
+    public static Result user() {
+        return ok(views.html.user.render());
     }
     
 }
