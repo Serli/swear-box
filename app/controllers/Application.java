@@ -29,7 +29,9 @@ public class Application extends JavaController {
 
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result user() {
-        return ok(views.html.user.render());
+		Google2Profile googleProfile = (Google2Profile) getUserProfile();
+		String nom = googleProfile.getFirstName();
+        return ok(views.html.user.render(nom));
     }
     
 }
