@@ -34,6 +34,9 @@ public class Application extends JavaController {
         return ok(views.html.user.render(nom));
     }
 
+    /**
+    * Methode s'utilisant dans conf\routes et permettant d'afficher la page admin
+    */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result admin() {
         return ok(views.html.admin.render());
