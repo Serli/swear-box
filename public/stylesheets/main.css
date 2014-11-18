@@ -4,16 +4,9 @@ body{
 	padding-top: 60px;
 }
 
-#login {
-  margin-left: auto;
-  margin-right: auto;
-  width: 505px;
-}
-
-#login-btn {
-  margin-left: auto;
-  margin-right: auto;
-  width: 120px;
+.h-center {
+  width: 100%;
+  text-align: center;
 }
 
 .btn-login {
@@ -25,7 +18,7 @@ body{
 	background-color: rgb(223,74,50);
 }
 
-.p-baniere {
+.p-banniere {
 	margin-top: 15px;
 	color:#FFFFFF;
 	margin-right: 12px;
