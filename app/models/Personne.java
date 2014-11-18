@@ -42,6 +42,10 @@ public class Personne implements Serializable{
 	@NotNull
 	private int Dette;
 	
+	@Column (name ="adr_Image")
+	@NotEmpty
+	private String adrImage;
+	
 	@ManyToMany(mappedBy="personnes")
 	private List<Utilisateur> utilisateurs;
 	
