@@ -5,6 +5,12 @@ import models.*;
 
 public class SQLAjoutPersonne{
 
+	/**
+	 * Ajoute une personne dans la table personne 
+	 * Lie l'utilisateur et la parsonne
+	 * @param Personne : la personne a ajouter
+	 * @param String : l'identifiant de l'utilisateur qui ajoute la personne a sa liste
+	 */
 	public static void AjoutPersonne(Personne p,String id){
 		//enregistrement de la personne
 		JPA.em().persist(p);
