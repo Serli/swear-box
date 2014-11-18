@@ -1,6 +1,7 @@
 package services;
 
 import play.db.jpa.JPA;
+import models.*;
 
 public class SQLAjoutPersonne{
 

@@ -44,16 +44,17 @@ public class Personne implements Serializable{
 	
 	@Column (name ="adr_Image")
 	@NotEmpty
-	private String adrImage;
+	private String AdrImage;
 	
 	@ManyToMany(mappedBy="personnes")
 	private List<Utilisateur> utilisateurs;
 	
-	public Personne(String nom, String prenom, int dette) {
+	public Personne(String nom, String prenom, int dette, String adresse_image) {
 		super();
 		Nom = nom;
 		Prenom = prenom;
 		Dette = dette;
+		AdrImage = adresse_image;
 	}
 
 	public Long getId_personne() {
@@ -88,4 +89,11 @@ public class Personne implements Serializable{
 		Dette = dette;
 	}
 	
+	public String getAdrImage() {
+		return AdrImage;
+	}
+
+	public void setAdrImage(String adresse_image) {
+		AdrImage = adresse_image;
+	}
 }

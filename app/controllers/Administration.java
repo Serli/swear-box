@@ -10,6 +10,9 @@ import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
+import org.pac4j.play.Config;
+import play.GlobalSettings;
+import play.Play;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -33,7 +36,7 @@ public class Administration extends JavaController {
 				//badRequest("Missing parameter [nom] or [prenom]");
 			} else {
 				final String image = Play.application().configuration().getString("AvatarDefault");
-				Personne person = New Presonne(nom,prenom,0,image);
+				Personne person = new Personne(nom,prenom,0,image);
 				SQLAjoutPersonne.AjoutPersonne(person);
 			}
 		}
