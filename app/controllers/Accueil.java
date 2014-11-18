@@ -12,6 +12,7 @@ import org.pac4j.play.java.RequiresAuthentication;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
+import services.AjoutUtilisateur;
 import views.html.*;
 /**
  * Gere les actions des vues connexion et user
@@ -27,7 +28,6 @@ public class Accueil extends JavaController {
     public static Result index() {
     	//Récupération du profil google de l'utilisateur
     	Google2Profile googleProfile = (Google2Profile) getUserProfile();
-    	
     	if(googleProfile == null) {
     		final String urlGoogle = getRedirectAction("Google2Client").getLocation();
         	return ok(index.render(urlGoogle));
@@ -41,11 +41,16 @@ public class Accueil extends JavaController {
      * Action appelée pour l'affichage de la vue user
      * @return la vue user avec en paramètre le nom de la personne connectée
      */
+    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result user() {
     	//Récupération du nom dans le profil google de l'utilisateur
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
+		
+		//Ajout de l'utilisateur dans la base de données si besoin
 		String nom = googleProfile.getFirstName();
+		String email = googleProfile.getEmail();
+		AjoutUtilisateur.ajoutUtilisateur(email);
 		
         return ok(views.html.user.render(nom));
     }

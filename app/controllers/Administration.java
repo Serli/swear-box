@@ -39,7 +39,7 @@ public class Administration extends JavaController {
 				Personne person = new Personne(nom,prenom,0,image);
 				Google2Profile googleProfile = (Google2Profile) getUserProfile();
 				String id = googleProfile.getEmail();
-				AjoutPersonne.AjoutPersonne(person,id);
+				AjoutPersonne.ajoutPersonne(person,id);
 			}
 		}
     }

@@ -38,19 +38,31 @@ public class Utilisateur implements Serializable{
 	@ManyToMany
 	List <Personne> personnes;
 	
+	public Utilisateur() {
+	}
+	
+	public Utilisateur(String email) {
+		Email = email;
+		Montant = 50;
+	}
+	
 	public Utilisateur(String email, int montant) {
 		Email = email;
 		Montant = montant;
 	}
+	
 	public String getEmail() {
 		return Email;
 	}
+	
 	public void setEmail(String email) {
 		Email = email;
 	}
+	
 	public int getMontant() {
 		return Montant;
 	}
+	
 	public void setMontant(int montant) {
 		Montant = montant;
 	}
