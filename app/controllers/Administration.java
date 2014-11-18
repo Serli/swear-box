@@ -24,22 +24,29 @@ import models.*;
 
 public class Administration extends JavaController {
 
+	/**
+	 * Ajoute une personne à son utilisateur
+	 * Récupere les champs pour créer la personne
+	 * Puis ajoute la personne dans la base de donné
+	 * @return Result : résultat de la fonction, Ok|pb
+	 */
 	@Transactional
-    public static void AjouterPersonne() {
+    public static Result AjouterPersonne() {
 		JsonNode json = request().body().asJson();
 		if(json == null) {
-			//badRequest("Expecting Json data");
+			return badRequest("Expecting Json data");
 		} else {
 			String nom = json.findPath("nom").textValue();
 			String prenom = json.findPath("prenom").textValue();
 			if(nom == null || prenom==null) {
-				//badRequest("Missing parameter [nom] or [prenom]");
+				return badRequest("Missing parameter [nom] or [prenom]");
 			} else {
 				final String image = Play.application().configuration().getString("AvatarDefault");
 				Personne person = new Personne(nom,prenom,0,image);
 				Google2Profile googleProfile = (Google2Profile) getUserProfile();
 				String id = googleProfile.getEmail();
-				AjoutPersonne.AjoutPersonne(person,id);
+				AjoutPersonne.ajoutPersonne(person,id);
+				return ok();
 			}
 		}
     }

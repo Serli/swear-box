@@ -11,7 +11,7 @@ public class AjoutPersonne{
 	 * @param Personne : la personne a ajouter
 	 * @param String : l'identifiant de l'utilisateur qui ajoute la personne a sa liste
 	 */
-	public static void AjoutPersonne(Personne p,String id){
+	public static void ajoutPersonne(Personne p,String id){
 		//enregistrement de la personne
 		JPA.em().persist(p);
 		//recuperation de l'utilisateur
