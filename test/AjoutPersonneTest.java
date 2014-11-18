@@ -46,6 +46,8 @@ public class AjoutPersonneTest{
 					//regarde si la personne a l'utilisateur dans sa list
 					assertThat(pbd.getUtilisateurs().get(0).getEmail()).isEqualTo(u.getEmail());
 					assertThat(pbd.getUtilisateurs().get(0).getEmail()).isEqualTo(ubd.getEmail());
+					JPA.em().remove(ubd);
+					JPA.em().remove(pbd);
 					}
 				});
 			}
