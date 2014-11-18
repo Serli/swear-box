@@ -16,6 +16,10 @@ import views.html.*;
 
 public class Application extends JavaController {
 
+	/**
+	 * Action appelée lors du lancement de l'appli
+	 * @return la vue connexion si l'utilisateur n'est pas connecté, appelle l'action user() sinon
+	 */
     public static Result index() {
     	Google2Profile googleProfile = (Google2Profile) getUserProfile();
     	if(googleProfile == null) {
@@ -27,6 +31,10 @@ public class Application extends JavaController {
     	}
     }
 
+    /**
+     * Action appelé pour l'affichage de la vue user
+     * @return la vue user avec en paramètre le nom de la personne connectée
+     */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result user() {
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();

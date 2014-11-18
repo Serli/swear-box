@@ -28,18 +28,31 @@ import static org.fest.assertions.Assertions.*;
 */
 public class ApplicationTest {
 
+	/*
     @Test
     public void simpleCheck() {
         int a = 1 + 1;
         assertThat(a).isEqualTo(2);
-    }
+    }*/
 
+	/**
+	 * Test si le message passé en paramètre lors de l'appel de la vue connexion est bien présent 
+	 */
     @Test
-    public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
+    public void renderTemplateIndex() {
+        Content html = views.html.index.render("Message test");
         assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Your new application is ready.");
+        assertThat(contentAsString(html)).contains("Message test");
     }
 
+    /**
+     * Test si le message passé en paramètre lors de l'appel de la vue user est bien présent
+     */
+    @Test
+    public void renderTemplateUser() {
+        Content html = views.html.user.render("Message test");
+        assertThat(contentType(html)).isEqualTo("text/html");
+        assertThat(contentAsString(html)).contains("Message test");
+    }
 
 }
