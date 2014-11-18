@@ -20,4 +20,5 @@ public class SQLAjoutPersonne{
 		//liaison entre les deux
 		JPA.em().merge(user);
 	}
+	
 }
