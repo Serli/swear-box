@@ -50,6 +50,7 @@ public class AjoutUtilisateurTest {
     	        	  AjoutUtilisateur.ajoutUtilisateur(email);
        	           	  Utilisateur u = JPA.em().find(Utilisateur.class, email);
        	           	  assertThat(u).isNotEqualTo(null);
+       	           	  JPA.em().remove(u);
     	          }
     	        });
     	      }

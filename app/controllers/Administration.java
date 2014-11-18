@@ -46,7 +46,6 @@ public class Administration extends JavaController {
 				Google2Profile googleProfile = (Google2Profile) getUserProfile();
 				String id = googleProfile.getEmail();
 				AjoutPersonne.ajoutPersonne(person,id);
-
 			}
 		}
     }
