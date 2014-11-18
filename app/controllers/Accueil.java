@@ -33,7 +33,7 @@ public class Accueil extends JavaController {
         	return ok(index.render(urlGoogle));
     	}
     	else {
-    		return redirect(routes.Application.user());
+    		return redirect(routes.Accueil.user());
     	}
     }
 

@@ -1,11 +1,11 @@
 # Routes
-# This file defines all application routes (Higher priority routes first)
+# This file defines all Accueil routes (Higher priority routes first)
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET     /user                       controllers.Application.user()
-GET     /admin                      controllers.Application.admin()
+GET     /                           controllers.Accueil.index()
+GET     /user                       controllers.Accueil.user()
+GET     /admin                      controllers.Accueil.admin()
 
 #OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
