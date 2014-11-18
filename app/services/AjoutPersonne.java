@@ -3,7 +3,7 @@ package services;
 import play.db.jpa.JPA;
 import models.*;
 
-public class SQLAjoutPersonne{
+public class AjoutPersonne{
 
 	/**
 	 * Ajoute une personne dans la table personne 
