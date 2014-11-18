@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -49,8 +50,12 @@ public class Personne implements Serializable{
 	@ManyToMany(mappedBy="personnes")
 	private List<Utilisateur> utilisateurs;
 	
+	public Personne() {
+		utilisateurs=new ArrayList <Utilisateur>();
+	}
+	
 	public Personne(String nom, String prenom, int dette, String adresse_image) {
-		super();
+		this();
 		Nom = nom;
 		Prenom = prenom;
 		Dette = dette;
@@ -95,5 +100,13 @@ public class Personne implements Serializable{
 
 	public void setAdrImage(String adresse_image) {
 		AdrImage = adresse_image;
+	}
+	
+	public List<Utilisateur> getUtilisateurs(){
+		return utilisateurs;
+	}
+	
+	public void setUtilisateurs(Utilisateur u){
+		utilisateurs.add(u);
 	}
 }

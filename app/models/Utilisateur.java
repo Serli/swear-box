@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -39,15 +40,17 @@ public class Utilisateur implements Serializable{
 	List <Personne> personnes;
 	
 	public Utilisateur() {
+		personnes=new ArrayList <Personne>();
 	}
 	
 	public Utilisateur(String email) {
+		this();
 		Email = email;
 		Montant = 50;
 	}
 	
 	public Utilisateur(String email, int montant) {
-		Email = email;
+		this(email);
 		Montant = montant;
 	}
 	

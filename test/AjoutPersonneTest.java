@@ -1,57 +1,56 @@
+
+import javax.persistence.Query;
+
 import org.junit.*;
 
-import play.mvc.*;
-import play.test.*;
-import play.libs.F.*;
-
+import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
-
-import static org.fluentlenium.core.filter.FilterConstructor.*;
-
-import play.db.jpa.JPA;
 import models.*;
 import services.*;
 
-import java.util.List;
 
-import play.libs.Json;
-import com.fasterxml.jackson.databind.JsonNode;
-import play.mvc.BodyParser;
-
-import org.pac4j.core.profile.CommonProfile;
-import org.pac4j.oauth.profile.google2.Google2Profile;
-import org.pac4j.play.java.JavaController;
-import org.pac4j.play.java.RequiresAuthentication;
-import org.pac4j.play.Config;
-import play.GlobalSettings;
-import play.Play;
-
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.mvc.*;
-import views.html.*;
-
-
-@Transactional
 public class AjoutPersonneTest{
 
+	/**
+	* Test Ajout de personne pour un utilisateur
+	* Verification de la liaison entre les deux tables 
+	*(par interpolation la création de la table personne)
+	*/
+	@Transactional
 	@Test
     public void test() {
-	
-		Personne p =new Personne("Toto", "Titi",0,"");
-		Utilisateur u= new Utilisateur("email@email",100);
-		//enregistrement de la personne
-		enregistrement(u);
-		
-		AjoutPersonne.ajoutPersonne(p,u.getEmail());
-		Utilisateur ubd=JPA.em().find(Utilisateur.class,"email@email");
-		assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
+		running(fakeApplication(), new Runnable()
+    	{
+    	    public void run()
+    	   {
+				JPA.withTransaction(new play.libs.F.Callback0()
+    	        {
+					public void invoke()
+					{
+					Personne p =new Personne("Toto", "Titi",0,"yolo");
+					Utilisateur u= new Utilisateur("email@email",100);
+					//enregistrement de la personne
+					JPA.em().persist(u);
+					Utilisateur ubd=JPA.em().find(Utilisateur.class,"email@email");
+					assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
+					
+					AjoutPersonne.ajoutPersonne(p,u.getEmail());
+					Personne pbd= (Personne)JPA.em().createQuery("Select p FROM Personne p").getSingleResult();
+					
+					//regarde si l'utilisateur a la personne dans sa list
+					assertThat(ubd.getPersonnes().get(0).getNom()).isEqualTo(p.getNom());
+					assertThat(ubd.getPersonnes().get(0).getNom()).isEqualTo(pbd.getNom());
+					
+					//regarde si la personne a l'utilisateur dans sa list
+					assertThat(pbd.getUtilisateurs().get(0).getEmail()).isEqualTo(u.getEmail());
+					assertThat(pbd.getUtilisateurs().get(0).getEmail()).isEqualTo(ubd.getEmail());
+					}
+				});
+			}
+		});
 	}
 	
-	
-	public void enregistrement(Utilisateur u){
-		JPA.em().persist(u);
-	}
 	
 }

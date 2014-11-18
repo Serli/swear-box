@@ -31,6 +31,7 @@ public class Administration extends JavaController {
 	 * @return Result : résultat de la fonction, Ok|pb
 	 */
 	@Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
     public static void AjouterPersonne() {
 		JsonNode json = request().body().asJson();
 		if(json == null) {
