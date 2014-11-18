@@ -1,0 +1,16 @@
+.taille-img {
+	width: 4em;
+	height: 4em;
+}
+
+.taille-glyph {
+	font-size: 2em;
+}
+
+.v-adjust {
+	padding-top: 1.25em;
+}
+
+.v-adjust-icon {
+	padding-top: 0.5em;
+}

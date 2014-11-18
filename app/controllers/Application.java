@@ -33,5 +33,10 @@ public class Application extends JavaController {
 		String nom = googleProfile.getFirstName();
         return ok(views.html.user.render(nom));
     }
+
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result admin() {
+        return ok(views.html.admin.render());
+    }
     
 }

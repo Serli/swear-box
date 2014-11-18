@@ -1,25 +1,12 @@
+@import "admin.css";
+@import "index.css";
+@import "user.css";
 
-
-body{
+body {
 	padding-top: 60px;
 }
 
 .h-center {
-  width: 100%;
-  text-align: center;
-}
-
-.btn-login {
-	margin-top: 10px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	padding-right: 4px;
-	background-color: rgb(223,74,50);
-}
-
-.p-banniere {
-	margin-top: 15px;
-	color:#FFFFFF;
-	margin-right: 12px;
+	width: 100%;
+	text-align: center;
 }
