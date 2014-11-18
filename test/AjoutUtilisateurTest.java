@@ -46,10 +46,14 @@ public class AjoutUtilisateurTest {
     	        {
     	          public void invoke()
     	          {
+    	        	  //Ajout d'un utilisateur à partir d'un email
     	        	  String email = "test@gmail.com";
     	        	  AjoutUtilisateur.ajoutUtilisateur(email);
+    	        	  
+    	        	  //Recherche de l'utilisateur dans la base de données
        	           	  Utilisateur u = JPA.em().find(Utilisateur.class, email);
        	           	  assertThat(u).isNotEqualTo(null);
+       	           
        	           	  JPA.em().remove(u);
     	          }
     	        });
