@@ -13,15 +13,21 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
-
-public class Application extends JavaController {
+/**
+ * Gere les actions des vues connexion et user
+ * @author Geoffrey
+ *
+ */
+public class Accueil extends JavaController {
 
 	/**
 	 * Action appelée lors du lancement de l'appli
 	 * @return la vue connexion si l'utilisateur n'est pas connecté, appelle l'action user() sinon
 	 */
     public static Result index() {
+    	//Récupération du profil google de l'utilisateur
     	Google2Profile googleProfile = (Google2Profile) getUserProfile();
+    	
     	if(googleProfile == null) {
     		final String urlGoogle = getRedirectAction("Google2Client").getLocation();
         	return ok(index.render(urlGoogle));
@@ -32,13 +38,15 @@ public class Application extends JavaController {
     }
 
     /**
-     * Action appelé pour l'affichage de la vue user
+     * Action appelée pour l'affichage de la vue user
      * @return la vue user avec en paramètre le nom de la personne connectée
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result user() {
+    	//Récupération du nom dans le profil google de l'utilisateur
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
 		String nom = googleProfile.getFirstName();
+		
         return ok(views.html.user.render(nom));
     }
 

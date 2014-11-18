@@ -22,18 +22,11 @@ import static org.fest.assertions.Assertions.*;
 
 /**
 *
-* Simple (JUnit) tests that can call all parts of a play app.
-* If you are interested in mocking a whole application, see the wiki for more details.
+* Test les actions du Controleur Accueil.java
 *
 */
-public class ApplicationTest {
+public class AccueilTest {
 
-	/*
-    @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(2);
-    }*/
 
 	/**
 	 * Test si le message passé en paramètre lors de l'appel de la vue connexion est bien présent 

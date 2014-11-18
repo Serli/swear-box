@@ -8,27 +8,28 @@ import play.Application;
 import play.GlobalSettings;
 import play.Play;
 
-
+/**
+ * Ajoute le client pour l'authentification via OAuth2 au lancement de l'application
+ * @author Geoffrey
+ *
+ */
 public class Global extends GlobalSettings{
 
     @Override
     public void onStart(final Application app) {
     	super.onStart(app);
-        //Config.setErrorPage401(views.html.error401.render().toString());
-        //Config.setErrorPage403(views.html.error403.render().toString());
 
+    	//Récupération des données necessaires dans le fichier application.conf
         final String GoogleId = Play.application().configuration().getString("GoogleId");
         final String GoogleSecret = Play.application().configuration().getString("GoogleSecret");
         final String baseUrl = Play.application().configuration().getString("baseUrl");
        
-        // OAuth
+        //Création du cient Google2Client pour la connexion Google via OAuth2
         final Google2Client google2Client = new Google2Client(GoogleId, GoogleSecret);
         
+        //Ajout des clients à Config
         final Clients clients = new Clients(baseUrl + "/oauth2callback", google2Client); // , casProxyReceptor);
         Config.setClients(clients);
-        //Config.setDefaultSuccessUrl("http://localhost:9000/protected");
-        // for test purposes : profile timeout = 60 seconds
-        // Config.setProfileTimeout(60);
     }
 	
 }
