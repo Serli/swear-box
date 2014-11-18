@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -25,7 +26,7 @@ public class Statistique implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id_Statistique;
 	
-	@NotEmpty
+	@NotNull
 	private Date date;
 	
 	@ManyToOne

@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -21,9 +23,11 @@ public class Utilisateur implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String Email;
-	@NotEmpty
+	
+	@NotNull
 	private int Montant;
 	
 	@JoinTable(name="U_P",
