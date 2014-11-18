@@ -17,6 +17,7 @@ public class AjoutPersonne{
 		//recuperation de l'utilisateur
 		Utilisateur user = JPA.em().find(Utilisateur.class,id); 
 		user.setPersonnes(p);
+		p.setUtilisateurs(user);
 		//liaison entre les deux
 		JPA.em().merge(user);
 	}
