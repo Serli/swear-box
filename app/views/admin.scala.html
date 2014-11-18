@@ -3,20 +3,35 @@
 
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
+
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Afficher/Cacher navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+
         <a class="navbar-brand" href="#">I-Swear Box</a>
+
       </div>
+
       <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="/admin">Administration</a></li> 
-          <li><a href="/logout">Deconnexion</a></li>    
+
+        <ul class="nav navbar-nav">
+          <li><a href="/liste">Liste</a></li>   
+          <li><a href="/statistiques">Statistiques</a></li>   
+          <li class="active"><a href="/admin">Administration</a></li>  
         </ul>
-      </div><!--/.nav-collapse -->
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/logout">Deconnexion</a></li>
+          <li><a href="/aide">Aide</a></li>     
+        </ul>
+
+      </div>
+
     </div>
   </div>
 
@@ -27,7 +42,6 @@
         <thead>
           <tr>
             <th>Photo</th>
-            <th>Nom</th>
             <th>Prenom</th>
             <th>Dettes</th>
             <th>Fonctionnalités</th>
@@ -37,23 +51,131 @@
         <tbody>
           <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
             <td><img src=@routes.Assets.at("images/profil.png") alt="photo01" class="taille-img"></td>
-            <td><p class="v-adjust">Nom</p></td>
-            <td><p class="v-adjust">Prenom</p></td>
-            <td><p class="v-adjust">Dette</p></td>
+            <td><p class="v-adjust-table-label">Prenom</p></td>
+            <td><p class="v-adjust-table-label">Dette</p></td>
             <td>
 
-              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-icon"></span></a>
+              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-table-icon"></span></a>
 
-              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-icon"></span></a>
+              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-table-icon"></span></a>
 
-              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-icon"></span></a>
+              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-table-icon"></span></a>
 
             </td>
           </tr>
-                
+          <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
+            <td><img src=@routes.Assets.at("images/profil.png") alt="photo01" class="taille-img"></td>
+            <td><p class="v-adjust-table-label">Prenom</p></td>
+            <td><p class="v-adjust-table-label">Dette</p></td>
+            <td>
+
+              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-table-icon"></span></a>
+
+            </td>
+          </tr>
+          <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
+            <td><img src=@routes.Assets.at("images/profil.png") alt="photo01" class="taille-img"></td>
+            <td><p class="v-adjust-table-label">Prenom</p></td>
+            <td><p class="v-adjust-table-label">Dette</p></td>
+            <td>
+
+              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-table-icon"></span></a>
+
+            </td>
+          </tr>
+          <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
+            <td><img src=@routes.Assets.at("images/profil.png") alt="photo01" class="taille-img"></td>
+            <td><p class="v-adjust-table-label">Prenom</p></td>
+            <td><p class="v-adjust-table-label">Dette</p></td>
+            <td>
+
+              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-table-icon"></span></a>
+
+            </td>
+          </tr>
+          <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
+            <td><img src=@routes.Assets.at("images/profil.png") alt="photo01" class="taille-img"></td>
+            <td><p class="v-adjust-table-label">Prenom</p></td>
+            <td><p class="v-adjust-table-label">Dette</p></td>
+            <td>
+
+              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-table-icon"></span></a>
+
+            </td>
+          </tr>
+          <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
+            <td><img src=@routes.Assets.at("images/profil.png") alt="photo01" class="taille-img"></td>
+            <td><p class="v-adjust-table-label">Prenom</p></td>
+            <td><p class="v-adjust-table-label">Dette</p></td>
+            <td>
+
+              <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog taille-glyph v-adjust-table-icon"></span></a>
+
+              <a title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove taille-glyph v-adjust-table-icon"></span></a>
+
+            </td>
+          </tr>
         </tbody>
 
       </table>
+
+      <div class="container">
+
+        <div class="row separation-actions">
+
+          <div class="col-xs-5 col-sm-5">
+            <input type="text" class="form-control" id="prenom" placeholder="Prenom">
+          </div>
+
+          <div class="col-xs-5 col-sm-5">
+            <input type="text" class="form-control" id="nom" placeholder="Nom">
+          </div>
+
+          <div class="col-xs-2 col-sm-2">
+            <button title="Ajouter un membre" type="submit" class="btn btn-success">
+              <span class="glyphicon glyphicon-plus"/>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="row separation-actions">
+
+          <div class="pull-right col-xs-2 col-sm-2">
+            <button title="Changer la pénalité" type="submit" class="btn btn-success">
+              <span class="glyphicon glyphicon-ok"/>
+            </button>
+          </div>
+
+          <div class="pull-right col-xs-10 col-sm-5">
+            <div class="input-group">
+              <input type="text" class="form-control" id="penalite" placeholder="Montant de la pénalité">
+              <span class="input-group-addon">€</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
   </div>
 

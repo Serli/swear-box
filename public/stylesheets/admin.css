@@ -1,3 +1,7 @@
+.separation-actions {
+	margin-bottom: 1em;
+}
+
 .taille-img {
 	width: 4em;
 	height: 4em;
@@ -7,10 +11,15 @@
 	font-size: 2em;
 }
 
-.v-adjust {
+.v-adjust-table-label {
 	padding-top: 1.25em;
 }
 
-.v-adjust-icon {
+.v-adjust-table-icon {
 	padding-top: 0.5em;
+}
+
+.v-adjust-add-btn {
+	padding-top: 1px;
+	margin-bottom: 0;
 }
