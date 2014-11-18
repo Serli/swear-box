@@ -6,6 +6,7 @@
 GET     /                           controllers.Accueil.index()
 GET     /user                       controllers.Accueil.user()
 GET     /admin                      controllers.Accueil.admin()
+GET 	/aide						controllers.Accueil.aide()
 
 #OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
