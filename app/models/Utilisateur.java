@@ -54,5 +54,12 @@ public class Utilisateur implements Serializable{
 	public void setMontant(int montant) {
 		Montant = montant;
 	}
+	
+	public List <Personne> getPersonnes() {
+		return personnes;
+	}
+	public void setPersonnes(Personne p) {
+		personnes.add(p);
+	}
 
 }

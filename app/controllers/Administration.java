@@ -37,7 +37,9 @@ public class Administration extends JavaController {
 			} else {
 				final String image = Play.application().configuration().getString("AvatarDefault");
 				Personne person = new Personne(nom,prenom,0,image);
-				SQLAjoutPersonne.AjoutPersonne(person);
+				Google2Profile googleProfile = (Google2Profile) getUserProfile();
+				String id = googleProfile.getEmail();
+				SQLAjoutPersonne.AjoutPersonne(person,id);
 			}
 		}
     }
