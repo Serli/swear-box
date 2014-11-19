@@ -37,7 +37,7 @@ public class AjoutPersonneTest{
 					assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 					
 					AjoutPersonne.ajoutPersonne(p,u.getEmail());
-					Personne pbd= (Personne)JPA.em().createQuery("Select p FROM Personne p").getSingleResult();
+					Personne pbd= (Personne)JPA.em().createQuery("Select p FROM Personne p WHERE p.Nom='Toto'").getSingleResult();
 					
 					//regarde si l'utilisateur a la personne dans sa list
 					assertThat(ubd.getPersonnes().get(0).getNom()).isEqualTo(p.getNom());
