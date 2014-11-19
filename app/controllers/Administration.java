@@ -43,7 +43,7 @@ public class Administration extends JavaController {
 	
 	/**
 	 * Supprime une personne
-	 * utilise le nom le prenom et l'utilisateur avec qui il est lié pour plus de sécurité
+	 * utilise le nom le prenom et l'utilisateur avec qui il est lié pour plus de sécurité (doublon nom prenom)
 	 * @return Result : résultat de la fonction, Ok|pb
 	 */
 	@Transactional

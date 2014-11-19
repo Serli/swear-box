@@ -12,8 +12,7 @@ import models.*;
 public class SupprimerPersonne{
 
 	/**
-	 * Supprime une personne dans la table personne 
-	 * Et JPA supprime toute les occurences de la personne dans la table U_P avec son identifiant
+	 * Supprime une personne dans la table personne
 	 * @param String : nom de la personne
 	 * @param String : prenom de la personne
 	 * @param String : l'identifiant de l'utilisateur qui supprime la personne

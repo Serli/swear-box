@@ -16,10 +16,14 @@ public class LierPersonneUtilisateur {
 	 * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
 	 */
 	public static void lierPersonneUtilisateur(Personne p,String id) {
-		//enregistrement de la personne
+
 		//recuperation de l'utilisateur
 		Utilisateur user = JPA.em().find(Utilisateur.class,id); 
-		user.setPersonnes(p);
-		p.setUtilisateurs(user);
+		
+		//si il ne sont pas deja lier, on le fait
+		if(user.getPersonnes().contains(p)==false){
+			user.setPersonnes(p);
+			p.setUtilisateurs(user);
+		}
 	}
 }

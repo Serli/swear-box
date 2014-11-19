@@ -21,7 +21,7 @@ public class AjoutPersonneTest{
 	@Transactional
 	@Test
     public void test() {
-		running(fakeApplication(inMemoryDatabase()), new Runnable()
+		running(fakeApplication(), new Runnable()
     	{
     	    public void run()
     	   {
@@ -31,12 +31,16 @@ public class AjoutPersonneTest{
 					{
 					Personne p =new Personne("Toto", "Titi",0,"yolo");
 					Utilisateur u= new Utilisateur("email@email",100);
-					//enregistrement de la personne
+					
+					//enregistrement de l'utilisateur
 					JPA.em().persist(u);
 					Utilisateur ubd=JPA.em().find(Utilisateur.class,"email@email");
 					assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 					
+					//ajout de la personne
 					AjoutPersonne.ajoutPersonne(p,u.getEmail());
+					
+					//recuperation de la personne en bd
 					Personne pbd= (Personne)JPA.em().createQuery("Select p FROM Personne p WHERE p.Nom='Toto'").getSingleResult();
 					
 					//regarde si l'utilisateur a la personne dans sa list
