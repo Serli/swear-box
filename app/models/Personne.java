@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table (name ="Personne")
 public class Personne implements Serializable{
 	/**
 	 * 
@@ -26,24 +25,19 @@ public class Personne implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id_Personne")
 	private Long id_personne;
 	
-	@Column(name = "Nom")
 	@NotEmpty
 	@Size(max =50)
 	private String Nom;
 	
 	@NotEmpty
 	@Size(max =50)
-	@Column (name = "Prenom")
 	private String Prenom;
 	
-	@Column (name ="Dette")
 	@NotNull
 	private int Dette;
 	
-	@Column (name ="adr_Image")
 	@NotEmpty
 	private String AdrImage;
 	

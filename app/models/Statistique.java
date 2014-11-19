@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table (name = "Statistiques")
 public class Statistique implements Serializable{
 	/**
 	 * 
@@ -27,6 +26,7 @@ public class Statistique implements Serializable{
 	private Long id_Statistique;
 	
 	@NotNull
+	@Column (name="Date_St")
 	private Date date;
 	
 	@ManyToOne

@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table (name ="Utilisateur")
 public class Utilisateur implements Serializable{
 	/**
 	 * 
