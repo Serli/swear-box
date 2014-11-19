@@ -9,6 +9,9 @@ GET     /admin                      controllers.Accueil.admin()
 GET 	/aide						controllers.Accueil.aide()
 GET 	/statistiques				controllers.Accueil.statistiques()
 GET     /personnes                  controllers.Administration.listePersonnes()
+POST    /ajoutPersonne              controllers.Administration.AjouterPersonne()
+POST    /supprPersonne              controllers.Administration.SupprimerPersonne()
+
 
 #OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
