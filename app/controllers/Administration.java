@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.pac4j.oauth.profile.google2.Google2Profile;
@@ -8,7 +10,8 @@ import org.pac4j.play.java.RequiresAuthentication;
 
 import play.Play;
 import play.db.jpa.Transactional;
-
+import play.libs.Json;
+import play.mvc.Result;
 import services.*;
 import models.*;
 
@@ -64,5 +67,15 @@ public class Administration extends JavaController {
 			}
 		}
     }
-    
-}
+
+	/**
+     * Action appelée pour récupérer la liste des membres de l'utilisateur
+     * @return la liste des membres au format JSON
+     */
+	@Transactional
+	public static Result listePersonnes() {
+		Google2Profile googleProfile = (Google2Profile) getUserProfile();
+		String emailUser = googleProfile.getEmail();
+		List<Personne> personnes = ListePersonnes.listePersonnes(emailUser);
+		return ok(Json.toJson(personnes));
+	}}
