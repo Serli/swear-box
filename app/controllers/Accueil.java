@@ -69,5 +69,13 @@ public class Accueil extends JavaController {
     public static Result aide() {
         return ok(views.html.aide.render());
     }
+
+    /**
+    * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
+    */
+    public static Result statistiques() {
+        return ok(views.html.statistiques.render());
+    }
+    
     
 }
