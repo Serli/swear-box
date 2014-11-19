@@ -38,7 +38,7 @@ public class AjoutUtilisateurTest {
 	 */
     @Test
     public void ajoutUtilisateur() {
-    	    running(fakeApplication(), new Runnable()
+    	    running(fakeApplication(inMemoryDatabase()), new Runnable()
     	    {
     	      public void run()
     	      {

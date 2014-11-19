@@ -19,7 +19,7 @@ public class LierPersonneUtilisateurTest{
 	@Transactional
 	@Test
     public void test() {
-		running(fakeApplication(), new Runnable()
+		running(fakeApplication(inMemoryDatabase()), new Runnable()
     	{
     	    public void run()
     	   {
