@@ -58,14 +58,14 @@ public class Welcome extends JavaController {
     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
     */
     public static Result help() {
-        return ok(views.html.aide.render());
+        return ok(views.html.help.render());
     }
 
     /**
     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
     */
     public static Result statistics() {
-        return ok(views.html.statistiques.render());
+        return ok(views.html.statistics.render());
     }
     
     
