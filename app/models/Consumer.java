@@ -20,7 +20,7 @@ public class Consumer implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final static int AMOUNTDEFAULT = 50;
+	private static final int AMOUNTDEFAULT = 50;
 	
 	@Id
 	private String email;
