@@ -7,12 +7,13 @@
     	<meta charset="utf-8" />
         <title>@title</title>
         <link href="@routes.Assets.at("images/favicon.png")" rel="shortcut icon" type="image/png" >
-
 		<!-- Bootstrap core CSS -->
 		<link href="@routes.Assets.at("stylesheets/bootstrap.css")" rel="stylesheet">
 		<link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet" media="screen">
+        
     </head>
-    <body>
+    <body ng-app>
         @content
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script> 
     </body>
 </html>
