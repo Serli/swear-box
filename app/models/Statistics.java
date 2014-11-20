@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Statistique implements Serializable{
+public class Statistics implements Serializable{
 	/**
 	 * 
 	 */
@@ -25,38 +25,38 @@ public class Statistique implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id_Statistique;
+	private Long idStatistics;
 	
 	@NotNull
-	@Column (name="Date_St")
+	@Column (name="dateSt")
 	private Date date;
 	
 	@ManyToOne
-	@JoinColumn(name="id_Personne")
-	private Personne personne;
+	@JoinColumn(name="idPerson")
+	private Person person;
 	
-	public Statistique(Date date, Personne personne) {
+	public Statistics(Date vDate, Person vPerson) {
 		super();
-		this.date = date;
-		this.personne = personne;
+		this.date = vDate;
+		this.person = vPerson;
 	}
-	public Long getId_Statistique() {
-		return id_Statistique;
+	public Long getIdStatistics() {
+		return idStatistics;
 	}
-	public void setId_Statistique(Long id_Statistique) {
-		this.id_Statistique = id_Statistique;
+	public void setIdStatistics(Long vIdStatistics) {
+		this.idStatistics = vIdStatistics;
 	}
 	public Date getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(Date vDate) {
+		this.date = vDate;
 	}
-	public Personne getPersonne() {
-		return personne;
+	public Person getPerson() {
+		return person;
 	}
-	public void setPersonne(Personne personne) {
-		this.personne = personne;
+	public void setIdPerson(Person vPersonn) {
+		this.person = vPersonn;
 	}
 
 

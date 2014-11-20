@@ -4,22 +4,22 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import play.db.jpa.JPA;
 
-import models.Personne;
+import models.Person;
 
 public class ListePersonnes {
 
-public  static List<Personne> listePersonnes(String emailUser){
+public  static List<Person> listePersonnes(String emailUser){
 		
 		@SuppressWarnings("unchecked")
-		TypedQuery<Personne> req = (TypedQuery<Personne>) JPA.em().createNativeQuery(
-				"SELECT Personne.id_personne, Personne.nom, Personne.prenom, Personne.dette, Personne.adr_image "
-				+ "FROM Personne "
-				+ "INNER JOIN u_p ON u_p.id_personne = Personne.id_personne "
-				+ "WHERE u_p.id_utilisateur = :email",
-				Personne.class).setParameter("email", emailUser);
+		TypedQuery<Person> req = (TypedQuery<Person>) JPA.em().createNativeQuery(
+				"SELECT Person.idPerson, Person.name, Person.firstName, Person.debt, Person.picture "
+				+ "FROM Person "
+				+ "INNER JOIN u_p ON u_p.idPerson = Person.idPerson "
+				+ "WHERE u_p.idUser = :email",
+				Person.class).setParameter("email", emailUser);
 		
-		List<Personne> personnes = (List<Personne>) req.getResultList();
-		return personnes;
+		List<Person> people = (List<Person>) req.getResultList();
+		return people;
 	
 	}
 

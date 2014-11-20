@@ -36,10 +36,10 @@ public class Administration extends JavaController {
 				return badRequest("Missing parameter [nom] or [prenom]");
 			} else {
 				final String image = Play.application().configuration().getString("AvatarDefault");
-				Personne person = new Personne(nom,prenom,0,image);
+				Person person = new Person(nom,prenom,0,image);
 				Google2Profile googleProfile = (Google2Profile) getUserProfile();
 				String id = googleProfile.getEmail();
-				AjoutPersonne.ajoutPersonne(person,id);
+				AddPerson.addPerson(person,id);
 				return ok();
 			}
 		}
@@ -76,6 +76,6 @@ public class Administration extends JavaController {
 	public static Result listePersonnes() {
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
 		String emailUser = googleProfile.getEmail();
-		List<Personne> personnes = ListePersonnes.listePersonnes(emailUser);
+		List<Person> personnes = ListePersonnes.listePersonnes(emailUser);
 		return ok(Json.toJson(personnes));
 	}}

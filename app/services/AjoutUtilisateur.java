@@ -2,7 +2,7 @@ package services;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import models.Utilisateur;
+import models.User;
 
 /**
  * Permet d'ajouter un utilisateur
@@ -16,9 +16,9 @@ public class AjoutUtilisateur {
 	 * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
 	 */
 	public static void ajoutUtilisateur(String email) {
-		Utilisateur u = JPA.em().find(Utilisateur.class, email);
+		User u = JPA.em().find(User.class, email);
 		if (u == null) {
-			u = new Utilisateur(email);
+			u = new User(email);
 			JPA.em().persist(u);
 		}
 	}

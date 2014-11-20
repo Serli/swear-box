@@ -19,14 +19,14 @@ public class SupprimerPersonne{
 	 */
 	public static void supprimerPersonne(long id){
 		//recuperation de la personne
-		Query query = JPA.em().createQuery("Select p from Personne p where p.id_personne =" + id);
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 
-		Personne pbd = (Personne) query.getSingleResult();
+		Person pbd = (Person) query.getSingleResult();
 		
 		
 		//suppression des clé dans U_P
-		for (Utilisateur u: pbd.getUtilisateurs()){	
-			u.getPersonnes().remove(pbd);
+		for (User u: pbd.getUsers()){	
+			u.getPeople().remove(pbd);
 		}
 
 		

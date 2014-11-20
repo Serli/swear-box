@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import models.Utilisateur;
+import models.User;
 
 import org.junit.*;
 
@@ -51,7 +51,7 @@ public class AjoutUtilisateurTest {
     	        	  AjoutUtilisateur.ajoutUtilisateur(email);
     	        	  
     	        	  //Recherche de l'utilisateur dans la base de données
-       	           	  Utilisateur u = JPA.em().find(Utilisateur.class, email);
+       	           	  User u = JPA.em().find(User.class, email);
        	           	  assertThat(u).isNotEqualTo(null);
        	           
        	           	  JPA.em().remove(u);
