@@ -41,7 +41,7 @@ public class SupprimerPersonneTest{
 						
 						//ajoute la personne et lie la personne a un autre utilisateur
 						AjoutPersonne.ajoutPersonne(p,u1.getEmail());
-						LierPersonneUtilisateur .lierPersonneUtilisateur(p,u2.getEmail());
+						LierPersonneUtilisateur.lierPersonneUtilisateur(p,u2.getEmail());
 						
 						
 						Personne pbd= (Personne)JPA.em().createQuery("Select p FROM Personne p WHERE p.Nom='Suppr-Toto'").getSingleResult();
@@ -62,7 +62,7 @@ public class SupprimerPersonneTest{
 						JPA.em().flush();
 						
 						//suppression de la personne pour les deux utilisateurs
-						SupprimerPersonne.supprimerPersonne("Suppr-Toto", "Suppr-Titi", "Suppr-email1@email");
+						SupprimerPersonne.supprimerPersonne(pbd.getId_personne());
 						
 						//recuperation des utilisateurs en bd apres suppression
 						u1bd=JPA.em().find(Utilisateur.class,"Suppr-email1@email");

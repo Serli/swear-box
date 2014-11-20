@@ -10,9 +10,7 @@ import org.pac4j.play.java.RequiresAuthentication;
 
 import play.Play;
 import play.db.jpa.Transactional;
-
 import play.libs.Json;
-
 import play.mvc.Result;
 import services.*;
 import models.*;
@@ -59,14 +57,12 @@ public class Administration extends JavaController {
 		if(json == null) {
 			return badRequest("Expecting Json data");
 		} else {
-			String nom = json.findPath("nom").textValue();
-			String prenom = json.findPath("prenom").textValue();
-			if(nom == null || prenom==null) {
-				return badRequest("Missing parameter [nom] or [prenom]");
+			long id = -1;
+			id = json.findPath("id").longValue();
+			if(id == -1 ) {
+				return badRequest("Missing parameter [id]");
 			} else {
-				Google2Profile googleProfile = (Google2Profile) getUserProfile();
-				String id = googleProfile.getEmail();
-				SupprimerPersonne.supprimerPersonne(nom, prenom, id);
+				SupprimerPersonne.supprimerPersonne(id);
 				return ok();
 			}
 		}
