@@ -8,9 +8,9 @@ import java.util.List;
 import org.junit.Test;
 
 import play.db.jpa.JPA;
-import models.Personne;
-import models.Utilisateur;
-import services.ListePersonnes;
+import models.*;
+import models.Consumer;
+import services.ListPeople;
 
 /**
  * Test la classe ListePersonne
@@ -18,7 +18,7 @@ import services.ListePersonnes;
  * @author Geoffrey
  *
  */
-public class ListePersonnesTest {
+public class ListPersonTest {
 
 	/**
 	 * Test la récupération de la liste des membres liés à l'utilisateur dans la
@@ -32,40 +32,40 @@ public class ListePersonnesTest {
 					public void invoke() {
 						// Ajout d'un utilisateur
 						String emailU1 = "test1@email.com";
-						Utilisateur u1 = new Utilisateur(emailU1, 100);
+						Consumer u1 = new Consumer(emailU1, 100);
 						JPA.em().persist(u1);
-						Utilisateur u2 = new Utilisateur("test2@email.com", 100);
+						Consumer u2 = new Consumer("test2@email.com", 100);
 						JPA.em().persist(u2);
 
 						// Ajout de deux personnes
-						Personne p1 = new Personne("nom1", "prenom1", 1, "adr1");
-						Personne p2 = new Personne("nom2", "prenom2", 2, "adr2");
-						Personne p3 = new Personne("nom3", "prenom3", 3, "adr3");
+						Person p1 = new Person("nom1", "prenom1", 1, "adr1");
+						Person p2 = new Person("nom2", "prenom2", 2, "adr2");
+						Person p3 = new Person("nom3", "prenom3", 3, "adr3");
 						JPA.em().persist(p1);
 						JPA.em().persist(p2);
 						JPA.em().persist(p3);
 
 						// Liaision des personnes avec les utilisateurs (table
 						// u_p)
-						u1.setPersonnes(p1);
-						p1.setUtilisateurs(u1);
-						u1.setPersonnes(p2);
-						p2.setUtilisateurs(u1);
-						u2.setPersonnes(p3);
-						p3.setUtilisateurs(u2);
+						u1.setPerson(p1);
+						p1.setUser(u1);
+						u1.setPerson(p2);
+						p2.setUser(u1);
+						u2.setPerson(p3);
+						p3.setUser(u2);
 
 						// Synchronisation avec la BD
 						JPA.em().flush();
 
 						// Récupération de la liste des personnes liées à u1
-						List<Personne> l = ListePersonnes
-								.listePersonnes(emailU1);
+						List<Person> l = ListPeople
+								.listPeople(emailU1);
 
 						assertThat(l.size()).isEqualTo(2);
-						assertThat(l.get(0).getPrenom()).isEqualTo(
-								p1.getPrenom());
-						assertThat(l.get(1).getPrenom()).isEqualTo(
-								p2.getPrenom());
+						assertThat(l.get(0).getFirstName()).isEqualTo(
+								p1.getFirstName());
+						assertThat(l.get(1).getFirstName()).isEqualTo(
+								p2.getFirstName());
 
 						JPA.em().remove(u1);
 						JPA.em().remove(u2);

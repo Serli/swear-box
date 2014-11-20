@@ -12,14 +12,14 @@ import org.pac4j.play.java.RequiresAuthentication;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
-import services.AjoutUtilisateur;
+import services.AddUser;
 import views.html.*;
 /**
  * Gere les actions des vues connexion et user
  * @author Geoffrey
  *
  */
-public class Accueil extends JavaController {
+public class Welcome extends JavaController {
 
 	/**
 	 * Action appelée lors du lancement de l'appli
@@ -33,7 +33,7 @@ public class Accueil extends JavaController {
         	return ok(index.render(urlGoogle));
     	}
     	else {
-    		return redirect(routes.Accueil.user());
+    		return redirect(routes.Welcome.user());
     	}
     }
 
@@ -50,7 +50,7 @@ public class Accueil extends JavaController {
 		//Ajout de l'utilisateur dans la base de données si besoin
 		String nom = googleProfile.getFirstName();
 		String email = googleProfile.getEmail();
-		AjoutUtilisateur.ajoutUtilisateur(email);
+		AddUser.addUser(email);
 		
         return ok(views.html.user.render(nom));
     }
@@ -66,14 +66,14 @@ public class Accueil extends JavaController {
     /**
     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
     */
-    public static Result aide() {
+    public static Result help() {
         return ok(views.html.aide.render());
     }
 
     /**
     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
     */
-    public static Result statistiques() {
+    public static Result statistics() {
         return ok(views.html.statistiques.render());
     }
     

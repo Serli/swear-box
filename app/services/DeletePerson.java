@@ -1,15 +1,10 @@
 package services;
 
-import java.util.List;
-
-import javax.persistence.OneToMany;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import play.db.jpa.JPA;
 import models.*;
 
-public class SupprimerPersonne{
+public class DeletePerson{
 
 	/**
 	 * Supprime une personne dans la table personne
@@ -17,16 +12,16 @@ public class SupprimerPersonne{
 	 * @param String : prenom de la personne
 	 * @param String : l'identifiant de l'utilisateur qui supprime la personne
 	 */
-	public static void supprimerPersonne(long id){
+	public static void deletePerson(long id){
 		//recuperation de la personne
-		Query query = JPA.em().createQuery("Select p from Personne p where p.id_personne =" + id);
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 
-		Personne pbd = (Personne) query.getSingleResult();
+		Person pbd = (Person) query.getSingleResult();
 		
 		
 		//suppression des clé dans U_P
-		for (Utilisateur u: pbd.getUtilisateurs()){	
-			u.getPersonnes().remove(pbd);
+		for (Consumer u: pbd.getUsers()){	
+			u.getPeople().remove(pbd);
 		}
 
 		
