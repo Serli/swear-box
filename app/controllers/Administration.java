@@ -27,13 +27,13 @@ public class Administration extends JavaController {
 		if(json == null) {
 			return badRequest("Expecting Json data");
 		} else {
-			String nom = json.findPath("nom").textValue();
-			String prenom = json.findPath("prenom").textValue();
-			if(nom == null || prenom==null) {
-				return badRequest("Missing parameter [nom] or [prenom]");
+			String name = json.findPath("name").textValue();
+			String firstname = json.findPath("firstname").textValue();
+			if(name == null || firstname==null) {
+				return badRequest("Missing parameter [name] or [firstname]");
 			} else {
-				final String image = Play.application().configuration().getString("AvatarDefault");
-				Person person = new Person(nom,prenom,0,image);
+				final String picture = Play.application().configuration().getString("AvatarDefault");
+				Person person = new Person(name,firstname,0,picture);
 				Google2Profile googleProfile = (Google2Profile) getUserProfile();
 				String id = googleProfile.getEmail();
 				AddPerson.addPerson(person,id);
@@ -73,6 +73,6 @@ public class Administration extends JavaController {
 	public static Result listPerson() {
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
 		String emailUser = googleProfile.getEmail();
-		List<Person> personnes = ListPeople.listPeople(emailUser);
-		return ok(Json.toJson(personnes));
+		List<Person> persons = ListPeople.listPeople(emailUser);
+		return ok(Json.toJson(persons));
 	}}

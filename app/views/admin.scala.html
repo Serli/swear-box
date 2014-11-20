@@ -67,16 +67,20 @@
 
       </table>
 
-      <div class="container">
-
+      <!--<div class="container">
+        <form ng-submit="addComment()">
+          <input type="text" class="form-control" ng-model="newMember.firstname" placeholder="Prénom"></br>
+          <input type="text" class="form-control" ng-model="newMember.name" placeholder="Nom"></br>
+          <input type="submit" value="Envoyer"/>
+        </form>-->
         <div class="row separation-actions">
 
           <div class="col-xs-5 col-sm-5">
-            <input type="text" class="form-control" id="firstname" placeholder="Prénom">
+            <input type="text" class="form-control" placeholder="Prénom">
           </div>
 
           <div class="col-xs-5 col-sm-5">
-            <input type="text" class="form-control" id="name" placeholder="Nom">
+            <input type="text" class="form-control" placeholder="Nom">
           </div>
 
           <div class="col-xs-2 col-sm-2">
@@ -97,7 +101,7 @@
 
           <div class="pull-right col-xs-10 col-sm-5">
             <div class="input-group">
-              <input type="text" class="form-control" id="penality" placeholder="Montant de la pénalité">
+              <input type="text" class="form-control" id="amount" placeholder="Montant de la pénalité">
               <span class="input-group-addon">cts</span>
             </div>
           </div>

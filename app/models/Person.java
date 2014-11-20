@@ -29,7 +29,7 @@ public class Person implements Serializable {
 
 	@NotEmpty
 	@Size(max = 50)
-	private String firstName;
+	private String firstname;
 
 	@NotNull
 	private int debt;
@@ -47,7 +47,7 @@ public class Person implements Serializable {
 	public Person(String vName, String vFirstName, int vDebt, String vPicture) {
 		this();
 		this.name = vName;
-		this.firstName = vFirstName;
+		this.firstname = vFirstName;
 		this.debt = vDebt;
 		this.picture = vPicture;
 	}
@@ -65,11 +65,11 @@ public class Person implements Serializable {
 	}
 
 	public String getFirstName() {
-		return this.firstName;
+		return this.firstname;
 	}
 
 	public void setFirstName(String vFirstName) {
-		this.firstName = vFirstName;
+		this.firstname = vFirstName;
 	}
 
 	public int getDebt() {
