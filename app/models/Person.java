@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Person implements Serializable {
@@ -38,6 +42,7 @@ public class Person implements Serializable {
 	private String picture;
 
 	@ManyToMany(mappedBy = "people")
+	@JsonBackReference
 	private List<Consumer> users;
 
 	public Person() {

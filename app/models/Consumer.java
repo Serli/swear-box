@@ -11,7 +11,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
+
 public class Consumer implements Serializable{
 	/**
 	 * 
@@ -25,12 +28,13 @@ public class Consumer implements Serializable{
 	@NotNull
 	private int amount;
 	
+	@ManyToMany
 	@JoinTable(name="U_P",
 		    joinColumns = @JoinColumn(name = "idUser", 
 		                              referencedColumnName = "email"), 
 		    inverseJoinColumns = @JoinColumn(name = "idPerson", 
 		                              referencedColumnName = "idPerson"))
-	@ManyToMany
+	@JsonManagedReference
 	List <Person> people;
 	
 	public Consumer() {
