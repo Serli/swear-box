@@ -6,9 +6,9 @@ import play.db.jpa.JPA;
 
 import models.Person;
 
-public class ListePersonnes {
+public class ListPeople {
 
-public  static List<Person> listePersonnes(String emailUser){
+public  static List<Person> listPeople(String emailUser){
 		
 		@SuppressWarnings("unchecked")
 		TypedQuery<Person> req = (TypedQuery<Person>) JPA.em().createNativeQuery(

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import models.User;
+import models.Consumer;
 
 import org.junit.*;
 
@@ -20,7 +20,7 @@ import play.i18n.Lang;
 import play.libs.F;
 import play.libs.F.*;
 import play.twirl.api.Content;
-import services.AjoutUtilisateur;
+import services.AddUser;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
@@ -48,10 +48,10 @@ public class AjoutUtilisateurTest {
     	          {
     	        	  //Ajout d'un utilisateur à partir d'un email
     	        	  String email = "test@gmail.com";
-    	        	  AjoutUtilisateur.ajoutUtilisateur(email);
+    	        	  AddUser.addUser(email);
     	        	  
     	        	  //Recherche de l'utilisateur dans la base de données
-       	           	  User u = JPA.em().find(User.class, email);
+       	           	  Consumer u = JPA.em().find(Consumer.class, email);
        	           	  assertThat(u).isNotEqualTo(null);
        	           
        	           	  JPA.em().remove(u);

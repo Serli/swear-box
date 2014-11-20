@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import play.db.jpa.JPA;
 import models.*;
-import models.User;
-import services.ListePersonnes;
+import models.Consumer;
+import services.ListPeople;
 
 /**
  * Test la classe ListePersonne
@@ -32,9 +32,9 @@ public class ListePersonnesTest {
 					public void invoke() {
 						// Ajout d'un utilisateur
 						String emailU1 = "test1@email.com";
-						User u1 = new User(emailU1, 100);
+						Consumer u1 = new Consumer(emailU1, 100);
 						JPA.em().persist(u1);
-						User u2 = new User("test2@email.com", 100);
+						Consumer u2 = new Consumer("test2@email.com", 100);
 						JPA.em().persist(u2);
 
 						// Ajout de deux personnes
@@ -58,8 +58,8 @@ public class ListePersonnesTest {
 						JPA.em().flush();
 
 						// Récupération de la liste des personnes liées à u1
-						List<Person> l = ListePersonnes
-								.listePersonnes(emailU1);
+						List<Person> l = ListPeople
+								.listPeople(emailU1);
 
 						assertThat(l.size()).isEqualTo(2);
 						assertThat(l.get(0).getFirstName()).isEqualTo(

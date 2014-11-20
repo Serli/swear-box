@@ -30,11 +30,11 @@ public class AjoutPersonneTest{
 					public void invoke()
 					{
 					Person p =new Person("Toto", "Titi",0,"yolo");
-					User u= new User("email@email",100);
+					Consumer u= new Consumer("email@email",100);
 					
 					//enregistrement de l'utilisateur
 					JPA.em().persist(u);
-					User ubd=JPA.em().find(User.class,"email@email");
+					Consumer ubd=JPA.em().find(Consumer.class,"email@email");
 					assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 					
 					//ajout de la personne

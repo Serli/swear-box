@@ -25,7 +25,7 @@ public class Administration extends JavaController {
 	 */
 	@Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result AjouterPersonne() {
+    public static Result addPerson() {
 		JsonNode json = request().body().asJson();
 		if(json == null) {
 			return badRequest("Expecting Json data");
@@ -52,7 +52,7 @@ public class Administration extends JavaController {
 	 */
 	@Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result SupprimerPersonne() {
+    public static Result deletePerson() {
 		JsonNode json = request().body().asJson();
 		if(json == null) {
 			return badRequest("Expecting Json data");
@@ -62,7 +62,7 @@ public class Administration extends JavaController {
 			if(id == -1 ) {
 				return badRequest("Missing parameter [id]");
 			} else {
-				SupprimerPersonne.supprimerPersonne(id);
+				DeletePerson.deletePerson(id);
 				return ok();
 			}
 		}
@@ -73,9 +73,9 @@ public class Administration extends JavaController {
      * @return la liste des membres au format JSON
      */
 	@Transactional
-	public static Result listePersonnes() {
+	public static Result listPerson() {
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
 		String emailUser = googleProfile.getEmail();
-		List<Person> personnes = ListePersonnes.listePersonnes(emailUser);
+		List<Person> personnes = ListPeople.listPeople(emailUser);
 		return ok(Json.toJson(personnes));
 	}}

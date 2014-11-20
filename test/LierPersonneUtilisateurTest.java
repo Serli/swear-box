@@ -29,20 +29,20 @@ public class LierPersonneUtilisateurTest{
 					{
 						
 					Person p =new Person("Lier-Toto", "Lier-Titi",0,"yolo");
-					User u1= new User("Lier-email1@email",100);
-					User u2= new User("Lier-email2@email",50);
+					Consumer u1= new Consumer("Lier-email1@email",100);
+					Consumer u2= new Consumer("Lier-email2@email",50);
 					
 					//enregistrement des utilisateurs et recuperation de ceux en bd
 					JPA.em().persist(u1);
-					User u1bd=JPA.em().find(User.class,"Lier-email1@email");
+					Consumer u1bd=JPA.em().find(Consumer.class,"Lier-email1@email");
 					JPA.em().persist(u2);
-					User u2bd=JPA.em().find(User.class,"Lier-email2@email");
+					Consumer u2bd=JPA.em().find(Consumer.class,"Lier-email2@email");
 					
 					//ajout de la personne a un utilisateur
 					AddPerson.addPerson(p,u1.getEmail());
 					
 					//lie la personne a l'autre utilisateur
-					LierPersonneUtilisateur .lierPersonneUtilisateur(p,u2.getEmail());
+					LinkUserPerson .linkUserPerson(p,u2.getEmail());
 					
 					//recuperation de la personne
 					Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Lier-Toto'").getSingleResult();

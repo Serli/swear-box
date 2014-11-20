@@ -42,10 +42,10 @@ public class Person implements Serializable{
 	private String picture;
 	
 	@ManyToMany(mappedBy="people")
-	private List<User> users;
+	private List<Consumer> users;
 	
 	public Person() {
-		this.users=new ArrayList <User>();
+		this.users=new ArrayList <Consumer>();
 	}
 	
 	public Person(String vName, String vFirstName, int vDebt, String vPicture) {
@@ -92,11 +92,11 @@ public class Person implements Serializable{
 		this.picture = vPicture;
 	}
 	
-	public List<User> getUsers(){
+	public List<Consumer> getUsers(){
 		return this.users;
 	}
 	
-	public void setUser(User vUser){
+	public void setUser(Consumer vUser){
 		this.users.add(vUser);
 	}
 }

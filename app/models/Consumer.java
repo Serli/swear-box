@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class User implements Serializable{
+public class Consumer implements Serializable{
 	/**
 	 * 
 	 */
@@ -38,17 +38,17 @@ public class User implements Serializable{
 	@ManyToMany
 	List <Person> people;
 	
-	public User() {
+	public Consumer() {
 		this.people=new ArrayList <Person>();
 	}
 	
-	public User(String vEmail) {
+	public Consumer(String vEmail) {
 		this();
 		this.email = vEmail;
 		this.amount = 50;
 	}
 	
-	public User(String vEmail, int vAmount) {
+	public Consumer(String vEmail, int vAmount) {
 		this(vEmail);
 		this.amount = vAmount;
 	}

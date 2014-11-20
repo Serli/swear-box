@@ -3,14 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Accueil.index()
-GET     /user                       controllers.Accueil.user()
-GET     /admin                      controllers.Accueil.admin()
-GET 	/aide						controllers.Accueil.aide()
-GET 	/statistiques				controllers.Accueil.statistiques()
-GET     /personnes                  controllers.Administration.listePersonnes()
-POST    /ajoutPersonne              controllers.Administration.AjouterPersonne()
-POST    /supprPersonne              controllers.Administration.SupprimerPersonne()
+GET     /                           controllers.Welcome.index()
+GET     /user                       controllers.Welcome.user()
+GET     /admin                      controllers.Welcome.admin()
+GET 	/help						controllers.Welcome.help()
+GET 	/statistics					controllers.Welcome.statistics()
+GET     /person                 	controllers.Administration.listPerson()
+POST    /addPerson            		controllers.Administration.addPerson()
+POST    /deletePerson               controllers.Administration.deletePerson()
 
 
 #OAuth

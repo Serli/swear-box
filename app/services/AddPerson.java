@@ -15,7 +15,7 @@ public class AddPerson{
 		//enregistrement de la personne
 		JPA.em().persist(p);
 		//recuperation de l'utilisateur
-		User user = JPA.em().find(User.class,id); 
+		Consumer user = JPA.em().find(Consumer.class,id); 
 		user.setPerson(p);
 		p.setUser(user);
 		

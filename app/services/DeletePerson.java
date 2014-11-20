@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import play.db.jpa.JPA;
 import models.*;
 
-public class SupprimerPersonne{
+public class DeletePerson{
 
 	/**
 	 * Supprime une personne dans la table personne
@@ -17,7 +17,7 @@ public class SupprimerPersonne{
 	 * @param String : prenom de la personne
 	 * @param String : l'identifiant de l'utilisateur qui supprime la personne
 	 */
-	public static void supprimerPersonne(long id){
+	public static void deletePerson(long id){
 		//recuperation de la personne
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 
@@ -25,7 +25,7 @@ public class SupprimerPersonne{
 		
 		
 		//suppression des clé dans U_P
-		for (User u: pbd.getUsers()){	
+		for (Consumer u: pbd.getUsers()){	
 			u.getPeople().remove(pbd);
 		}
 
