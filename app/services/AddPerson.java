@@ -4,6 +4,9 @@ import play.db.jpa.JPA;
 import models.*;
 
 public class AddPerson{
+	
+	private AddPerson(){
+	}
 
 	/**
 	 * Ajoute une personne dans la table personne 

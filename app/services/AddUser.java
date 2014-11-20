@@ -9,6 +9,9 @@ import models.Consumer;
  *
  */
 public class AddUser {
+	
+	private AddUser(){
+	}
 
 	/**
 	 * Ajoute l'utilisateur s'il n'existe pas

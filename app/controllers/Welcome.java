@@ -1,15 +1,9 @@
 package controllers;
 
-import java.util.List;
-
-import play.libs.Json;
-
-import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
-import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import services.AddUser;
@@ -32,9 +26,7 @@ public class Welcome extends JavaController {
     		final String urlGoogle = getRedirectAction("Google2Client").getLocation();
         	return ok(index.render(urlGoogle));
     	}
-    	else {
-    		return redirect(routes.Welcome.user());
-    	}
+    	return redirect(routes.Welcome.user());
     }
 
     /**

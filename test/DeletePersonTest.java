@@ -38,11 +38,9 @@ public class DeletePersonTest{
 						
 						//ajoute la personne et lie la personne a un autre utilisateur
 						AddPerson.addPerson(p,u1.getEmail());
-						LinkUserPerson.linkUserPerson(p,u2.getEmail());
-						
-						
 						Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getSingleResult();
-						
+						LinkUserPerson.linkUserPerson(pbd.getIdPerson(),u2.getEmail());
+												
 						//regarde si les utilisateurs ont la personne dans sa list
 						assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(p.getName());
 						assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(pbd.getName());

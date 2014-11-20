@@ -20,15 +20,15 @@ public class Global extends GlobalSettings{
     	super.onStart(app);
 
     	//Récupération des données necessaires dans le fichier application.conf
-        final String GoogleId = Play.application().configuration().getString("GoogleId");
-        final String GoogleSecret = Play.application().configuration().getString("GoogleSecret");
+        final String googleId = Play.application().configuration().getString("GoogleId");
+        final String googleSecret = Play.application().configuration().getString("GoogleSecret");
         final String baseUrl = Play.application().configuration().getString("baseUrl");
        
         //Création du cient Google2Client pour la connexion Google via OAuth2
-        final Google2Client google2Client = new Google2Client(GoogleId, GoogleSecret);
+        final Google2Client google2Client = new Google2Client(googleId, googleSecret);
         
         //Ajout des clients à Config
-        final Clients clients = new Clients(baseUrl + "/oauth2callback", google2Client); // , casProxyReceptor);
+        final Clients clients = new Clients(baseUrl + "/oauth2callback", google2Client);
         Config.setClients(clients);
     }
 	

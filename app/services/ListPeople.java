@@ -7,8 +7,12 @@ import play.db.jpa.JPA;
 import models.Person;
 
 public class ListPeople {
+	
+	private ListPeople(){
+	}
+	
 
-public  static List<Person> listPeople(String emailUser){
+	public  static List<Person> listPeople(String emailUser){
 		
 		@SuppressWarnings("unchecked")
 		TypedQuery<Person> req = (TypedQuery<Person>) JPA.em().createNativeQuery(
@@ -18,9 +22,7 @@ public  static List<Person> listPeople(String emailUser){
 				+ "WHERE u_p.idUser = :email",
 				Person.class).setParameter("email", emailUser);
 		
-		List<Person> people = (List<Person>) req.getResultList();
-		return people;
-	
+		return (List<Person>) req.getResultList();
 	}
 
 }

@@ -38,12 +38,12 @@ public class LinkUserPersonTest{
 					//ajout de la personne a un utilisateur
 					AddPerson.addPerson(p,u1.getEmail());
 					
-					//lie la personne a l'autre utilisateur
-					LinkUserPerson .linkUserPerson(p,u2.getEmail());
-					
 					//recuperation de la personne
 					Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Lier-Toto'").getSingleResult();
-					
+	
+					//lie la personne a l'autre utilisateur
+					LinkUserPerson .linkUserPerson(pbd.getIdPerson(),u2.getEmail());
+				
 					//regarde si les utilisateurs ont la personne dans sa list
 					assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(p.getName());
 					assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(pbd.getName());

@@ -22,7 +22,7 @@ public class Consumer implements Serializable{
 	private String email;
 	
 	@NotNull
-	private int amount;
+	private int amount=50;
 	
 	@JoinTable(name="U_P",
 		    joinColumns = @JoinColumn(name = "idUser", 
@@ -39,7 +39,6 @@ public class Consumer implements Serializable{
 	public Consumer(String vEmail) {
 		this();
 		this.email = vEmail;
-		this.amount = 50;
 	}
 	
 	public Consumer(String vEmail, int vAmount) {
