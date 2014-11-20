@@ -62,10 +62,10 @@ public class ListPersonTest {
 								.listPeople(emailU1);
 
 						assertThat(l.size()).isEqualTo(2);
-						assertThat(l.get(0).getFirstName()).isEqualTo(
-								p1.getFirstName());
-						assertThat(l.get(1).getFirstName()).isEqualTo(
-								p2.getFirstName());
+						assertThat(l.get(0).getFirstname()).isEqualTo(
+								p1.getFirstname());
+						assertThat(l.get(1).getFirstname()).isEqualTo(
+								p2.getFirstname());
 
 						JPA.em().remove(u1);
 						JPA.em().remove(u2);

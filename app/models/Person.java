@@ -69,11 +69,11 @@ public class Person implements Serializable {
 		this.name = vName;
 	}
 
-	public String getFirstName() {
+	public String getFirstname() {
 		return this.firstname;
 	}
 
-	public void setFirstName(String vFirstName) {
+	public void setFirstname(String vFirstName) {
 		this.firstname = vFirstName;
 	}
 
