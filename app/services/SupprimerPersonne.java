@@ -17,16 +17,9 @@ public class SupprimerPersonne{
 	 * @param String : prenom de la personne
 	 * @param String : l'identifiant de l'utilisateur qui supprime la personne
 	 */
-	public static void supprimerPersonne(String nom, String prenom, String id){
+	public static void supprimerPersonne(long id){
 		//recuperation de la personne
-		TypedQuery<Personne> query =  (TypedQuery<Personne>) JPA.em().createNativeQuery(
-		        "Select p.Id_Personne, p.Nom, p.Prenom, p.Dette, p.adr_Image "
-		        + "FROM Personne as p INNER JOIN U_P as up "
-		        	+ "ON p.id_Personne = up.id_Personne "
-		        + "WHERE p.Nom='" + nom + "' "
-		        	+ "AND p.Prenom='" + prenom+ "' "
-		        	+ "AND up.id_Utilisateur='" + id + "'",
-		        Personne.class);
+		Query query = JPA.em().createQuery("Select p from Personne p where p.id_personne =" + id);
 
 		Personne pbd = (Personne) query.getSingleResult();
 		
