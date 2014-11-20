@@ -4,7 +4,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	$scope.members = {};
 
-	$http.get('//localhost:9000/person')
+	$http.get('/person')
 	.success(function(data, status, headers, config){
 		$scope.members = data;
 	})
@@ -19,9 +19,15 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 			firstname : $scope.newMember.firstname
 		};			
 
-  	$http.post('//localhost:9000/addPerson', dataObj)
+  	$http.post('/addPerson', dataObj)
 		.success(function(data, status, headers, config){
 			console.log("suc");
+			$http.get('/person')
+				.success(function(data, status, headers, config){
+					$scope.members = data;
+				})
+				.error(function(data, status, headers, config){
+				});
 		})
 		.error(function(data, status, headers, config){
 			console.log("err");
@@ -29,13 +35,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
   	$scope.newMember.name= '';
   	$scope.newMember.firstname= '';
-
-		$http.get('//localhost:9000/person')
-		.success(function(data, status, headers, config){
-			$scope.members = data;
-		})
-		.error(function(data, status, headers, config){
-		});
 
   }
 }]);

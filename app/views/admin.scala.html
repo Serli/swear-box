@@ -68,7 +68,27 @@
       </table>
 
       <div class="container">
-        <div class="row separation-actions">
+        <form ng-submit="addMember()">
+          <div class="row separation-actions">
+
+            <div class="col-xs-5 col-sm-5">
+              <input type="text" class="form-control" ng-model="newMember.firstname" placeholder="Prénom" required>
+            </div>
+
+            <div class="col-xs-5 col-sm-5">
+              <input type="text" class="form-control" ng-model="newMember.name" placeholder="Nom" required>
+            </div>
+
+            <div class="col-xs-2 col-sm-2">
+              <button title="Ajouter un membre" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus"/>
+              </button>
+            </div>
+
+          </div>
+        </form>
+
+        <!--<div class="row separation-actions">
 
           <div class="col-xs-5 col-sm-5">
             <input type="text" class="form-control" ng-model="newMember.firstname" placeholder="Prénom">
@@ -84,7 +104,7 @@
             </button>
           </div>
 
-        </div>
+        </div>-->
 
         <div class="row separation-actions">
 
