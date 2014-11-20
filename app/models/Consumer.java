@@ -17,12 +17,13 @@ public class Consumer implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private final static int AMOUNTDEFAULT = 50;
 	
 	@Id
 	private String email;
 	
 	@NotNull
-	private int amount=50;
+	private int amount;
 	
 	@JoinTable(name="U_P",
 		    joinColumns = @JoinColumn(name = "idUser", 
@@ -34,6 +35,7 @@ public class Consumer implements Serializable{
 	
 	public Consumer() {
 		this.people=new ArrayList <Person>();
+		this.amount=AMOUNTDEFAULT;
 	}
 	
 	public Consumer(String vEmail) {

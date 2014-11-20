@@ -3,7 +3,6 @@ package controllers;
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
-
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import services.AddUser;

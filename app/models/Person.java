@@ -13,37 +13,37 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-public class Person implements Serializable{
+public class Person implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idPerson;
-	
+
 	@NotEmpty
-	@Size(max =50)
+	@Size(max = 50)
 	private String name;
-	
+
 	@NotEmpty
-	@Size(max =50)
+	@Size(max = 50)
 	private String firstName;
-	
+
 	@NotNull
 	private int debt;
-	
+
 	@NotEmpty
 	private String picture;
-	
-	@ManyToMany(mappedBy="people")
+
+	@ManyToMany(mappedBy = "people")
 	private List<Consumer> users;
-	
+
 	public Person() {
-		this.users=new ArrayList <Consumer>();
+		this.users = new ArrayList<Consumer>();
 	}
-	
+
 	public Person(String vName, String vFirstName, int vDebt, String vPicture) {
 		this();
 		this.name = vName;
@@ -79,7 +79,7 @@ public class Person implements Serializable{
 	public void setDebt(int vDebt) {
 		this.debt = vDebt;
 	}
-	
+
 	public String getPicture() {
 		return this.picture;
 	}
@@ -87,12 +87,12 @@ public class Person implements Serializable{
 	public void setAdrImage(String vPicture) {
 		this.picture = vPicture;
 	}
-	
-	public List<Consumer> getUsers(){
+
+	public List<Consumer> getUsers() {
 		return this.users;
 	}
-	
-	public void setUser(Consumer vUser){
+
+	public void setUser(Consumer vUser) {
 		this.users.add(vUser);
 	}
 }
