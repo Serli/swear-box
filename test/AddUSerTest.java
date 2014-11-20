@@ -1,29 +1,10 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
 import models.Consumer;
-
-import org.junit.*;
-
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
-import play.twirl.api.Content;
 import services.AddUser;
+
+import play.db.jpa.JPA;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
-
+import org.junit.*;
 
 
 /**
@@ -31,7 +12,7 @@ import static org.fest.assertions.Assertions.*;
  * @author Geoffrey
  *
  */
-public class AjoutUtilisateurTest {
+public class AddUSerTest {
 
 	/**
 	 * Test l'ajout d'un utilisateur dans la base de données 

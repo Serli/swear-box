@@ -18,7 +18,7 @@ import services.ListPeople;
  * @author Geoffrey
  *
  */
-public class ListePersonnesTest {
+public class ListPersonTest {
 
 	/**
 	 * Test la récupération de la liste des membres liés à l'utilisateur dans la

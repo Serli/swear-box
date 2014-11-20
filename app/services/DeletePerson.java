@@ -1,11 +1,6 @@
 package services;
 
-import java.util.List;
-
-import javax.persistence.OneToMany;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
 import play.db.jpa.JPA;
 import models.*;
 

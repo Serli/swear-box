@@ -1,6 +1,4 @@
 
-import javax.persistence.Query;
-
 import org.junit.*;
 
 import play.db.jpa.JPA;
@@ -11,7 +9,7 @@ import models.*;
 import services.*;
 
 
-public class AjoutPersonneTest{
+public class AddPersonTest{
 
 	/**
 	* Test Ajout de personne pour un utilisateur

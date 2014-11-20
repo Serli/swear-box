@@ -10,7 +10,7 @@ import play.twirl.api.Content;
 * Test les actions du Controleur Accueil.java
 *
 */
-public class AccueilTest {
+public class WelcomeTest {
 
 
 	/**

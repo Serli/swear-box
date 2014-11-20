@@ -1,6 +1,3 @@
-
-import javax.persistence.Query;
-
 import org.junit.*;
 
 import play.db.jpa.JPA;
@@ -11,7 +8,7 @@ import models.*;
 import services.*;
 
 
-public class SupprimerPersonneTest{
+public class DeletePersonTest{
 
 	/**
 	* Test suppression d'une personne pour deux utilisateurs

@@ -1,7 +1,6 @@
 package services;
 
 import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
 import models.*;
 
 /**
