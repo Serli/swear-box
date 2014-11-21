@@ -1,3 +1,4 @@
+package unit;
 import org.junit.*;
 
 import play.db.jpa.JPA;
@@ -7,14 +8,11 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 import services.*;
 
-/**
- * Test la classe LinkUserPerson
- *
- */
+
 public class LinkUserPersonTest{
 
 	/**
-	* Test si la classe LinkUserPerson lie correctement une personne à un utilisateur
+	* Test LierPersonneUtilisateur
 	*/
 	@Transactional
 	@Test
@@ -32,11 +30,9 @@ public class LinkUserPersonTest{
 					Consumer u1= new Consumer("Lier-email1@email",100);
 					Consumer u2= new Consumer("Lier-email2@email",50);
 					
-					//enregistrement des utilisateurs et recuperation de ceux en bd
+					//enregistrement des utilisateurs
 					JPA.em().persist(u1);
-					Consumer u1bd=JPA.em().find(Consumer.class,"Lier-email1@email");
 					JPA.em().persist(u2);
-					Consumer u2bd=JPA.em().find(Consumer.class,"Lier-email2@email");
 					
 					//ajout de la personne a un utilisateur
 					AddPerson.addPerson(p,u1.getEmail());
@@ -48,21 +44,12 @@ public class LinkUserPersonTest{
 					LinkUserPerson .linkUserPerson(pbd.getIdPerson(),u2.getEmail());
 				
 					//regarde si les utilisateurs ont la personne dans sa list
-					assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(p.getName());
-					assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(pbd.getName());
-					
-					assertThat(u2bd.getPeople().get(0).getName()).isEqualTo(p.getName());
-					assertThat(u2bd.getPeople().get(0).getName()).isEqualTo(pbd.getName());
-					
-					//regarde si la personne a les utilisateurs dans sa list
-					assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(u1.getEmail());
-					assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(u1bd.getEmail());
-					assertThat(pbd.getUsers().get(1).getEmail()).isEqualTo(u2.getEmail());
-					assertThat(pbd.getUsers().get(1).getEmail()).isEqualTo(u2bd.getEmail());
+					assertThat(u2.getPeople().get(0).getName()).isEqualTo(pbd.getName());
+				
 					
 					//clean
-					JPA.em().remove(u1bd);
-					JPA.em().remove(u2bd);
+					JPA.em().remove(u1);
+					JPA.em().remove(u2);
 					JPA.em().remove(pbd);
 					}
 				});

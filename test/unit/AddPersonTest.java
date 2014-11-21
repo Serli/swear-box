@@ -1,3 +1,4 @@
+package unit;
 
 import org.junit.*;
 
@@ -8,20 +9,15 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 import services.*;
 
-/**
- * Test la classe AddPerson
- *
- */
-public class AddPersonTest{
 
+public class AddPersonTest{
+	
 	/**
 	* Test Ajout de personne pour un utilisateur
-	* Verification de la liaison entre les deux tables 
-	*(par interpolation la création de la table personne)
 	*/
 	@Transactional
 	@Test
-    public void test() {
+	public void test() {
 		running(fakeApplication(inMemoryDatabase()), new Runnable()
     	{
     	    public void run()
@@ -35,8 +31,6 @@ public class AddPersonTest{
 					
 					//enregistrement de l'utilisateur
 					JPA.em().persist(u);
-					Consumer ubd=JPA.em().find(Consumer.class,"email@email");
-					assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 					
 					//ajout de la personne
 					AddPerson.addPerson(p,u.getEmail());
@@ -45,19 +39,14 @@ public class AddPersonTest{
 					Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Toto'").getSingleResult();
 					
 					//regarde si l'utilisateur a la personne dans sa list
-					assertThat(ubd.getPeople().get(0).getName()).isEqualTo(p.getName());
-					assertThat(ubd.getPeople().get(0).getName()).isEqualTo(pbd.getName());
+					assertThat(pbd).isNotEqualTo(null);
 					
-					//regarde si la personne a l'utilisateur dans sa list
-					assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(u.getEmail());
-					assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(ubd.getEmail());
-					JPA.em().remove(ubd);
+					JPA.em().remove(u);
 					JPA.em().remove(pbd);
 					}
 				});
 			}
 		});
 	}
-	
 	
 }

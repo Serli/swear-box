@@ -1,3 +1,4 @@
+package integration;
 import org.junit.*;
 
 import play.db.jpa.JPA;
@@ -13,6 +14,7 @@ import services.*;
  */
 public class DeletePersonTest{
 
+	
 	/**
 	* Test suppression d'une personne pour deux utilisateurs
 	* Verification de la liaison entre les deux tables
@@ -78,6 +80,4 @@ public class DeletePersonTest{
 			}
 		});
 	}
-	
-	
 }
