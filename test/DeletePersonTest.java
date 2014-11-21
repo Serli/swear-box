@@ -7,7 +7,10 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 import services.*;
 
-
+/**
+ * Test la classe DeletePerson
+ *
+ */
 public class DeletePersonTest{
 
 	/**

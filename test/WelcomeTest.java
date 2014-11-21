@@ -7,7 +7,7 @@ import org.junit.Test;
 import play.twirl.api.Content;
 /**
 *
-* Test les actions du Controleur Accueil.java
+* Test les actions du Contrôleur Welcome.java
 *
 */
 public class WelcomeTest {

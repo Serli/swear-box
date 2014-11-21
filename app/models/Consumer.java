@@ -13,12 +13,15 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * Représente un utilisateur du service
+ * Il possède une liste de personnes
+ *
+ */
 @Entity
-
 public class Consumer implements Serializable{
-	/**
-	 * 
-	 */
+
+    
 	private static final long serialVersionUID = 1L;
 	private static final int AMOUNTDEFAULT = 50;
 	

@@ -8,12 +8,15 @@ import play.GlobalSettings;
 import play.Play;
 
 /**
- * Ajoute le client pour l'authentification via OAuth2 au lancement de l'application
+ * Effectue des tâches au lancement de l'application
  * @author Geoffrey
  *
  */
 public class Global extends GlobalSettings{
 
+    /**
+     * Ajoute le client pour l'authentification via OAuth2 au lancement de l'application
+     */
     @Override
     public void onStart(final Application app) {
     	super.onStart(app);

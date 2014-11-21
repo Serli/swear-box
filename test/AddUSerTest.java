@@ -8,11 +8,11 @@ import org.junit.*;
 
 
 /**
- * Test la classe AjoutUtilisateur
+ * Test la classe AddUser
  * @author Geoffrey
  *
  */
-public class AddUSerTest {
+public class AddUserTest {
 
 	/**
 	 * Test l'ajout d'un utilisateur dans la base de données 

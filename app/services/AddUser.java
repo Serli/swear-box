@@ -4,7 +4,7 @@ import play.db.jpa.JPA;
 import models.Consumer;
 
 /**
- * Permet d'ajouter un utilisateur
+ * Ajoute un utilisateur
  * @author Geoffrey
  *
  */

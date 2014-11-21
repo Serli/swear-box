@@ -12,6 +12,10 @@ import play.mvc.Result;
 import services.*;
 import models.*;
 
+/**
+ * Gère les actions de la vue admin
+ *
+ */
 public class Administration extends JavaController {
 
 	/**

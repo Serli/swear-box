@@ -16,11 +16,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Représente une personne membre d'une famille
+ * Elle est liée à un ou plusieurs utilisateurs
+ *
+ */
 @Entity
 public class Person implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Id

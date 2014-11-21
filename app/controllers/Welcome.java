@@ -7,8 +7,9 @@ import play.db.jpa.Transactional;
 import play.mvc.*;
 import services.AddUser;
 import views.html.*;
+
 /**
- * Gere les actions des vues connexion et user
+ * Gère les actions des vues connexion et user
  * @author Geoffrey
  *
  */

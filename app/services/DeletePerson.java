@@ -4,6 +4,10 @@ import javax.persistence.Query;
 import play.db.jpa.JPA;
 import models.*;
 
+/**
+ * Supprime une personne
+ *
+ */
 public class DeletePerson{
 	
 	private DeletePerson(){
@@ -21,16 +25,13 @@ public class DeletePerson{
 
 		Person pbd = (Person) query.getSingleResult();
 		
-		
 		//suppression des clé dans U_P
 		for (Consumer u: pbd.getUsers()){	
 			u.getPeople().remove(pbd);
 		}
-
-		
+	
 		//referesh BD
 		JPA.em().flush();	
-		
 		
 		//suppression de la personne
 		JPA.em().remove(pbd);

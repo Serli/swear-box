@@ -8,7 +8,10 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 import services.*;
 
-
+/**
+ * Test la classe AddPerson
+ *
+ */
 public class AddPersonTest{
 
 	/**

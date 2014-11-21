@@ -5,7 +5,11 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-
+/**
+ * Représente la prononciation d'un grot mot
+ * Qui l'a prononcé et à quelle date 
+ *
+ */
 @Entity
 public class Statistics implements Serializable{
 	/**

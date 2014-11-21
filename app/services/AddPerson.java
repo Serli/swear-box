@@ -3,6 +3,10 @@ package services;
 import play.db.jpa.JPA;
 import models.*;
 
+/**
+ * Ajoute une personne qui sera liée à l'utilisateur connecté
+ *
+ */
 public class AddPerson{
 	
 	private AddPerson(){

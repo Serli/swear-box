@@ -7,11 +7,14 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 import services.*;
 
-
+/**
+ * Test la classe LinkUserPerson
+ *
+ */
 public class LinkUserPersonTest{
 
 	/**
-	* Test LierPersonneUtilisateur
+	* Test si la classe LinkUserPerson lie correctement une personne à un utilisateur
 	*/
 	@Transactional
 	@Test

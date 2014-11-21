@@ -6,11 +6,16 @@ import play.libs.F.*;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
+/**
+ * Test le bon fonctionnement du lancement de l'appli sur un serveur
+ * @author Geoffrey
+ *
+ */
 public class IntegrationTest {
 
     /**
-     * add your integration test here
-     * in this example we just check if the welcome page is being shown
+     * Test si l'index se lance et s'affiche dans un navigateur
+     * 
      */
     @Test
     public void test() {

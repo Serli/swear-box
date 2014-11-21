@@ -4,8 +4,7 @@ import play.db.jpa.JPA;
 import models.*;
 
 /**
- * Permet d'ajouter un utilisateur
- * @author Geoffrey
+ * Lie une personne à un utilisateur
  *
  */
 public class LinkUserPerson {
@@ -14,8 +13,9 @@ public class LinkUserPerson {
 	}
 
 	/**
-	 * Ajoute l'utilisateur s'il n'existe pas
-	 * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
+	 * Lie la personne à l'utilisateur
+	 * @param idPerson id de la personne à lier
+	 * @param idUser id de l'utilisateur à lier
 	 */
 	public static void linkUserPerson(long idPerson,String idUser) {
 		boolean test= true;

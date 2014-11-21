@@ -13,8 +13,7 @@ import models.Consumer;
 import services.ListPeople;
 
 /**
- * Test la classe ListePersonne
- * 
+ * Test la classe ListPeople
  * @author Geoffrey
  *
  */
