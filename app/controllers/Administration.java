@@ -74,6 +74,7 @@ public class Administration extends JavaController {
      * @return la liste des membres au format JSON
      */
 	@Transactional
+	@RequiresAuthentication(clientName = "Google2Client")
 	public static Result listPerson() {
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
 		String emailUser = googleProfile.getEmail();

@@ -65,6 +65,7 @@ public class Welcome extends JavaController {
     /**
     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
     */
+    @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {
         return ok(views.html.statistics.render());
     }
