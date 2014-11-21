@@ -116,7 +116,7 @@
 
           <div class="pull-right col-xs-10 col-sm-5">
             <div class="input-group">
-              <input type="text" class="form-control" id="amount" placeholder="Montant de la pénalité">
+              <input ng-keypress="isNumeric($event)" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la pénalité">
               <span class="input-group-addon">cts</span>
             </div>
           </div>

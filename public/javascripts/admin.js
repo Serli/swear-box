@@ -15,6 +15,17 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
+	//Vérifie si la touche du clavier préssée est un chiffre, une tab ou un <-
+	//----------------------------------------------------------------------
+	$scope.isNumeric = function(event) {
+		if ((event.which < 48 || event.which > 57) 
+				&& (event.which != 0) 
+				&& (event.which != 8)) {
+			event.preventDefault();
+			return false;
+		}
+	}
+
 	//Ajoute un membre dans la BD via le serveur
 	//----------------------------------------------------------------------
 	$scope.addMember = function(){	
@@ -44,13 +55,13 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//Supprime un membre dans la BD via le serveur
 	//----------------------------------------------------------------------
 	$scope.deleteMember = function (idt, index) {
-		
+
 		var dataObj = {
 				id : idt
 		};
-		
+
 		$scope.members.splice(index,1);
-		
+
 		$http.post('/deletePerson', dataObj)
 		.success(function(data, status, headers, config){
 			$http.get('/person')
