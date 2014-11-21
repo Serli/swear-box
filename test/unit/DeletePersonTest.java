@@ -1,4 +1,6 @@
 package unit;
+import java.util.List;
+
 import org.junit.*;
 
 import play.db.jpa.JPA;
@@ -41,8 +43,10 @@ public class DeletePersonTest{
 						//suppression de la personne pour les deux utilisateurs
 						DeletePerson.deletePerson(pbd.getIdPerson());
 						
+						
 						//test si la personne n'existe plus
-						assertThat(pbd).isNull();
+						List<Person> lp= (List<Person>)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getResultList();
+						assertThat(lp).isEmpty();
 						
 						//clean
 						JPA.em().remove(u1);
