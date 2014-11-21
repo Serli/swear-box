@@ -2,8 +2,12 @@ var adminApp = angular.module('adminApp',[]);
 
 adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
+	//Déclaration des objets
+	//----------------------------------------------------------------------
 	$scope.members = {};
 
+	//Récupère les données de la BD via le serveur
+	//----------------------------------------------------------------------
 	$http.get('/person')
 	.success(function(data, status, headers, config){
 		$scope.members = data;
@@ -11,8 +15,9 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
-	$scope.addMember = function(){
-		$scope.members.push($scope.newMember);	
+	//Ajoute un membre dans la BD via le serveur
+	//----------------------------------------------------------------------
+	$scope.addMember = function(){	
 
 		var dataObj = {
 				name : $scope.newMember.name,
@@ -21,7 +26,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.post('/addPerson', dataObj)
 		.success(function(data, status, headers, config){
-			console.log("suc");
 			$http.get('/person')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
@@ -30,7 +34,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 			});
 		})
 		.error(function(data, status, headers, config){
-			console.log("err");
 		});
 
 		$scope.newMember.name= '';
@@ -38,14 +41,18 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	}
 
-	$scope.deleteMember = function (idt) {
+	//Supprime un membre dans la BD via le serveur
+	//----------------------------------------------------------------------
+	$scope.deleteMember = function (idt, index) {
+		
 		var dataObj = {
 				id : idt
 		};
-
+		
+		$scope.members.splice(index,1);
+		
 		$http.post('/deletePerson', dataObj)
 		.success(function(data, status, headers, config){
-			console.log("suc");
 			$http.get('/person')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
@@ -54,7 +61,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 			});
 		})
 		.error(function(data, status, headers, config){
-			console.log("err");
 		});
 
 	};
