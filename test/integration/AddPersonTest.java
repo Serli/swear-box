@@ -1,3 +1,4 @@
+package integration;
 
 import org.junit.*;
 
@@ -10,7 +11,7 @@ import services.*;
 
 
 public class AddPersonTest{
-
+	
 	/**
 	* Test Ajout de personne pour un utilisateur
 	* Verification de la liaison entre les deux tables 
