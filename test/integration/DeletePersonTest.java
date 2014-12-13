@@ -21,7 +21,7 @@ public class DeletePersonTest{
      */
     @Transactional
     @Test
-    public void test() {
+    public void deletePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()

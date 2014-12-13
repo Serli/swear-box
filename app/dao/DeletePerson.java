@@ -8,7 +8,7 @@ import models.*;
  * Supprime une personne
  *
  */
-public class DeletePerson{
+public final class DeletePerson{
 
     private DeletePerson(){
     }

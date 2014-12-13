@@ -20,7 +20,7 @@ public class AddPersonTest{
      */
     @Transactional
     @Test
-    public void test() {
+    public void addPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()

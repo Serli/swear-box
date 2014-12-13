@@ -7,7 +7,7 @@ import models.*;
  * Lie une personne à un utilisateur
  *
  */
-public class LinkUserPerson {
+public final class LinkUserPerson {
 
     private LinkUserPerson(){
     }

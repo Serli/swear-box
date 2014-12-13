@@ -24,7 +24,7 @@ public class ListPeopleTest {
      * base de données
      */
     @Test
-    public void listePersonnes() {
+    public void listPeopleOfAUser() {
         running(fakeApplication(inMemoryDatabase()), new Runnable() {
             public void run() {
                 JPA.withTransaction(new play.libs.F.Callback0() {

@@ -20,7 +20,7 @@ public class AddUserTest {
      * Test l'ajout d'un utilisateur dans la base de données 
      */
     @Test
-    public void ajoutUtilisateur() {
+    public void addUser() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()

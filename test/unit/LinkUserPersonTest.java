@@ -19,7 +19,7 @@ public class LinkUserPersonTest{
      */
     @Transactional
     @Test
-    public void test() {
+    public void linkUserToPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()

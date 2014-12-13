@@ -11,7 +11,7 @@ import play.db.jpa.JPA;
  * @author Geoffrey
  *
  */
-public class ListPeople {
+public final class ListPeople {
 
     private ListPeople(){
     }

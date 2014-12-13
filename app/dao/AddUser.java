@@ -8,7 +8,7 @@ import models.Consumer;
  * @author Geoffrey
  *
  */
-public class AddUser {
+public final class AddUser {
 
     private AddUser(){
     }

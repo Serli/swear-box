@@ -7,7 +7,7 @@ import models.*;
  * Ajoute une personne qui sera liée à l'utilisateur connecté
  *
  */
-public class AddPerson{
+public final class AddPerson{
 
     private AddPerson(){
     }
