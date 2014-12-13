@@ -41,7 +41,7 @@ public class DeletePersonTest{
                         Consumer u2bd=JPA.em().find(Consumer.class,"Suppr-email2@email");
 
                         //ajoute la personne et lie la personne a un autre utilisateur
-                        AddPerson.addPerson(p,u1.getEmail());
+                        PersonDAO.add(p,u1.getEmail());
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getSingleResult();
                         LinkUserPerson.linkUserPerson(pbd.getIdPerson(),u2.getEmail());
 
@@ -61,7 +61,7 @@ public class DeletePersonTest{
                         JPA.em().flush();
 
                         //suppression de la personne pour les deux utilisateurs
-                        DeletePerson.deletePerson(pbd.getIdPerson());
+                        PersonDAO.delete(pbd.getIdPerson());
 
                         //recuperation des utilisateurs en bd apres suppression
                         u1bd=JPA.em().find(Consumer.class,"Suppr-email1@email");

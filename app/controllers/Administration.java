@@ -44,7 +44,7 @@ public class Administration extends JavaController {
                 Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
-                AddPerson.addPerson(person,id);
+                PersonDAO.add(person,id);
                 return ok();
             }
         }
@@ -67,7 +67,7 @@ public class Administration extends JavaController {
             if(id == -1 ) {
                 return badRequest("Missing parameter [id]");
             } else {
-                DeletePerson.deletePerson(id);
+                PersonDAO.delete(id);
                 return ok();
             }
         }
@@ -82,6 +82,6 @@ public class Administration extends JavaController {
     public static Result listPerson() {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String emailUser = googleProfile.getEmail();
-        List<Person> persons = ListPeople.listPeople(emailUser);
+        List<Person> persons = PersonDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
     }}

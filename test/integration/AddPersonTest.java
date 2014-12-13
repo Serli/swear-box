@@ -40,7 +40,7 @@ public class AddPersonTest{
                         assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 
                         //ajout de la personne
-                        AddPerson.addPerson(p,u.getEmail());
+                        PersonDAO.add(p,u.getEmail());
 
                         //recuperation de la personne en bd
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Toto'").getSingleResult();

@@ -38,7 +38,7 @@ public class LinkUserPersonTest{
                         JPA.em().persist(u2);
 
                         //ajout de la personne a un utilisateur
-                        AddPerson.addPerson(p,u1.getEmail());
+                        PersonDAO.add(p,u1.getEmail());
 
                         //recuperation de la personne
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Lier-Toto'").getSingleResult();

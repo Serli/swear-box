@@ -4,7 +4,7 @@ import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
-import dao.AddUser;
+import dao.ConsumerDAO;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
@@ -43,7 +43,7 @@ public class Welcome extends JavaController {
         //Ajout de l'utilisateur dans la base de données si besoin
         String nom = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
-        AddUser.addUser(email);
+        ConsumerDAO.add(email);
 
         return ok(views.html.user.render(nom));
     }

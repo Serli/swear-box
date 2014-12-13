@@ -37,14 +37,14 @@ public class DeletePersonTest{
                         JPA.em().persist(u1);
 
                         //ajoute la personne et lie la personne a un autre utilisateur
-                        AddPerson.addPerson(p,u1.getEmail());
+                        PersonDAO.add(p,u1.getEmail());
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getSingleResult();
 
 
                         JPA.em().flush();
 
                         //suppression de la personne pour les deux utilisateurs
-                        DeletePerson.deletePerson(pbd.getIdPerson());
+                        PersonDAO.delete(pbd.getIdPerson());
 
 
                         //test si la personne n'existe plus

@@ -4,20 +4,19 @@ import play.db.jpa.JPA;
 import models.Consumer;
 
 /**
- * Ajoute un utilisateur
- * @author Geoffrey
+ * Regroupe les opérations sur la table Consumer
  *
  */
-public final class AddUser {
+public final class ConsumerDAO {
 
-    private AddUser(){
+    private ConsumerDAO(){
     }
 
     /**
      * Ajoute l'utilisateur s'il n'existe pas
      * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
      */
-    public static void addUser(String email) {
+    public static void add(String email) {
         //Recuperation de l'utilisateur
         Consumer u = JPA.em().find(Consumer.class, email);
         

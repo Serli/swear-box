@@ -6,7 +6,7 @@ import static org.fest.assertions.Assertions.*;
 
 import org.junit.*;
 
-import dao.AddUser;
+import dao.ConsumerDAO;
 
 
 /**
@@ -31,7 +31,7 @@ public class AddUserTest {
                     {
                         //Ajout d'un utilisateur à partir d'un email
                         String email = "test@gmail.com";
-                        AddUser.addUser(email);
+                        ConsumerDAO.add(email);
 
                         //Recherche de l'utilisateur dans la base de données
                         Consumer u = JPA.em().find(Consumer.class, email);

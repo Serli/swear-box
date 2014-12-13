@@ -39,7 +39,7 @@ public class LinkUserPersonTest{
                         Consumer u2bd=JPA.em().find(Consumer.class,"Lier-email2@email");
 
                         //ajout de la personne a un utilisateur
-                        AddPerson.addPerson(p,u1.getEmail());
+                        PersonDAO.add(p,u1.getEmail());
 
                         //recuperation de la personne
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Lier-Toto'").getSingleResult();
