@@ -24,83 +24,83 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 public class Person implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idPerson;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPerson;
 
-	@NotEmpty
-	@Size(max = 50)
-	private String name;
+    @NotEmpty
+    @Size(max = 50)
+    private String name;
 
-	@NotEmpty
-	@Size(max = 50)
-	private String firstname;
+    @NotEmpty
+    @Size(max = 50)
+    private String firstname;
 
-	@NotNull
-	private int debt;
+    @NotNull
+    private int debt;
 
-	@NotEmpty
-	private String picture;
+    @NotEmpty
+    private String picture;
 
-	@ManyToMany(mappedBy = "people")
-	@JsonBackReference
-	private List<Consumer> users;
+    @ManyToMany(mappedBy = "people")
+    @JsonBackReference
+    private List<Consumer> users;
 
-	public Person() {
-		this.users = new ArrayList<Consumer>();
-	}
+    public Person() {
+        this.users = new ArrayList<Consumer>();
+    }
 
-	public Person(String vName, String vFirstName, int vDebt, String vPicture) {
-		this();
-		this.name = vName;
-		this.firstname = vFirstName;
-		this.debt = vDebt;
-		this.picture = vPicture;
-	}
+    public Person(String vName, String vFirstName, int vDebt, String vPicture) {
+        this();
+        this.name = vName;
+        this.firstname = vFirstName;
+        this.debt = vDebt;
+        this.picture = vPicture;
+    }
 
-	public Long getIdPerson() {
-		return this.idPerson;
-	}
+    public Long getIdPerson() {
+        return this.idPerson;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
-	public void setName(String vName) {
-		this.name = vName;
-	}
+    public void setName(String vName) {
+        this.name = vName;
+    }
 
-	public String getFirstname() {
-		return this.firstname;
-	}
+    public String getFirstname() {
+        return this.firstname;
+    }
 
-	public void setFirstname(String vFirstName) {
-		this.firstname = vFirstName;
-	}
+    public void setFirstname(String vFirstName) {
+        this.firstname = vFirstName;
+    }
 
-	public int getDebt() {
-		return this.debt;
-	}
+    public int getDebt() {
+        return this.debt;
+    }
 
-	public void setDebt(int vDebt) {
-		this.debt = vDebt;
-	}
+    public void setDebt(int vDebt) {
+        this.debt = vDebt;
+    }
 
-	public String getPicture() {
-		return this.picture;
-	}
+    public String getPicture() {
+        return this.picture;
+    }
 
-	public void setAdrImage(String vPicture) {
-		this.picture = vPicture;
-	}
+    public void setAdrImage(String vPicture) {
+        this.picture = vPicture;
+    }
 
-	public List<Consumer> getUsers() {
-		return this.users;
-	}
+    public List<Consumer> getUsers() {
+        return this.users;
+    }
 
-	public void setUser(Consumer vUser) {
-		this.users.add(vUser);
-	}
+    public void setUser(Consumer vUser) {
+        this.users.add(vUser);
+    }
 }

@@ -22,66 +22,66 @@ import models.*;
  */
 public class Administration extends JavaController {
 
-	/**
-	 * Ajoute une personne à son utilisateur
-	 * Récupere les champs pour créer la personne
-	 * Puis ajoute la personne dans la base de donné
-	 * @return Result : résultat de la fonction, Ok|pb
-	 */
-	@Transactional
+    /**
+     * Ajoute une personne à son utilisateur
+     * Récupere les champs pour créer la personne
+     * Puis ajoute la personne dans la base de donné
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result addPerson() {
-		JsonNode json = request().body().asJson();
-		if(json == null) {
-			return badRequest("Expecting Json data");
-		} else {
-			String name = json.findPath("name").textValue();
-			String firstname = json.findPath("firstname").textValue();
-			if(name == null || firstname==null) {
-				return badRequest("Missing parameter [name] or [firstname]");
-			} else {
-				final String picture = Play.application().configuration().getString("AvatarDefault");
-				Person person = new Person(name,firstname,0,picture);
-				Google2Profile googleProfile = (Google2Profile) getUserProfile();
-				String id = googleProfile.getEmail();
-				AddPerson.addPerson(person,id);
-				return ok();
-			}
-		}
-    }
-	
-	/**
-	 * Supprime une personne
-	 * utilise le nom le prenom et l'utilisateur avec qui il est lié pour plus de sécurité (doublon nom prenom)
-	 * @return Result : résultat de la fonction, Ok|pb
-	 */
-	@Transactional
-    @RequiresAuthentication(clientName = "Google2Client")
-    public static Result deletePerson() {
-		JsonNode json = request().body().asJson();
-		if(json == null) {
-			return badRequest("Expecting Json data");
-		} else {
-			long id = -1;
-			id = json.findPath("id").longValue();
-			if(id == -1 ) {
-				return badRequest("Missing parameter [id]");
-			} else {
-				DeletePerson.deletePerson(id);
-				return ok();
-			}
-		}
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            String name = json.findPath("name").textValue();
+            String firstname = json.findPath("firstname").textValue();
+            if(name == null || firstname==null) {
+                return badRequest("Missing parameter [name] or [firstname]");
+            } else {
+                final String picture = Play.application().configuration().getString("AvatarDefault");
+                Person person = new Person(name,firstname,0,picture);
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String id = googleProfile.getEmail();
+                AddPerson.addPerson(person,id);
+                return ok();
+            }
+        }
     }
 
-	/**
+    /**
+     * Supprime une personne
+     * utilise le nom le prenom et l'utilisateur avec qui il est lié pour plus de sécurité (doublon nom prenom)
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result deletePerson() {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            long id = -1;
+            id = json.findPath("id").longValue();
+            if(id == -1 ) {
+                return badRequest("Missing parameter [id]");
+            } else {
+                DeletePerson.deletePerson(id);
+                return ok();
+            }
+        }
+    }
+
+    /**
      * Action appelée pour récupérer la liste des membres de l'utilisateur
      * @return la liste des membres au format JSON
      */
-	@Transactional
-	@RequiresAuthentication(clientName = "Google2Client")
-	public static Result listPerson() {
-		Google2Profile googleProfile = (Google2Profile) getUserProfile();
-		String emailUser = googleProfile.getEmail();
-		List<Person> persons = ListPeople.listPeople(emailUser);
-		return ok(Json.toJson(persons));
-	}}
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result listPerson() {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String emailUser = googleProfile.getEmail();
+        List<Person> persons = ListPeople.listPeople(emailUser);
+        return ok(Json.toJson(persons));
+    }}
