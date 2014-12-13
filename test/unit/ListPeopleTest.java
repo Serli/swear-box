@@ -8,10 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import dao.ListPeople;
 import play.db.jpa.JPA;
 import models.*;
-import models.Consumer;
-import services.ListPeople;
 
 /**
  * Test la classe ListPeople

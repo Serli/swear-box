@@ -1,4 +1,4 @@
-package services;
+package dao;
 
 import javax.persistence.Query;
 import play.db.jpa.JPA;

@@ -1,11 +1,12 @@
 package unit;
 import models.Consumer;
-import services.AddUser;
-
 import play.db.jpa.JPA;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
+
 import org.junit.*;
+
+import dao.AddUser;
 
 
 /**

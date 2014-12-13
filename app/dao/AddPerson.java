@@ -1,4 +1,4 @@
-package services;
+package dao;
 
 import play.db.jpa.JPA;
 import models.*;

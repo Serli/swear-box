@@ -2,12 +2,12 @@ package unit;
 
 import org.junit.*;
 
+import dao.*;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 import models.*;
-import services.*;
 
 /**
  * Test la classe AddPerson

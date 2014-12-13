@@ -1,4 +1,4 @@
-package services;
+package dao;
 
 import java.util.List;
 import javax.persistence.TypedQuery;
