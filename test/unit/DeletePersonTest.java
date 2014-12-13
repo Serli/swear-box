@@ -48,7 +48,7 @@ public class DeletePersonTest{
 						
 						
 						//test si la personne n'existe plus
-						List<Person> lp= (List<Person>)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getResultList();
+						List<Person> lp= JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'",Person.class).getResultList();
 						assertThat(lp).isEmpty();
 						
 						//clean
