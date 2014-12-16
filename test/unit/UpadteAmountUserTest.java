@@ -20,7 +20,7 @@ public class UpadteAmountUserTest {
      * Test l'ajout d'un utilisateur dans la base de données 
      */
     @Test
-    public void addUser() {
+    public void updateAmountUser() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()

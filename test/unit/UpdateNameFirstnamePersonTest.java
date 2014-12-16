@@ -23,7 +23,7 @@ public class UpdateNameFirstnamePersonTest{
      */
     @Transactional
     @Test
-    public void deletePerson() {
+    public void updateNameFirstnamePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()
