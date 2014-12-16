@@ -144,8 +144,9 @@ public final class PersonDAO{
 		
 	}
 	 /**
-     * Incrémenter le montant de la dette.
-     * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
+     * Increase a person debt
+     * @param long : person id
+     * @param String : user id
      */
     public static void incrementDebt(long id,String email){
 		//recuperation de la personne

@@ -1,10 +1,16 @@
 package controllers;
 
+import models.Person;
+
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import dao.ConsumerDAO;
+import dao.PersonDAO;
+import play.Play;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
@@ -49,21 +55,16 @@ public class Welcome extends JavaController {
     }
     
     /**
-     * Action appelée pour incrémenter la dette d'une personne
-     * @return la vue user avec en paramètre le nom de la personne connectée
+     * Action called for increase a person debt
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result Debt() {
-        //Récupération du nom dans le profil google de l'utilisateur
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
-
-        //Ajout de l'utilisateur dans la base de données si besoin
-        String nom = googleProfile.getFirstName();
+    public static Result increaseDebt(Long id) {
+    	Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        ConsumerDAO.add(email);
-
-        return ok(views.html.user.render(nom));
+        PersonDAO.incrementDebt(id,email);
+        return ok();
     }
 
     /**
