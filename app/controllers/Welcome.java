@@ -27,9 +27,7 @@ public class Welcome extends JavaController {
      * @return connection view for an unconnected user or welcome view
      */
     public static Result index() {
-        //Récupération du profil google de l'utilisateur
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
-        if(googleProfile == null) {
+        if(!isConnected()) {
             final String urlGoogle = getRedirectAction("Google2Client").getLocation();
             return ok(index.render(urlGoogle));
         }
@@ -54,6 +52,7 @@ public class Welcome extends JavaController {
         return ok(views.html.user.render(nom));
     }
     
+
     /**
      * Action called for increase a person debt
      * @return Result : fonction result, Ok|pb
@@ -79,7 +78,8 @@ public class Welcome extends JavaController {
      * Method's using in conf\routes and to display the help page
      */
     public static Result help() {
-        return ok(views.html.help.render());
+        Boolean isActive = isConnected();
+        return ok(views.html.help.render(isActive));
     }
 
     /**
@@ -88,6 +88,15 @@ public class Welcome extends JavaController {
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {
         return ok(views.html.statistics.render());
+    }
+
+    /**
+    * Methode retournant vrai si l'utilisateur a son compte google connecte
+    */
+    private static Boolean isConnected() {
+        //Récupération du profil google de l'utilisateur
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        return !(googleProfile == null);
     }
 
 
