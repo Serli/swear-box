@@ -1,27 +1,31 @@
 # Routes
-# This file defines all Accueil routes (Higher priority routes first)
+# This file defines all routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# === Home page 
 GET     /                           controllers.Welcome.index()
 GET     /user                       controllers.Welcome.user()
+
+# === Admin page
 GET     /admin                      controllers.Welcome.admin()
-GET 	/help						controllers.Welcome.help()
-GET 	/statistics					controllers.Welcome.statistics()
 GET     /members                 	controllers.Administration.listPerson()
 POST    /member            		    controllers.Administration.addPerson()
 DELETE  /members/:id                controllers.Administration.deletePerson(id: Long)
 PUT     /debt/:id                   controllers.Administration.debt(id: Long)
+PUT     /user                       controllers.Administration.updateAmount()
 
+# === Help page
+GET 	/help						controllers.Welcome.help()
 
+# === Statistics page
+GET 	/statistics					controllers.Welcome.statistics()
 
-#OAuth
+# === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
 POST  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
 GET   /oauth2callback                             org.pac4j.play.CallbackController.callback()
 POST  /oauth2callback                             org.pac4j.play.CallbackController.callback()
 GET   /logout                                     org.pac4j.play.CallbackController.logoutAndRedirect()
-
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

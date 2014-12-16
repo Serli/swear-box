@@ -64,7 +64,7 @@ public class Administration extends JavaController {
         return ok();
     }
 
-    
+
     /**
      * Acquitte une personne
      * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
@@ -78,7 +78,7 @@ public class Administration extends JavaController {
         PersonDAO.debt(idt,email);
         return ok();
     }
-    
+
     /**
      * Action appelée pour récupérer la liste des membres de l'utilisateur
      * @return la liste des membres au format JSON
@@ -91,22 +91,32 @@ public class Administration extends JavaController {
         List<Person> persons = PersonDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
     }
-    
-    
+
+
     /**
-     * Modifie le montant de la dette par defaut
+     * Modifie le montant de la pénalité
      * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
      * @return Result : résultat de la fonction, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result updateAmount(Long id, int vAmount) {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
-        String email = googleProfile.getEmail();
-        ConsumerDAO.updateAmount(email, vAmount);
-        return ok();
+    public static Result updateAmount() {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            String amount = json.findPath("amount").textValue();
+            if(amount == null) {
+                return badRequest("Missing parameter [amount]");
+            } else {
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
+                ConsumerDAO.updateAmount(email, Integer.parseInt(amount));
+                return ok();
+            }
+        }
     }
-    
+
     /**
      * Modifie le nom et prenom d'une personne
      * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
