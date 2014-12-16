@@ -2,11 +2,11 @@ var userApp = angular.module('userApp',[]);
 
 userApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
-	//Déclaration des objets
+	//declaration of the objects
 	//----------------------------------------------------------------------
 	$scope.members = {};
 
-	//Récupère les données de la BD via le serveur
+	//Retrieves the data of the BDD through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
 	.success(function(data, status, headers, config){
