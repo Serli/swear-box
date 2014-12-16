@@ -12,10 +12,10 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe DeletePerson
+ * Test la foncion DischargePerson
  *
  */
-public class DebtPersonTest{
+public class DischargePersonTest{
 
     /**
      * Test suppression d'une personne
