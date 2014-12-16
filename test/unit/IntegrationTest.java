@@ -8,14 +8,14 @@ import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
 /**
- * Test le bon fonctionnement du lancement de l'appli sur un serveur
+ * Test the functioning of launching the app on a server
  * @author Geoffrey
  *
  */
 public class IntegrationTest {
 
     /**
-     * Test si l'index se lance et s'affiche dans un navigateur
+     * Test if the index starts and is displayed in a browser
      * 
      */
     @Test
