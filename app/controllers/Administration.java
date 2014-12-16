@@ -130,4 +130,18 @@ public class Administration extends JavaController {
         PersonDAO.updateNameFirstname(id,email, vName,vFirstname);
         return ok();
     }
+    
+    /**
+     * Modifie l'adresse de l'image
+     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result updatePicture(Long id, String vPicture) {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        PersonDAO.updatePicture(id,email, vPicture);
+        return ok();
+    }
 }

@@ -1,5 +1,4 @@
 package unit;
-import java.util.List;
 
 import javax.persistence.Query;
 
@@ -23,7 +22,7 @@ public class DebtPersonTest{
      */
     @Transactional
     @Test
-    public void deletePerson() {
+    public void debtPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()

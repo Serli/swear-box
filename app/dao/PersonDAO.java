@@ -111,5 +111,23 @@ public final class PersonDAO{
 		JPA.em().flush();	
 		
 	}
+	
+	public static void updatePicture(long id,String email,String vPicture){
+		//recuperation de la personne
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
+		Person pbd = (Person) query.getSingleResult();
+		Consumer user = JPA.em().find(Consumer.class,email);
+		
+		//suppression des clé dans U_P
+		
+		//si l'utilisateur a les droits
+		if (user.getPeople().contains(pbd)){
+			pbd.setAdrImage(vPicture);
+		}
+	
+		//referesh BD
+		JPA.em().flush();	
+		
+	}
 
 }
