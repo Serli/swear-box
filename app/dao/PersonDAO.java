@@ -69,6 +69,8 @@ public final class PersonDAO{
      */
 	public  static List<Person> listByUser(String emailUser){
 	    Consumer u = JPA.em().find(Consumer.class, emailUser);
+	    
+	    //Sort of the members list by Firstname
 	    Collections.sort(u.getPeople(), new Comparator<Person>()
 	    {
 	        public int compare(Person o1, Person o2)
@@ -76,6 +78,7 @@ public final class PersonDAO{
 	            return o1.getFirstname().compareTo(o2.getFirstname());
 	        }
 	    });
+	    
 	    return u.getPeople();
 	}
 

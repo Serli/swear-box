@@ -55,11 +55,12 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	//Deleted a member in the database through the server
 	//----------------------------------------------------------------------
-	$scope.deleteMember = function (idt, index) {
-		$scope.members.splice(index,1);
+	$scope.deleteMember = function () {
+		$scope.members.splice($scope.idx,1);
 
-		$http.delete('/members/'+idt)
+		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
+			$('#deleteMember').modal('hide');
 			$http.get('/members')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
@@ -142,5 +143,15 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$('#modifyMember').modal('show');
 	};
 
+	//Open the delete modal
+	//----------------------------------------------------------------------
+	$scope.openDeleteModal = function (idx, idt, firstname, name) {
+		$scope.idx = idx;
+		$scope.idt = idt;
+		$scope.firstname = firstname;
+		$scope.name = name;
+		$('#deleteMember').modal('show');
+	};
+	
 }]);
 

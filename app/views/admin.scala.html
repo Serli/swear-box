@@ -30,7 +30,7 @@
 
                   <a ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
-                  <a ng-click="deleteMember(member.idPerson,$index)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
+                  <a ng-click="openDeleteModal($index,member.idPerson,member.firstname,member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
 
                 </td>
               </tr>
@@ -71,13 +71,13 @@
 
             <div class="pull-right col-xs-10 col-sm-5">
               <div class="input-group">
-                <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la pénalité">
+                <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la pénalité" required>
                 <span class="input-group-addon">cts</span>
               </div>
             </div>
 
           </div>
-		    </form>
+		</form>
       </div>
 
       <div id="modifyMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
@@ -87,7 +87,7 @@
 
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">X</button>
-                <label class="modal-title">Modification</label>
+                <label class="modal-title">Modification d'un membre</label>
               </div>
 
               <div class="modal-body">
@@ -102,7 +102,39 @@
               </div>
 
               <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" title="Modifier un membre" class="btn btn-success">Modifier</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="deleteMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <form ng-submit="deleteMember()">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">X</button>
+                <label class="modal-title">Suppression d'un membre</label>
+              </div>
+
+              <div class="modal-body">
+                <p>
+                  Prénom :
+                  <input readonly="true" type="firstname" class="form-control" placeHolder="{{firstname}}"/>
+                </p>
+                <p>
+                  Nom :
+                  <input readonly="true" type="name" class="form-control" placeHolder="{{name}}"/>
+                </p>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" title="Modifier un membre" class="btn btn-success">Supprimer</button>
               </div>
 
             </div>
