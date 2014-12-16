@@ -52,16 +52,44 @@ public class Administration extends JavaController {
 
     /**
      * Supprime une personne
-     * utilise le nom le prenom et l'utilisateur avec qui il est lié pour plus de sécurité (doublon nom prenom)
+     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
      * @return Result : résultat de la fonction, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result deletePerson(Long id) {
-        PersonDAO.delete(id);
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        PersonDAO.delete(id,email);
         return ok();
     }
 
+    
+    /**
+     * Acquitte une personne
+     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result debt() {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            long id = -1;
+            id = json.findPath("id").longValue();
+            if(id == -1 ) {
+                return badRequest("Missing parameter [id]");
+            } else {
+            	Google2Profile googleProfile = (Google2Profile) getUserProfile();
+				String email = googleProfile.getEmail();
+                PersonDAO.debt(id,email);
+                return ok();
+            }
+        }
+    }
+    
     /**
      * Action appelée pour récupérer la liste des membres de l'utilisateur
      * @return la liste des membres au format JSON

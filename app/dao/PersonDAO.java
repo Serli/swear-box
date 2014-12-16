@@ -36,28 +36,29 @@ public final class PersonDAO{
     }
 
     /**
-     * Supprime une personne dans la table personne
-     * @param String : nom de la personne
-     * @param String : prenom de la personne
-     * @param String : l'identifiant de l'utilisateur qui supprime la personne
-     */
-    public static void delete(long id){
-        //recuperation de la personne
-        Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
-
-        Person pbd = (Person) query.getSingleResult();
-
-        //suppression des clé dans U_P
-        for (Consumer u: pbd.getUsers()){   
-            u.getPeople().remove(pbd);
-        }
-
-        //referesh BD
-        JPA.em().flush();   
-
-        //suppression de la personne
-        JPA.em().remove(pbd);
-    }
+	 * Supprime une personne dans la table personne
+	 * @param long : l'identifiant de la personne a supprimer
+	 * @param String : l'identifiant de l'utilisateur qui supprime la personne
+	 */
+	public static void delete(long id,String email){
+		//recuperation de la personne
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
+		Person pbd = (Person) query.getSingleResult();
+		Consumer user = JPA.em().find(Consumer.class,email);
+		
+		//suppression des clé dans U_P
+		if (user.getPeople().contains(pbd)){
+			for (Consumer u: pbd.getUsers()){	
+				u.getPeople().remove(pbd);
+			}
+		}
+	
+		//referesh BD
+		JPA.em().flush();	
+		
+		//suppression de la personne
+		JPA.em().remove(pbd);
+	}
 
     /**
      * Liste les personnes liées à l'utilisateur dont l'email est passé en paramètre
@@ -68,5 +69,36 @@ public final class PersonDAO{
         Consumer u = JPA.em().find(Consumer.class, emailUser);
         return u.getPeople();
     }
+    
+    /**
+	 * Acquite la dette d'une personne
+	 * @param long : l'identifiant de la personne a acquitter
+	 * @param String : l'identifiant de l'utilisateur qui acquitte la personne
+	 */
+	public static void debt(long id,String email){
+		//recuperation de la personne
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
+		Person pbd = (Person) query.getSingleResult();
+		Consumer user = JPA.em().find(Consumer.class,email);
+		
+		//suppression des clé dans U_P
+		
+		//si l'utilisateur a les droits
+		if (user.getPeople().contains(pbd)){
+			//pour tous les utilisateurs
+			for (Consumer u: pbd.getUsers()){	
+				//pour toutes les personnes
+				for (Person p: u.getPeople()){	
+					//si c'est la personne pbd
+					if(p.equals(pbd))
+						p.setDebt(0);
+				}
+			}
+		}
+	
+		//referesh BD
+		JPA.em().flush();	
+		
+	}
 
 }

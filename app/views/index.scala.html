@@ -1,6 +1,7 @@
 @(urlGoogle: String)
+@importedCss = { <link href="@routes.Assets.at("stylesheets/index.css")" rel="stylesheet" media="screen">}
 
-@main("ISwear-Box") {
+@main("ISwear-Box", importedCss) {
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -19,7 +20,9 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-  
+
+} {  
+
 	<div class="container">
       <div class="row">
 
@@ -34,6 +37,6 @@
 				</div>
 	  
       </div>
-    </div>
-    
+    </div>   
+
 }
