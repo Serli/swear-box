@@ -7,16 +7,16 @@ import org.junit.Test;
 
 import play.twirl.api.Content;
 /**
-*
-* Test les actions du Contrôleur Welcome.java
-*
-*/
+ *
+ * Test les actions du Contrôleur Welcome.java
+ *
+ */
 public class WelcomeTest {
 
 
-	/**
-	 * Test si le message passé en paramètre lors de l'appel de la vue connexion est bien présent 
-	 */
+    /**
+     * Test si le message passé en paramètre lors de l'appel de la vue connexion est bien présent 
+     */
     @Test
     public void renderTemplateIndex() {
         Content html = views.html.index.render("Message test");
