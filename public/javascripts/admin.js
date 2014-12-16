@@ -6,6 +6,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//----------------------------------------------------------------------
 	$scope.members = {};
 
+
 	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
@@ -73,7 +74,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	
 	//Discharge the debt of member
 	//----------------------------------------------------------------------
-	$scope.dischargeMember = function (idt, index) {
+	$scope.dischargeMember = function (idt) {
 		$http.put('/discharge/'+idt, {})
 		.success(function(data, status, headers, config){
 			$http.get('/members')
@@ -93,20 +94,53 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.updateAmount = function(){	
 
 		var dataObj = {
-				amount : $scope.amount,
+				amount : $scope.amount
 		};			
 
 		$http.put('/user', dataObj)
 		.success(function(data, status, headers, config){
-			console.log('success');
 		})
 		.error(function(data, status, headers, config){
-			console.log('error');
 		});
 
 		$scope.amount= '';
 
-	}
+	};
+
+	//Modify the name or/and the firstname of a member
+	//----------------------------------------------------------------------
+	$scope.modifyMember = function () {
+
+		var dataObj = {
+				name : $scope.modMember.name,
+				firstname : $scope.modMember.firstname
+		};			
+
+		$http.put('/member/'+$scope.idt, dataObj)
+		.success(function(data, status, headers, config){
+			$('#modifyMember').modal('hide');
+			$http.get('/members')
+			.success(function(data, status, headers, config){
+				$scope.members = data;
+			})
+			.error(function(data, status, headers, config){
+			});
+		})
+		.error(function(data, status, headers, config){
+		});
+
+		$scope.modMember.name= '';
+		$scope.modMember.firstname= '';
+	};
+
+	//Open the modify modal
+	//----------------------------------------------------------------------
+	$scope.openModifyModal = function (idt, firstname, name) {
+		$scope.idt = idt;
+		$scope.firstname = firstname;
+		$scope.name = name;
+		$('#modifyMember').modal('show');
+	};
 
 }]);
 

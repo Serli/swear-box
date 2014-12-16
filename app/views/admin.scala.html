@@ -4,7 +4,7 @@
 
 @main("ISwear-Box", importedCss) {
   @tags.navbar(isActive, numPage)
-} {
+} {  
   <div class="container" ng-app="adminApp">
     <div class="row" ng-controller="listCtrl">
       <table class="table table-hover">
@@ -28,7 +28,7 @@
 
                   <a ng-click="dischargeMember(member.idPerson)" title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
 
-                  <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a><!--Netflix-->
+                  <a ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
                   <a ng-click="deleteMember(member.idPerson,$index)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
 
@@ -59,47 +59,62 @@
 
           </div>
         </form>
-
-        <!--<div class="row separation-actions">
-
-          <div class="col-xs-5 col-sm-5">
-            <input type="text" class="form-control" ng-model="newMember.firstname" placeholder="Prénom">
-          </div>
-
-          <div class="col-xs-5 col-sm-5">
-            <input type="text" class="form-control" ng-model="newMember.name" placeholder="Nom">
-          </div>
-
-          <div class="col-xs-2 col-sm-2">
-            <button title="Ajouter un membre" ng-click="addMember()" class="btn btn-success">
-              <span class="glyphicon glyphicon-plus"/>
-            </button>
-          </div>
-
-        </div>-->
         
         <form ng-submit="updateAmount()">
-        <div class="row separation-actions">
+          <div class="row separation-actions">
 
-          <div class="pull-right col-xs-2 col-sm-2">
-            <button title="Changer la pénalité" type="submit" class="btn btn-success">
-              <span class="glyphicon glyphicon-ok"/>
-            </button>
-          </div>
-
-          <div class="pull-right col-xs-10 col-sm-5">
-            <div class="input-group">
-              <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la pénalité">
-              <span class="input-group-addon">cts</span>
+            <div class="pull-right col-xs-2 col-sm-2">
+              <button title="Changer la pénalité" type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"/>
+              </button>
             </div>
-          </div>
 
+            <div class="pull-right col-xs-10 col-sm-5">
+              <div class="input-group">
+                <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la pénalité">
+                <span class="input-group-addon">cts</span>
+              </div>
+            </div>
+
+          </div>
+		    </form>
+      </div>
+
+      <div id="modifyMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <form ng-submit="modifyMember()">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">X</button>
+                <label class="modal-title">Modification</label>
+              </div>
+
+              <div class="modal-body">
+                <p>
+                  Prénom :
+                  <input type="firstname" class="form-control" ng-model="modMember.firstname" placeHolder="{{firstname}}"/>
+                </p>
+                <p>
+                  Nom :
+                  <input type="name" class="form-control" ng-model="modMember.name" placeHolder="{{name}}"/>
+                </p>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" title="Modifier un membre" class="btn btn-success">Modifier</button>
+              </div>
+
+            </div>
+          </form>
         </div>
-		</form>
       </div>
 
     </div>
   </div>
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="@routes.Assets.at("javascripts/admin.js")"></script>
+  <script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
 }
