@@ -8,7 +8,7 @@ import org.junit.Test;
 import play.twirl.api.Content;
 /**
  *
- * Test actions of Contrôleur Welcome.java
+ * Test actions of Controler Welcome.java
  *
  */
 public class WelcomeTest {
@@ -19,7 +19,7 @@ public class WelcomeTest {
      */
     @Test
     public void renderTemplateIndex() {
-        Content html = views.html.index.render("Message test");
+        Content html = views.html.index.render("Message test",false,0);
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Message test");
     }
@@ -29,9 +29,8 @@ public class WelcomeTest {
      */
     @Test
     public void renderTemplateUser() {
-        Content html = views.html.user.render("Message test");
+        Content html = views.html.user.render("Message test",true,0);
         assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Message test");
     }
 
 }
