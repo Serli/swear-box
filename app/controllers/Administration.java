@@ -41,7 +41,7 @@ public class Administration extends JavaController {
                 return badRequest("Missing parameter [name] or [firstname]");
             } else {
                 final String picture = Play.application().configuration().getString("AvatarDefault");
-                Person person = new Person(name,firstname,0,picture);
+                Person person = new Person(name,firstname,10,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
                 PersonDAO.add(person,id);
@@ -115,6 +115,20 @@ public class Administration extends JavaController {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
         ConsumerDAO.updateAmount(email, vAmount);
+        return ok();
+    }
+    
+    /**
+     * Modifie le nom et prenom d'une personne
+     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result updateNameFirstname(Long id, String vName, String vFirstname ) {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        PersonDAO.updateNameFirstname(id,email, vName,vFirstname);
         return ok();
     }
 }

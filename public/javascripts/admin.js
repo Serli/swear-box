@@ -88,7 +88,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.post('/debt', dataObj)
 		.success(function(data, status, headers, config){
-			$http.get('/person')
+			$http.get('/members')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
 			})
