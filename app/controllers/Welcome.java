@@ -1,16 +1,13 @@
 package controllers;
 
-import models.Person;
 
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
-import com.fasterxml.jackson.databind.JsonNode;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
-import play.Play;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
