@@ -8,7 +8,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	//Récupère les données de la BD via le serveur
 	//----------------------------------------------------------------------
-	$http.get('/person')
+	$http.get('/members')
 	.success(function(data, status, headers, config){
 		$scope.members = data;
 	})
@@ -35,9 +35,9 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 				firstname : $scope.newMember.firstname
 		};			
 
-		$http.post('/addPerson', dataObj)
+		$http.post('/member', dataObj)
 		.success(function(data, status, headers, config){
-			$http.get('/person')
+			$http.get('/members')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
 			})
@@ -62,9 +62,9 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$scope.members.splice(index,1);
 
-		$http.post('/deletePerson', dataObj)
+		$http.delete('/members/'+idt)
 		.success(function(data, status, headers, config){
-			$http.get('/person')
+			$http.get('/members')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
 			})

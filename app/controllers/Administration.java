@@ -57,20 +57,9 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result deletePerson() {
-        JsonNode json = request().body().asJson();
-        if(json == null) {
-            return badRequest("Expecting Json data");
-        } else {
-            long id = -1;
-            id = json.findPath("id").longValue();
-            if(id == -1 ) {
-                return badRequest("Missing parameter [id]");
-            } else {
-                PersonDAO.delete(id);
-                return ok();
-            }
-        }
+    public static Result deletePerson(Long id) {
+        PersonDAO.delete(id);
+        return ok();
     }
 
     /**
