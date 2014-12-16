@@ -63,7 +63,9 @@ public class Administration extends JavaController {
 			if(id == -1 ) {
 				return badRequest("Missing parameter [id]");
 			} else {
-				DeletePerson.deletePerson(id);
+				Google2Profile googleProfile = (Google2Profile) getUserProfile();
+				String email = googleProfile.getEmail();
+				DeletePerson.deletePerson(id,email);
 				return ok();
 			}
 		}

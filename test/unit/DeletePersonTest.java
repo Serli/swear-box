@@ -44,7 +44,7 @@ public class DeletePersonTest{
 						JPA.em().flush();
 						
 						//suppression de la personne pour les deux utilisateurs
-						DeletePerson.deletePerson(pbd.getIdPerson());
+						DeletePerson.deletePerson(pbd.getIdPerson(),"Suppr-email1@email");
 						
 						
 						//test si la personne n'existe plus

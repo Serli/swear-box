@@ -62,7 +62,7 @@ public class DeletePersonTest{
 						JPA.em().flush();
 						
 						//suppression de la personne pour les deux utilisateurs
-						DeletePerson.deletePerson(pbd.getIdPerson());
+						DeletePerson.deletePerson(pbd.getIdPerson(),u1bd.getEmail());
 						
 						//recuperation des utilisateurs en bd apres suppression
 						u1bd=JPA.em().find(Consumer.class,"Suppr-email1@email");
