@@ -127,11 +127,23 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result updateNameFirstname(Long id, String vName, String vFirstname ) {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
-        String email = googleProfile.getEmail();
-        PersonDAO.updateNameFirstname(id,email, vName,vFirstname);
-        return ok();
+    public static Result updateNameFirstname(Long id) {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            String name = json.findPath("name").textValue();
+            String firstname = json.findPath("firstname").textValue();
+            if(name == null || firstname==null) {
+                return badRequest("Missing parameter [name] or [firstname]");
+            } else {
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
+                PersonDAO.updateNameFirstname(id,email, name,firstname);
+                return ok();
+            }
+        }
+        
     }
     
     /**
