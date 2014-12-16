@@ -17,8 +17,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
- * Représente une personne membre d'une famille
- * Elle est liée à un ou plusieurs utilisateurs
+ * Represent a family member person
+ * It is linked to one or more users
  *
  */
 @Entity

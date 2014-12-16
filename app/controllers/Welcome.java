@@ -47,6 +47,24 @@ public class Welcome extends JavaController {
 
         return ok(views.html.user.render(nom));
     }
+    
+    /**
+     * Action appelée pour incrémenter la dette d'une personne
+     * @return la vue user avec en paramètre le nom de la personne connectée
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result Debt() {
+        //Récupération du nom dans le profil google de l'utilisateur
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+
+        //Ajout de l'utilisateur dans la base de données si besoin
+        String nom = googleProfile.getFirstName();
+        String email = googleProfile.getEmail();
+        ConsumerDAO.add(email);
+
+        return ok(views.html.user.render(nom));
+    }
 
     /**
      * Method's using in conf\routes and to display the admin page

@@ -143,5 +143,24 @@ public final class PersonDAO{
 		JPA.em().flush();	
 		
 	}
+	 /**
+     * Incrémenter le montant de la dette.
+     * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
+     */
+    public static void incrementDebt(long id,String email){
+		//recuperation de la personne
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
+		Person pbd = (Person) query.getSingleResult();
+		Consumer user = JPA.em().find(Consumer.class,email);
+		
+		//si l'utilisateur a les droits
+		if (user.getPeople().contains(pbd)){
+			pbd.setDebt(pbd.getDebt()+user.getAmount());
+		}
+	
+		//referesh BD
+		JPA.em().flush();	
+    }
+	
 
 }

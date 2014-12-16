@@ -148,4 +148,5 @@ public class Administration extends JavaController {
         PersonDAO.updatePicture(id,email, vPicture);
         return ok();
     }
+
 }

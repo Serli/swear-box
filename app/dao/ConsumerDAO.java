@@ -43,4 +43,5 @@ public final class ConsumerDAO {
         
         JPA.em().flush();
     }
+   
 }
