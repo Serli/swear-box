@@ -5,7 +5,8 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//declaration of the objects
 	//----------------------------------------------------------------------
 	$scope.members = {};
-
+	$scope.newMember = {};
+	$scope.modMember = {};
 
 	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
@@ -138,8 +139,8 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//----------------------------------------------------------------------
 	$scope.openModifyModal = function (idt, firstname, name) {
 		$scope.idt = idt;
-		$scope.firstname = firstname;
-		$scope.name = name;
+		$scope.modMember.firstname = firstname;
+		$scope.modMember.name = name;
 		$('#modifyMember').modal('show');
 	};
 
