@@ -12,13 +12,13 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe DeletePerson
+ * Test UpdateNameFirstname function
  *
  */
 public class UpdateNameFirstnamePersonTest{
 
     /**
-     * Test suppression d'une personne
+     * Test updating a person
      */
     @Transactional
     @Test

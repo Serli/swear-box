@@ -9,15 +9,15 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe DeletePerson
+ * Test for DeletePerson function
  *
  */
 public class DeletePersonTest{
 
     /**
-     * Test suppression d'une personne pour deux utilisateurs
-     * Verification de la liaison entre les deux tables
-     * Vérification de la suppression de la personne dans les deux utilisateur et dans la table U_P
+     * Test removal of a person for two users
+     * Verification of the link between the two tables
+     * Verification of the removal of the person in both the user and in the table U_P
      */
     @Transactional
     @Test

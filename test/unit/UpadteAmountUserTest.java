@@ -10,14 +10,14 @@ import dao.ConsumerDAO;
 
 
 /**
- * Test la classe AddUser
+ * Test UpadteAmountUser function
  * @author Geoffrey
  *
  */
 public class UpadteAmountUserTest {
 
     /**
-     * Test l'ajout d'un utilisateur dans la base de données 
+     * Test adding an user
      */
     @Test
     public void updateAmountUser() {

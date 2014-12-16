@@ -9,13 +9,13 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe DeletePerson
+ * Test LinkUserPerson function
  *
  */
 public class LinkUserPersonTest{
 
     /**
-     * Test LierPersonneUtilisateur
+     * Test a link between two users and a person
      */
     @Transactional
     @Test

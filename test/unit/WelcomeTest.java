@@ -8,14 +8,14 @@ import org.junit.Test;
 import play.twirl.api.Content;
 /**
  *
- * Test les actions du Contrôleur Welcome.java
+ * Test actions of Contrôleur Welcome.java
  *
  */
 public class WelcomeTest {
 
 
     /**
-     * Test si le message passé en paramètre lors de l'appel de la vue connexion est bien présent 
+     * Test if the message passed as a parameter in the call connection is present views
      */
     @Test
     public void renderTemplateIndex() {
@@ -25,7 +25,7 @@ public class WelcomeTest {
     }
 
     /**
-     * Test si le message passé en paramètre lors de l'appel de la vue user est bien présent
+     * Test if the message passed as a parameter when calling the user view is present
      */
     @Test
     public void renderTemplateUser() {

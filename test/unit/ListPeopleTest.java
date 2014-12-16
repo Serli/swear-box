@@ -13,15 +13,14 @@ import play.db.jpa.JPA;
 import models.*;
 
 /**
- * Test la classe ListPeople
+ * Test ListPeople function
  * @author Geoffrey
  *
  */
 public class ListPeopleTest {
 
     /**
-     * Test la récupération de la liste des membres liés à l'utilisateur dans la
-     * base de données
+     * Test the recovery of the list of the user related members in the database
      */
     @Test
     public void listPeopleOfAUser() {
