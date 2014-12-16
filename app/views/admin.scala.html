@@ -1,39 +1,10 @@
+@(isActive: Boolean, numPage: Integer)
+
 @importedCss = { <link href="@routes.Assets.at("stylesheets/admin.css")" rel="stylesheet" media="screen">}
 
 @main("ISwear-Box", importedCss) {
-
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-
-      <div class="navbar-header">
-
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-
-        <a class="navbar-brand" href="/">I-Swear Box</a>
-
-      </div>
-
-      <div class="collapse navbar-collapse">
-
-        <ul class="nav navbar-nav">
-          <li><a href="/statistics">Statistiques</a></li>   
-          <li class="active"><a href="/admin">Administration</a></li>  
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/logout">Déconnexion</a></li>
-          <li><a href="/help">Aide</a></li>     
-        </ul>
-
-      </div>
-
-    </div>
-  </div>
-}{
+  @tags.navbar(isActive, numPage)
+} {
   <div class="container" ng-app="adminApp">
     <div class="row" ng-controller="listCtrl">
       <table class="table table-hover">

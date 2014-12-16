@@ -29,7 +29,7 @@ public class Welcome extends JavaController {
     public static Result index() {
         if(!isConnected()) {
             final String urlGoogle = getRedirectAction("Google2Client").getLocation();
-            return ok(index.render(urlGoogle));
+            return ok(index.render(urlGoogle, new Boolean(false), new Integer(0)));
         }
         return redirect(routes.Welcome.user());
     }
@@ -49,7 +49,7 @@ public class Welcome extends JavaController {
         String email = googleProfile.getEmail();
         ConsumerDAO.add(email);
 
-        return ok(views.html.user.render(nom));
+        return ok(views.html.user.render(nom, new Boolean(true), new Integer(0)));
     }
     
 
@@ -71,7 +71,7 @@ public class Welcome extends JavaController {
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result admin() {
-        return ok(views.html.admin.render());
+        return ok(views.html.admin.render(new Boolean(true), new Integer(2)));
     }
 
     /**
@@ -79,7 +79,7 @@ public class Welcome extends JavaController {
      */
     public static Result help() {
         Boolean isActive = isConnected();
-        return ok(views.html.help.render(isActive));
+        return ok(views.html.help.render(isActive, new Integer(3)));
     }
 
     /**
@@ -87,11 +87,11 @@ public class Welcome extends JavaController {
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {
-        return ok(views.html.statistics.render());
+        return ok(views.html.statistics.render(new Boolean(true), new Integer(1)));
     }
 
     /**
-    * Methode retournant vrai si l'utilisateur a son compte google connecte
+    * Method's returning true if the user has his Google's account connected
     */
     private static Boolean isConnected() {
         //Récupération du profil google de l'utilisateur
