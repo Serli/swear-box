@@ -10,13 +10,13 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe AddPerson
+ * Test for AddPerson function
  *
  */
 public class AddPersonTest{
 
     /**
-     * Test Ajout de personne pour un utilisateur
+     * Test AddPerson function for a user
      */
     @Transactional
     @Test

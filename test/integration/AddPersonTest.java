@@ -10,15 +10,14 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe AddPerson
+ * Test for AddPerson function
  *
  */
 public class AddPersonTest{
 
     /**
-     * Test Ajout de personne pour un utilisateur
-     * Verification de la liaison entre les deux tables 
-     *(par interpolation la création de la table personne)
+     * Test for AddPerson function
+     * Verification of the link between the two tables
      */
     @Transactional
     @Test

@@ -5,6 +5,7 @@
 # === Home page 
 GET     /                           controllers.Welcome.index()
 GET     /user                       controllers.Welcome.user()
+PUT     /increase/:id               controllers.Welcome.increaseDebt(id: Long)
 
 # === Admin page
 GET     /admin                      controllers.Welcome.admin()

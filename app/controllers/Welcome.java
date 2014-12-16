@@ -91,7 +91,7 @@ public class Welcome extends JavaController {
     }
 
     /**
-    * Method's returning true if the user has his Google's account connected
+    * Method that returns true if the user logged in to the google account
     */
     private static Boolean isConnected() {
         //Récupération du profil google de l'utilisateur

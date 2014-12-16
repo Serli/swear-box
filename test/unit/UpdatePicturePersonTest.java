@@ -11,13 +11,13 @@ import static org.fest.assertions.Assertions.*;
 import models.*;
 
 /**
- * Test la classe DeletePerson
+ * Test UpdatePicturePerson function
  *
  */
 public class UpdatePicturePersonTest{
 
     /**
-     * Test suppression d'une personne
+     * Test updating the picture path for a person
      */
     @Transactional
     @Test

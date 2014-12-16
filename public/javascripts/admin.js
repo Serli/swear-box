@@ -2,11 +2,11 @@ var adminApp = angular.module('adminApp',[]);
 
 adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
-	//Déclaration des objets
+	//declaration of the objects
 	//----------------------------------------------------------------------
 	$scope.members = {};
 
-	//Récupère les données de la BD via le serveur
+	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
 	.success(function(data, status, headers, config){
@@ -15,7 +15,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
-	//Vérifie si la touche du clavier préssée est un chiffre, une tab ou un <-
+	//Checks if the pressed key is a number, a tab or <-
 	//----------------------------------------------------------------------
 	$scope.isNumeric = function(event) {
 		if ((event.which < 48 || event.which > 57) 
@@ -26,7 +26,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		}
 	}
 
-	//Ajoute un membre dans la BD via le serveur
+	//Add a member to the database through the server
 	//----------------------------------------------------------------------
 	$scope.addMember = function(){	
 
@@ -52,7 +52,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	}
 
-	//Supprime un membre dans la BD via le serveur
+	//Deleted a member in the database through the server
 	//----------------------------------------------------------------------
 	$scope.deleteMember = function (idt, index) {
 		$scope.members.splice(index,1);
@@ -71,7 +71,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	};
 	
-	//Acquitte la dette du membre
+	//Discharge the debt of member
 	//----------------------------------------------------------------------
 	$scope.dischargeMember = function (idt, index) {
 		$http.put('/discharge/'+idt, {})
@@ -88,7 +88,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	};
 	
-	//Modifier le montant de la pénalité
+	//Update the amount of penalty
 	//----------------------------------------------------------------------
 	$scope.updateAmount = function(){	
 
