@@ -75,6 +75,30 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		});
 
 	};
+	
+	//Supprime un membre dans la BD via le serveur
+	//----------------------------------------------------------------------
+	$scope.debtMember = function (idt, index) {
+
+		var dataObj = {
+				id : idt
+		};
+
+		$scope.members.splice(index,1);
+
+		$http.post('/debt', dataObj)
+		.success(function(data, status, headers, config){
+			$http.get('/person')
+			.success(function(data, status, headers, config){
+				$scope.members = data;
+			})
+			.error(function(data, status, headers, config){
+			});
+		})
+		.error(function(data, status, headers, config){
+		});
+
+	};
 
 }]);
 

@@ -11,6 +11,7 @@ GET 	/statistics					controllers.Welcome.statistics()
 GET     /person                 	controllers.Administration.listPerson()
 POST    /addPerson            		controllers.Administration.addPerson()
 POST    /deletePerson               controllers.Administration.deletePerson()
+POST    /debt                       controllers.Administration.debt()
 
 
 #OAuth

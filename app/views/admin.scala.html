@@ -54,7 +54,7 @@
                 <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
                 <td>
 
-                  <a title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
+                  <a ng-click="debtMember(member.idPerson,$index)" title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
 
                   <a title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
