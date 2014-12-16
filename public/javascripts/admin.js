@@ -55,11 +55,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//Supprime un membre dans la BD via le serveur
 	//----------------------------------------------------------------------
 	$scope.deleteMember = function (idt, index) {
-
-		var dataObj = {
-				id : idt
-		};
-
 		$scope.members.splice(index,1);
 
 		$http.delete('/members/'+idt)
@@ -76,17 +71,10 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 	};
 	
-	//Supprime un membre dans la BD via le serveur
+	//Acquitte la dette du membre
 	//----------------------------------------------------------------------
 	$scope.debtMember = function (idt, index) {
-
-		var dataObj = {
-				id : idt
-		};
-
-		$scope.members.splice(index,1);
-
-		$http.post('/debt', dataObj)
+		$http.put('/debt/'+idt, {})
 		.success(function(data, status, headers, config){
 			$http.get('/members')
 			.success(function(data, status, headers, config){
