@@ -90,4 +90,34 @@ public class Administration extends JavaController {
         String emailUser = googleProfile.getEmail();
         List<Person> persons = PersonDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
-    }}
+    }
+    
+    
+    /**
+     * Modifie le montant de la dette par defaut
+     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result updateAmount(Long id, int vAmount) {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        ConsumerDAO.updateAmount(email, vAmount);
+        return ok();
+    }
+    
+    /**
+     * Modifie le nom et prenom d'une personne
+     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
+     * @return Result : résultat de la fonction, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result updateNameFirstname(Long id, String vName, String vFirstname ) {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        PersonDAO.updateNameFirstname(id,email, vName,vFirstname);
+        return ok();
+    }
+}

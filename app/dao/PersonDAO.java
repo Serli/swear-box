@@ -85,15 +85,26 @@ public final class PersonDAO{
 		
 		//si l'utilisateur a les droits
 		if (user.getPeople().contains(pbd)){
-			//pour tous les utilisateurs
-			for (Consumer u: pbd.getUsers()){	
-				//pour toutes les personnes
-				for (Person p: u.getPeople()){	
-					//si c'est la personne pbd
-					if(p.equals(pbd))
-						p.setDebt(0);
-				}
-			}
+			pbd.setDebt(0);
+		}
+	
+		//referesh BD
+		JPA.em().flush();	
+		
+	}
+	
+	public static void updateNameFirstname(long id,String email,String vName, String vFirstname){
+		//recuperation de la personne
+		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
+		Person pbd = (Person) query.getSingleResult();
+		Consumer user = JPA.em().find(Consumer.class,email);
+		
+		//suppression des clé dans U_P
+		
+		//si l'utilisateur a les droits
+		if (user.getPeople().contains(pbd)){
+			pbd.setName(vName);
+			pbd.setFirstname(vFirstname);
 		}
 	
 		//referesh BD
