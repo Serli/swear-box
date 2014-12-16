@@ -56,6 +56,7 @@ public class UpdateNameFirstnamePersonTest{
 
                         //clean
                         JPA.em().remove(u1);
+                        JPA.em().remove(p);
                     }
                 });
             }
