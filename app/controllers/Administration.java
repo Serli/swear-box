@@ -64,7 +64,7 @@ public class Administration extends JavaController {
         return ok();
     }
 
-    
+
     /**
      * Discharge a person for a conected user
      * @param Long : person id to delete
@@ -78,7 +78,7 @@ public class Administration extends JavaController {
         PersonDAO.discharge(idt,email);
         return ok();
     }
-    
+
     /**
      * List all persons for a conected user
      * @return Result(JSON) : list of membres
@@ -91,8 +91,8 @@ public class Administration extends JavaController {
         List<Person> persons = PersonDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
     }
-    
-    
+
+
     /**
      * Update the default amount for a connected user
      * @param Long : user id 
@@ -101,13 +101,23 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result updateAmount(Long id, int vAmount) {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
-        String email = googleProfile.getEmail();
-        ConsumerDAO.updateAmount(email, vAmount);
-        return ok();
+    public static Result updateAmount() {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            String amount = json.findPath("amount").textValue();
+            if(amount == null) {
+                return badRequest("Missing parameter [amount]");
+            } else {
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
+                ConsumerDAO.updateAmount(email, Integer.parseInt(amount));
+                return ok();
+            }
+        }
     }
-    
+
     /**
      * Update a person for a conected user
      * @param Long : user id 

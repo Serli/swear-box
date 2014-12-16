@@ -87,6 +87,26 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		});
 
 	};
+	
+	//Modifier le montant de la pénalité
+	//----------------------------------------------------------------------
+	$scope.updateAmount = function(){	
+
+		var dataObj = {
+				amount : $scope.amount,
+		};			
+
+		$http.put('/user', dataObj)
+		.success(function(data, status, headers, config){
+			console.log('success');
+		})
+		.error(function(data, status, headers, config){
+			console.log('error');
+		});
+
+		$scope.amount= '';
+
+	}
 
 }]);
 
