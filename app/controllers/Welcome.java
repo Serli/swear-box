@@ -10,15 +10,15 @@ import play.mvc.*;
 import views.html.*;
 
 /**
- * Gère les actions des vues connexion et user
+ * maneged actions for welcome view
  * @author Geoffrey
  *
  */
 public class Welcome extends JavaController {
 
     /**
-     * Action appelée lors du lancement de l'appli
-     * @return la vue connexion si l'utilisateur n'est pas connecté, appelle l'action user() sinon
+     * Action called when launching the app
+     * @return connection view for an unconnected user or welcome view
      */
     public static Result index() {
         //Récupération du profil google de l'utilisateur
@@ -31,8 +31,8 @@ public class Welcome extends JavaController {
     }
 
     /**
-     * Action appelée pour l'affichage de la vue user
-     * @return la vue user avec en paramètre le nom de la personne connectée
+     * Action called for displaying the user view
+     * @return user view
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
@@ -49,7 +49,7 @@ public class Welcome extends JavaController {
     }
 
     /**
-     * Methode s'utilisant dans conf\routes et permettant d'afficher la page admin
+     * Method's using in conf\routes and to display the admin page
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result admin() {
@@ -57,14 +57,14 @@ public class Welcome extends JavaController {
     }
 
     /**
-     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
+     * Method's using in conf\routes and to display the help page
      */
     public static Result help() {
         return ok(views.html.help.render());
     }
 
     /**
-     * Methode s'utilisant dans conf\routes et permettant d'afficher la page d'aide
+     * Method's using in conf\routes and to display the statistics page
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {

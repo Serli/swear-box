@@ -75,7 +75,7 @@ public final class PersonDAO{
 	 * @param long : l'identifiant de la personne a acquitter
 	 * @param String : l'identifiant de l'utilisateur qui acquitte la personne
 	 */
-	public static void debt(long id,String email){
+	public static void discharge(long id,String email){
 		//recuperation de la personne
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 		Person pbd = (Person) query.getSingleResult();

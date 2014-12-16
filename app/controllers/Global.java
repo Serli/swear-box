@@ -8,14 +8,14 @@ import play.GlobalSettings;
 import play.Play;
 
 /**
- * Effectue des tâches au lancement de l'application
+ * Performs tasks in launching the application
  * @author Geoffrey
  *
  */
 public class Global extends GlobalSettings{
 
     /**
-     * Ajoute le client pour l'authentification via OAuth2 au lancement de l'application
+     * add a user for an authentification  (OAuth2)
      */
     @Override
     public void onStart(final Application app) {

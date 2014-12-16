@@ -73,8 +73,8 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	
 	//Acquitte la dette du membre
 	//----------------------------------------------------------------------
-	$scope.debtMember = function (idt, index) {
-		$http.put('/debt/'+idt, {})
+	$scope.dischargeMember = function (idt, index) {
+		$http.put('/discharge/'+idt, {})
 		.success(function(data, status, headers, config){
 			$http.get('/members')
 			.success(function(data, status, headers, config){

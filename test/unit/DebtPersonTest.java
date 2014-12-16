@@ -45,7 +45,7 @@ public class DebtPersonTest{
                         JPA.em().flush();
 
                         //suppression de la personne pour les deux utilisateurs
-                        PersonDAO.debt(pbd.getIdPerson(),"debt-email1@email");
+                        PersonDAO.discharge(pbd.getIdPerson(),"debt-email1@email");
 
 
                         //test si la personne n'existe plus

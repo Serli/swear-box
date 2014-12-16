@@ -17,16 +17,16 @@ import play.mvc.Result;
 import models.*;
 
 /**
- * Gère les actions de la vue admin
+ * maneged actions for administration view
  *
  */
 public class Administration extends JavaController {
 
     /**
-     * Ajoute une personne à son utilisateur
-     * Récupere les champs pour créer la personne
-     * Puis ajoute la personne dans la base de donné
-     * @return Result : résultat de la fonction, Ok|pb
+     * Add a person to a conected user
+     * Use field informations to create a Person
+     * Add this person on the database
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
@@ -51,9 +51,9 @@ public class Administration extends JavaController {
     }
 
     /**
-     * Supprime une personne
-     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
-     * @return Result : résultat de la fonction, Ok|pb
+     * Delete a person for a conected user
+     * @param Long : person id to delete
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
@@ -66,22 +66,22 @@ public class Administration extends JavaController {
 
     
     /**
-     * Acquitte une personne
-     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
-     * @return Result : résultat de la fonction, Ok|pb
+     * Discharge a person for a conected user
+     * @param Long : person id to delete
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result debt(Long idt) {
+    public static Result discharge(Long idt) {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        PersonDAO.debt(idt,email);
+        PersonDAO.discharge(idt,email);
         return ok();
     }
     
     /**
-     * Action appelée pour récupérer la liste des membres de l'utilisateur
-     * @return la liste des membres au format JSON
+     * List all persons for a conected user
+     * @return Result(JSON) : list of membres
      */
     @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
@@ -94,9 +94,10 @@ public class Administration extends JavaController {
     
     
     /**
-     * Modifie le montant de la dette par defaut
-     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
-     * @return Result : résultat de la fonction, Ok|pb
+     * Update the default amount for a connected user
+     * @param Long : user id 
+     * @param int : new amount
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
@@ -108,9 +109,11 @@ public class Administration extends JavaController {
     }
     
     /**
-     * Modifie le nom et prenom d'une personne
-     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
-     * @return Result : résultat de la fonction, Ok|pb
+     * Update a person for a conected user
+     * @param Long : user id 
+     * @param String : new name
+     * @param String : new firstname
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
@@ -122,9 +125,10 @@ public class Administration extends JavaController {
     }
     
     /**
-     * Modifie l'adresse de l'image
-     * utilise l'identifiant l'utilisateur avec qui il est lié pour plus de sécurité
-     * @return Result : résultat de la fonction, Ok|pb
+     * Update a person picture for a conected user
+     * @param Long : user id 
+     * @param String : new picture path
+     * @return Result : fonction result, Ok|pb
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
