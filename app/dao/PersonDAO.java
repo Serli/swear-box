@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -65,11 +67,18 @@ public final class PersonDAO{
      * @param String : user id
      * @return List<Person> : list of persons
      */
-    public  static List<Person> listByUser(String emailUser){
-        Consumer u = JPA.em().find(Consumer.class, emailUser);
-        return u.getPeople();
-    }
-    
+	public  static List<Person> listByUser(String emailUser){
+	    Consumer u = JPA.em().find(Consumer.class, emailUser);
+	    Collections.sort(u.getPeople(), new Comparator<Person>()
+	    {
+	        public int compare(Person o1, Person o2)
+	        {
+	            return o1.getFirstname().compareTo(o2.getFirstname());
+	        }
+	    });
+	    return u.getPeople();
+	}
+
     /**
      * discharge a person on the Person table
      * @param long : person id
