@@ -1,7 +1,7 @@
 package dao;
 
 /**
- * Regroupe les opérations sur la table Statistics
+ * Groups the operations on the Statistics table
  * @author Geoffrey
  *
  */

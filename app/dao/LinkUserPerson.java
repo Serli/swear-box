@@ -4,7 +4,7 @@ import play.db.jpa.JPA;
 import models.*;
 
 /**
- * Lie une personne à un utilisateur
+ * link an user and a person
  *
  */
 public final class LinkUserPerson {
@@ -13,9 +13,9 @@ public final class LinkUserPerson {
     }
 
     /**
-     * Lie la personne à l'utilisateur
-     * @param idPerson id de la personne à lier
-     * @param idUser id de l'utilisateur à lier
+     * link a person to an user
+     * @param long : person id
+     * @param String : user id
      */
     public static void linkUserPerson(long idPerson,String idUser) {
         boolean test= true;

@@ -4,7 +4,7 @@ import play.db.jpa.JPA;
 import models.Consumer;
 
 /**
- * Regroupe les opérations sur la table Consumer
+ * Groups the operations on the Consumer table
  *
  */
 public final class ConsumerDAO {
@@ -13,8 +13,8 @@ public final class ConsumerDAO {
     }
 
     /**
-     * Ajoute l'utilisateur s'il n'existe pas
-     * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
+     * Add a new user if he doesn't exist
+     * @param String : User email 
      */
     public static void add(String email) {
         //Recuperation de l'utilisateur
@@ -28,8 +28,9 @@ public final class ConsumerDAO {
     }
     
     /**
-     * Modifie le montant de la penalité.
-     * @param email email de l'utilisateur ( clé primaire de la table Utilisateur )
+     * Update the user amount
+     * @param String : User email 
+     * @param int : new amount 
      */
     public static void updateAmount(String email, int vAmount) {
         //Recuperation de l'utilisateur
@@ -42,4 +43,5 @@ public final class ConsumerDAO {
         
         JPA.em().flush();
     }
+   
 }

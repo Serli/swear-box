@@ -6,8 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Représente la prononciation d'un grot mot
- * Qui l'a prononcé et à quelle date 
+ * Represents the pronunciation of a dirty word
+ * Who uttered and when
  *
  */
 @Entity

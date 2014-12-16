@@ -14,8 +14,8 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * Représente un utilisateur du service
- * Il possède une liste de personnes
+ * Represents a service user
+ * It has a list of people
  *
  */
 @Entity
