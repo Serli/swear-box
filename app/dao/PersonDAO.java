@@ -8,7 +8,7 @@ import play.db.jpa.JPA;
 import models.*;
 
 /**
- * Regroupe les opérations sur la table Person
+ * Groups the operations on the Person table
  *
  */
 public final class PersonDAO{
@@ -17,10 +17,10 @@ public final class PersonDAO{
     }
 
     /**
-     * Ajoute une personne dans la table personne 
-     * Lie l'utilisateur et la parsonne
-     * @param People : la personne a ajouter
-     * @param String : l'identifiant de l'utilisateur qui ajoute la personne a sa liste
+     * Add a person on the Person table
+     * link the user with it
+     * @param Person : person to add
+     * @param String : user id
      */
     public static void add(Person p,String id){
         //enregistrement de la personne
@@ -36,10 +36,10 @@ public final class PersonDAO{
     }
 
     /**
-	 * Supprime une personne dans la table personne
-	 * @param long : l'identifiant de la personne a supprimer
-	 * @param String : l'identifiant de l'utilisateur qui supprime la personne
-	 */
+     * Delete a person on the Person table
+     * @param Person : person to add
+     * @param String : user id
+     */
 	public static void delete(long id,String email){
 		//recuperation de la personne
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
@@ -61,9 +61,9 @@ public final class PersonDAO{
 	}
 
     /**
-     * Liste les personnes liées à l'utilisateur dont l'email est passé en paramètre
-     * @param emailUser email de l'utilisateur
-     * @return List<Person> la liste des personnes
+     * List all persons for an user
+     * @param String : user id
+     * @return List<Person> : list of persons
      */
     public  static List<Person> listByUser(String emailUser){
         Consumer u = JPA.em().find(Consumer.class, emailUser);
@@ -71,10 +71,10 @@ public final class PersonDAO{
     }
     
     /**
-	 * Acquite la dette d'une personne
-	 * @param long : l'identifiant de la personne a acquitter
-	 * @param String : l'identifiant de l'utilisateur qui acquitte la personne
-	 */
+     * discharge a person on the Person table
+     * @param long : person id
+     * @param String : user id
+     */
 	public static void discharge(long id,String email){
 		//recuperation de la personne
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
@@ -93,6 +93,14 @@ public final class PersonDAO{
 		
 	}
 	
+	
+	/**
+     * update a person on the Person table
+     * @param long : person id
+     * @param String : user id
+     * @param String : new name
+     * @param String : new firstname
+     */
 	public static void updateNameFirstname(long id,String email,String vName, String vFirstname){
 		//recuperation de la personne
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
@@ -112,6 +120,12 @@ public final class PersonDAO{
 		
 	}
 	
+	/**
+     * update a person picture on the Person table
+     * @param long : person id
+     * @param String : user id
+     * @param String : new picture path
+     */
 	public static void updatePicture(long id,String email,String vPicture){
 		//recuperation de la personne
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
