@@ -41,7 +41,7 @@ public class Administration extends JavaController {
                 return badRequest("Missing parameter [name] or [firstname]");
             } else {
                 final String picture = Play.application().configuration().getString("AvatarDefault");
-                Person person = new Person(name,firstname,10,picture);
+                Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
                 PersonDAO.add(person,id);
