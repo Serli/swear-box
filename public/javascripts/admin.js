@@ -179,8 +179,13 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	
 	//----------------------------------------------------------------------
 	$scope.onChange = function (idt) {
+		var filePath = $('#hiddenfile').val();
+		if(filePath.match(/fakepath/)) {
+            filePath = filePath.replace(/C:\\fakepath\\/i, '');
+        }
+		console.log(filePath);
 		var dataObj = {
-				picture : "images/"+$('#hiddenfile').val()
+				picture : "images/"+filePath
 		};			
 
 		$http.put('/member/picture/'+idt, dataObj)
