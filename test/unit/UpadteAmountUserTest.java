@@ -9,6 +9,7 @@ import org.junit.*;
 import com.google.inject.Inject;
 
 import dao.ConsumerDAO;
+import dao.ConsumerDAOImpl;
 import dao.PersonDAO;
 
 
@@ -19,9 +20,7 @@ import dao.PersonDAO;
  */
 public class UpadteAmountUserTest {
 
-    @Inject
-    private ConsumerDAO consumerDAO;
-
+    private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
     
     /**
      * Test adding an user

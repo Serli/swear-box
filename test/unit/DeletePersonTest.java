@@ -18,8 +18,7 @@ import models.*;
  */
 public class DeletePersonTest{
 
-	@Inject
-    private PersonDAO personDAO;
+	private PersonDAO personDAO = new PersonDAOImpl();
 	
     /**
      * Test deleting a person

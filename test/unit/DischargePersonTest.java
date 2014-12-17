@@ -19,8 +19,7 @@ import models.*;
  */
 public class DischargePersonTest{
 
-    @Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
     
     /**
      * Test deleting a person

@@ -3,6 +3,7 @@ package integration;
 import org.junit.*;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import dao.*;
 import play.db.jpa.JPA;
@@ -17,8 +18,8 @@ import models.*;
  */
 public class AddPersonTest{
 
-	@Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
+	
     /**
      * Test for AddPerson function
      * Verification of the link between the two tables
@@ -34,6 +35,7 @@ public class AddPersonTest{
                 {
                     public void invoke()
                     {
+                        
                         Person p =new Person("Toto", "Titi",0,"yolo");
                         Consumer u= new Consumer("email@email",100);
 

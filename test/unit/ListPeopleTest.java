@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
+import dao.PersonDAOImpl;
 import play.db.jpa.JPA;
 import models.*;
 
@@ -22,8 +23,7 @@ import models.*;
  */
 public class ListPeopleTest {
 
-    @Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
     
     /**
      * Test the recovery of the list of the user related members in the database

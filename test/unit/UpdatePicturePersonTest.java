@@ -18,8 +18,7 @@ import models.*;
  */
 public class UpdatePicturePersonTest{
 
-    @Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
     
     /**
      * Test updating the picture path for a person

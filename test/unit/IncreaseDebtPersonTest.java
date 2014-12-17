@@ -19,8 +19,7 @@ import models.*;
  */
 public class IncreaseDebtPersonTest{
 
-    @Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
     
     /**
      * Test increasing debt for a person

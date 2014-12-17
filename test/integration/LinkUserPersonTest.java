@@ -16,8 +16,7 @@ import models.*;
  */
 public class LinkUserPersonTest{
 
-	@Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
 	
     /**
      * Test if the class LinkUserPerson correctly binds a person to a user

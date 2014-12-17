@@ -20,8 +20,7 @@ import models.*;
 public class UpdateNameFirstnamePersonTest{
 
     
-    @Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
     
     /**
      * Test updating a person

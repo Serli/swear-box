@@ -16,8 +16,8 @@ import models.*;
  */
 public class DeletePersonTest{
 
-	@Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
+	
     /**
      * Test removal of a person for two users
      * Verification of the link between the two tables

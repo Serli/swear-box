@@ -17,8 +17,7 @@ import models.*;
  */
 public class AddPersonTest{
 
-	@Inject
-    private PersonDAO personDAO;
+    private PersonDAO personDAO = new PersonDAOImpl();
 	
     /**
      * Test AddPerson function for a user

@@ -1,10 +1,9 @@
 package dao;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
-import play.db.jpa.JPA;
 import models.Consumer;
+import play.db.jpa.JPA;
+
+import com.google.inject.Singleton;
 
 /**
  * Groups the operations on the Consumer table
