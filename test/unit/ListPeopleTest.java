@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.google.inject.Inject;
+
+import dao.ConsumerDAO;
 import dao.PersonDAO;
 import play.db.jpa.JPA;
 import models.*;
@@ -19,6 +22,9 @@ import models.*;
  */
 public class ListPeopleTest {
 
+    @Inject
+    private PersonDAO personDAO;
+    
     /**
      * Test the recovery of the list of the user related members in the database
      */
@@ -55,7 +61,7 @@ public class ListPeopleTest {
                         JPA.em().flush();
 
                         //Récupération de la liste des personnes liées à u1
-                        List<Person> l = PersonDAO.listByUser(emailU1);
+                        List<Person> l = personDAO.listByUser(emailU1);
 
                         assertThat(l.size()).isEqualTo(2);
                         assertThat(l.get(0).getFirstname()).isEqualTo(p1.getFirstname());

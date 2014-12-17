@@ -6,7 +6,10 @@ import static org.fest.assertions.Assertions.*;
 
 import org.junit.*;
 
+import com.google.inject.Inject;
+
 import dao.ConsumerDAO;
+import dao.PersonDAO;
 
 
 /**
@@ -16,6 +19,10 @@ import dao.ConsumerDAO;
  */
 public class UpadteAmountUserTest {
 
+    @Inject
+    private ConsumerDAO consumerDAO;
+
+    
     /**
      * Test adding an user
      */
@@ -31,9 +38,9 @@ public class UpadteAmountUserTest {
                     {
                         //Ajout d'un utilisateur à partir d'un email
                         String email = "test@gmail.com";
-                        ConsumerDAO.add(email);
+                        consumerDAO.add(email);
 
-                        ConsumerDAO.updateAmount(email, 20);
+                        consumerDAO.updateAmount(email, 20);
                         
                         //Recherche de l'utilisateur dans la base de données
                         Consumer u = JPA.em().find(Consumer.class, email);
