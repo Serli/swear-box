@@ -12,7 +12,7 @@ import models.Consumer;
 public final class ConsumerDAOImpl implements ConsumerDAO {
 
     @Inject
-    private ConsumerDAOImpl(){
+    public ConsumerDAOImpl(){
     }
 
     /**

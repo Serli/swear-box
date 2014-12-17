@@ -9,7 +9,6 @@ import org.junit.*;
 import com.google.inject.Inject;
 
 import dao.ConsumerDAO;
-import dao.PersonDAO;
 
 
 /**
