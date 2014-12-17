@@ -17,13 +17,13 @@ import play.mvc.Result;
 import models.*;
 
 /**
- * maneged actions for administration view
+ * Managed actions for administration view
  *
  */
 public class Administration extends JavaController {
 
     /**
-     * Add a person to a conected user
+     * Add a person to a connected user
      * Use field informations to create a Person
      * Add this person on the database
      * @return Result : fonction result, Ok|pb
@@ -51,7 +51,7 @@ public class Administration extends JavaController {
     }
 
     /**
-     * Delete a person for a conected user
+     * Delete a person for a connected user
      * @param Long : person id to delete
      * @return Result : fonction result, Ok|pb
      */
@@ -66,7 +66,7 @@ public class Administration extends JavaController {
 
 
     /**
-     * Discharge a person for a conected user
+     * Discharge a person for a connected user
      * @param Long : person id to delete
      * @return Result : fonction result, Ok|pb
      */
@@ -80,7 +80,7 @@ public class Administration extends JavaController {
     }
 
     /**
-     * List all persons for a conected user
+     * List all persons for a connected user
      * @return Result(JSON) : list of membres
      */
     @Transactional(readOnly=true)
@@ -119,7 +119,7 @@ public class Administration extends JavaController {
     }
 
     /**
-     * Update a person for a conected user
+     * Update a person for a connected user
      * @param Long : user id 
      * @param String : new name
      * @param String : new firstname
@@ -147,7 +147,7 @@ public class Administration extends JavaController {
     }
     
     /**
-     * Update a person picture for a conected user
+     * Update a person picture for a connected user
      * @param Long : user id 
      * @param String : new picture path
      * @return Result : fonction result, Ok|pb

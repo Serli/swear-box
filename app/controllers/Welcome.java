@@ -13,7 +13,7 @@ import play.mvc.*;
 import views.html.*;
 
 /**
- * maneged actions for welcome view
+ * Managed actions for welcome view
  * @author Geoffrey
  *
  */
@@ -21,7 +21,7 @@ public class Welcome extends JavaController {
 
     /**
      * Action called when launching the app
-     * @return connection view for an unconnected user or welcome view
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     public static Result index() {
         if(!isConnected()) {
@@ -33,20 +33,20 @@ public class Welcome extends JavaController {
 
     /**
      * Action called for displaying the user view
-     * @return user view
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result user() {
-        //Récupération du nom dans le profil google de l'utilisateur
+        //Get the name in the user google profile
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
 
-        //Ajout de l'utilisateur dans la base de données si besoin
-        String nom = googleProfile.getFirstName();
+        //Add the user to the data if it is needed
+        String name = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
         ConsumerDAO.add(email);
 
-        return ok(views.html.user.render(nom, new Boolean(true), new Integer(0)));
+        return ok(views.html.user.render(name, new Boolean(true), new Integer(0)));
     }
     
 
@@ -59,12 +59,13 @@ public class Welcome extends JavaController {
     public static Result increaseDebt(Long id) {
     	Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        PersonDAO.incrementDebt(id,email);
+        PersonDAO.incrementDebt(id, email);
         return ok();
     }
 
     /**
      * Method's using in conf\routes and to display the admin page
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result admin() {
@@ -73,14 +74,15 @@ public class Welcome extends JavaController {
 
     /**
      * Method's using in conf\routes and to display the help page
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     public static Result help() {
-        Boolean isActive = isConnected();
-        return ok(views.html.help.render(isActive, new Integer(3)));
+        return ok(views.html.help.render(isConnected(), new Integer(3)));
     }
 
     /**
      * Method's using in conf\routes and to display the statistics page
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {
@@ -88,10 +90,10 @@ public class Welcome extends JavaController {
     }
 
     /**
-    * Method that returns true if the user logged in to the google account
+    * Method which get the user google profile and return if the user is connected
+    * @return Boolean : true = User connected
     */
     private static Boolean isConnected() {
-        //Récupération du profil google de l'utilisateur
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         return !(googleProfile == null);
     }
