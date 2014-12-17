@@ -1,6 +1,7 @@
 package dao;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import play.db.jpa.JPA;
 import models.Consumer;
@@ -9,11 +10,8 @@ import models.Consumer;
  * Groups the operations on the Consumer table
  *
  */
+@Singleton
 public final class ConsumerDAOImpl implements ConsumerDAO {
-
-    @Inject
-    private ConsumerDAOImpl(){
-    }
 
     /**
      * Add a new user if he doesn't exist

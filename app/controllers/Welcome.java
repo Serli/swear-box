@@ -7,7 +7,9 @@ import org.pac4j.play.java.RequiresAuthentication;
 
 
 
+
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
@@ -20,6 +22,7 @@ import views.html.*;
  * @author Geoffrey
  *
  */
+@Singleton
 public class Welcome extends JavaController {
 
     @Inject

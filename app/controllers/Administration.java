@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import dao.*;
 
@@ -21,6 +22,7 @@ import models.*;
  * Managed actions for administration view
  *
  */
+@Singleton
 public class Administration extends JavaController {
 
     @Inject
