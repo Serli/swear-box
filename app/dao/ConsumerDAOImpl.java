@@ -1,5 +1,6 @@
 package dao;
 
+
 import models.Consumer;
 import play.db.jpa.JPA;
 

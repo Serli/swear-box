@@ -1,16 +1,17 @@
 package unit;
+import static org.fest.assertions.Assertions.assertThat;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.inMemoryDatabase;
+import static play.test.Helpers.running;
 import models.Consumer;
+
+import org.junit.Test;
+
 import play.db.jpa.JPA;
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
-
-import org.junit.*;
-
-import com.google.inject.Inject;
-
 import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
-import dao.PersonDAO;
+
+
 
 
 /**

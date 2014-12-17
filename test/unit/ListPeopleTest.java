@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.google.inject.Inject;
 
-import dao.ConsumerDAO;
 import dao.PersonDAO;
 import dao.PersonDAOImpl;
 import play.db.jpa.JPA;

@@ -1,8 +1,7 @@
 package dao;
 
 import java.util.List;
-
-import models.Person;
+import models.*;
 
 /**
  * Groups the operations on the Person table

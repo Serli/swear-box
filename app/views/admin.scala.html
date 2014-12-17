@@ -20,7 +20,7 @@
       
         <tbody ng-repeat="member in members">
 
-              <tr> <!-- Dynamic HTML part to add after every member addition -->
+              <tr>
                 <td><img ng-src="@routes.Assets.at("{{member.picture}}")" alt="photo01" class="dimension-img"></td>
                 <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                 <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
@@ -71,6 +71,7 @@
 
             <div class="pull-right col-xs-10 col-sm-5">
               <div class="input-group">
+                <span class="input-group-addon">Pénalité : {{amountTag}}</span>
                 <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la pénalité" required>
                 <span class="input-group-addon">cts</span>
               </div>
@@ -141,7 +142,7 @@
           </form>
         </div>
       </div>
-      
+
       <div id="dischargeMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
           <form ng-submit="dischargeMember()">

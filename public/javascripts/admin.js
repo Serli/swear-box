@@ -17,6 +17,13 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
+	$http.get('/amount')
+	.success(function(data, status, headers, config){
+		$scope.amountTag = data;
+	})
+	.error(function(data, status, headers, config){
+	});
+
 	//Checks if the pressed key is a number, a tab or <-
 	//----------------------------------------------------------------------
 	$scope.isNumeric = function(event) {
@@ -108,6 +115,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		.error(function(data, status, headers, config){
 		});
 
+		$scope.amountTag= $scope.amount;
 		$scope.amount= '';
 
 	};
