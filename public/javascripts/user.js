@@ -2,7 +2,7 @@ var userApp = angular.module('userApp',[]);
 
 userApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
-	//declaration of the objects
+	//Objects declaration
 	//----------------------------------------------------------------------
 	$scope.members = {};
 
@@ -15,7 +15,7 @@ userApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
-	//Incremente la dette du membre
+	//Increase the member debt
 	//----------------------------------------------------------------------
 	$scope.increase = function (idt) {
 		$http.put('/increase/'+idt, {})

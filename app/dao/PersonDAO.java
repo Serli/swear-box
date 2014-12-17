@@ -66,9 +66,6 @@ public interface PersonDAO{
      * @param long : person id
      * @param String : user id
      */
-
     public void incrementDebt(long id,String email);
-
-	
 
 }
