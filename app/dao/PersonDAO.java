@@ -1,13 +1,8 @@
 package dao;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import javax.persistence.Query;
-
-import play.db.jpa.JPA;
-import models.*;
+import models.Person;
 
 /**
  * Groups the operations on the Person table
