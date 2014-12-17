@@ -50,8 +50,7 @@ public class Welcome extends JavaController {
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result user() {
-        //Récupération du nom dans le profil google de l'utilisateur
-
+        //Get the name in the user google profile
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
 
         //Add the user to the data if it is needed

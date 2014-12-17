@@ -36,29 +36,27 @@ public class LinkUserPersonTest{
                 {
                     public void invoke()
                     {
-                        //creation des entites
+                        //Creation of entities
                         Person p =new Person("Lier-Toto", "Lier-Titi",0,"yolo");
                         Consumer u1= new Consumer("Lier-email1@email",100);
                         Consumer u2= new Consumer("Lier-email2@email",50);
 
-                        //enregistrement des utilisateurs
+                        //Recording users
                         JPA.em().persist(u1);
                         JPA.em().persist(u2);
 
-                        //ajout de la personne a un utilisateur
+                        //Add the person and link it to an other user
                         personDAO.add(p,u1.getEmail());
 
-                        //recuperation de la personne
+                        //Add the person and link it to an other user
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Lier-Toto'").getSingleResult();
-
-                        //lie la personne a l'autre utilisateur
                         LinkUserPerson .linkUserPerson(pbd.getIdPerson(),u2.getEmail());
 
-                        //regarde si les utilisateurs ont la personne dans sa list
+                        //Check is both users have the same name
                         assertThat(u2.getPeople().get(0).getName()).isEqualTo(pbd.getName());
 
 
-                        //clean
+                        //Clean
                         JPA.em().remove(u1);
                         JPA.em().remove(u2);
                         JPA.em().remove(pbd);

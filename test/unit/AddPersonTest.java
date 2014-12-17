@@ -39,16 +39,16 @@ public class AddPersonTest{
                         Person p =new Person("Toto", "Titi",0,"yolo");
                         Consumer u= new Consumer("email@email",100);
 
-                        //enregistrement de l'utilisateur
+                        //Recording the user
                         JPA.em().persist(u);
 
-                        //ajout de la personne
+                        //Add the person
                         personDAO.add(p,u.getEmail());
 
-                        //recuperation de la personne en bd
+                        //Get the person from the DB
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Toto'").getSingleResult();
 
-                        //regarde si l'utilisateur a la personne dans sa list
+                        //Check if the user has the person in his list
                         assertThat(pbd).isNotEqualTo(null);
 
                         JPA.em().remove(u);

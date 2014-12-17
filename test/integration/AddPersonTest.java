@@ -41,22 +41,22 @@ public class AddPersonTest{
                         Person p =new Person("Toto", "Titi",0,"yolo");
                         Consumer u= new Consumer("email@email",100);
 
-                        //enregistrement de l'utilisateur
+                        //Recording of the user
                         JPA.em().persist(u);
                         Consumer ubd=JPA.em().find(Consumer.class,"email@email");
                         assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 
-                        //ajout de la personne
+                        //Add the person
                         personDAO.add(p,u.getEmail());
 
-                        //recuperation de la personne en bd
+                        //Get the person from the DB
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Toto'").getSingleResult();
 
-                        //regarde si l'utilisateur a la personne dans sa list
+                        //Check if the user has the person in his list
                         assertThat(ubd.getPeople().get(0).getName()).isEqualTo(p.getName());
                         assertThat(ubd.getPeople().get(0).getName()).isEqualTo(pbd.getName());
 
-                        //regarde si la personne a l'utilisateur dans sa list
+                        //Check if the person has the user in his list
                         assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(u.getEmail());
                         assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(ubd.getEmail());
                         JPA.em().remove(ubd);

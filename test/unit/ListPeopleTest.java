@@ -33,14 +33,14 @@ public class ListPeopleTest {
             public void run() {
                 JPA.withTransaction(new play.libs.F.Callback0() {
                     public void invoke() {
-                        // Ajout d'un utilisateur
+                        // Add 2 users
                         String emailU1 = "test1@email.com";
                         Consumer u1 = new Consumer(emailU1, 100);
                         JPA.em().persist(u1);
                         Consumer u2 = new Consumer("test2@email.com", 100);
                         JPA.em().persist(u2);
 
-                        // Ajout de deux personnes
+                        // Add 3 persons
                         Person p1 = new Person("nom1", "prenom1", 1, "adr1");
                         Person p2 = new Person("nom2", "prenom2", 2, "adr2");
                         Person p3 = new Person("nom3", "prenom3", 3, "adr3");
@@ -48,7 +48,7 @@ public class ListPeopleTest {
                         JPA.em().persist(p2);
                         JPA.em().persist(p3);
 
-                        // Liaision des personnes avec les utilisateurs (table u_p)
+                        // Link persons to users
                         u1.setPerson(p1);
                         p1.setUser(u1);
                         u1.setPerson(p2);
@@ -56,10 +56,10 @@ public class ListPeopleTest {
                         u2.setPerson(p3);
                         p3.setUser(u2);
 
-                        //Synchronisation avec la BD
+                        //Synchronisation with the DB
                         JPA.em().flush();
 
-                        //Récupération de la liste des personnes liées à u1
+                        //Get the list of the person link to u1
                         List<Person> l = personDAO.listByUser(emailU1);
 
                         assertThat(l.size()).isEqualTo(2);

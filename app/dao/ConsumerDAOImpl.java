@@ -18,10 +18,10 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * @param String : User email 
      */
     public void add(String email) {
-        //Recuperation de l'utilisateur
+        //Get the user
         Consumer u = JPA.em().find(Consumer.class, email);
         
-        //Si l'utilisateur n'existe pas il est ajouté
+        //If the user doesn't exist he is added
         if (u == null) {
             u = new Consumer(email);
             JPA.em().persist(u);
@@ -34,10 +34,10 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * @param int : new amount 
      */
     public void updateAmount(String email, int vAmount) {
-        //Recuperation de l'utilisateur
+        //Get the user
         Consumer u = JPA.em().find(Consumer.class, email);
         
-        //Si l'utilisateur n'existe pas il est ajouté
+        //If the user exists the amount is modified
         if (u != null) {
             u.setAmount(vAmount);
         }
@@ -46,10 +46,10 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     }
    
     public int getAmount(String email) {
-        //Recuperation de l'utilisateur
+        //Get the user
         Consumer u = JPA.em().find(Consumer.class, email);
         
-        //Si l'utilisateur n'existe pas il est ajouté
+        //If the user exists the amount is returned
         if (u != null) {
             return u.getAmount();
         }

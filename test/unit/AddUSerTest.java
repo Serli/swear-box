@@ -22,7 +22,7 @@ public class AddUserTest {
 	private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
 	
     /**
-     * test AddUser for an user
+     * Test AddUser for an user
      */
     @Test
     public void addUser() {
@@ -34,11 +34,11 @@ public class AddUserTest {
                 {
                     public void invoke()
                     {
-                        //Ajout d'un utilisateur à partir d'un email
+                        //Add an user from a email
                         String email = "test@gmail.com";
                         consumerDAO.add(email);
 
-                        //Recherche de l'utilisateur dans la base de données
+                        //Seek the user in the DB
                         Consumer u = JPA.em().find(Consumer.class, email);
                         assertThat(u).isNotEqualTo(null);
 

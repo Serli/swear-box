@@ -36,14 +36,15 @@ public class UpdateAmountUserTest {
                 {
                     public void invoke()
                     {
-                        //Ajout d'un utilisateur à partir d'un email
+                        //Add an user from an email
                         String email = "test@gmail.com";
                         consumerDAO.add(email);
 
                         consumerDAO.updateAmount(email, 20);
                         
-                        //Recherche de l'utilisateur dans la base de données
+                        //Seek the user in the DB
                         Consumer u = JPA.em().find(Consumer.class, email);
+                        //Check if the amount is modified
                         assertThat(u.getAmount()==20);
 
                         JPA.em().remove(u);

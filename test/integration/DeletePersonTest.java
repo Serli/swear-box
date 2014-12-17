@@ -42,25 +42,25 @@ public class DeletePersonTest{
                         Consumer u1= new Consumer("Suppr-email1@email",100);
                         Consumer u2= new Consumer("Suppr-email2@email",50);
 
-                        //enregistrement des utilisateurs
+                        //Recording users
                         JPA.em().persist(u1);
                         Consumer u1bd=JPA.em().find(Consumer.class,"Suppr-email1@email");
                         JPA.em().persist(u2);
                         Consumer u2bd=JPA.em().find(Consumer.class,"Suppr-email2@email");
 
-                        //ajoute la personne et lie la personne a un autre utilisateur
+                        //Add the person and link it to a other user
                         personDAO.add(p,u1.getEmail());
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getSingleResult();
                         LinkUserPerson.linkUserPerson(pbd.getIdPerson(),u2.getEmail());
 
-                        //regarde si les utilisateurs ont la personne dans sa list
+                        //Check if the users have the person in their list
                         assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(p.getName());
                         assertThat(u1bd.getPeople().get(0).getName()).isEqualTo(pbd.getName());
 
                         assertThat(u2bd.getPeople().get(0).getName()).isEqualTo(p.getName());
                         assertThat(u2bd.getPeople().get(0).getName()).isEqualTo(pbd.getName());
 
-                        //regarde si la personne a les utilisateurs dans sa list
+                        //Check if the person has the users in his list
                         assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(u1.getEmail());
                         assertThat(pbd.getUsers().get(0).getEmail()).isEqualTo(u1bd.getEmail());
                         assertThat(pbd.getUsers().get(1).getEmail()).isEqualTo(u2.getEmail());
@@ -68,18 +68,18 @@ public class DeletePersonTest{
 
                         JPA.em().flush();
 
-                        //suppression de la personne pour les deux utilisateurs
+                        //Delete the person for the two users
                         personDAO.delete(pbd.getIdPerson(),u1bd.getEmail());
 
-                        //recuperation des utilisateurs en bd apres suppression
+                        //Get users from the DB after the delete
                         u1bd=JPA.em().find(Consumer.class,"Suppr-email1@email");
                         u2bd=JPA.em().find(Consumer.class,"Suppr-email2@email");
 
-                        //test si la personne n'existe plus
+                        //Test if the person doesn't exist anymore
                         assertThat(u1bd.getPeople()).isEmpty();
                         assertThat(u2bd.getPeople()).isEmpty();
 
-                        //clean
+                        //Clean
                         JPA.em().remove(u1bd);
                         JPA.em().remove(u2bd);
                     }

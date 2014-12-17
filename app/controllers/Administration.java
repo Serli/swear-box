@@ -102,7 +102,7 @@ public class Administration extends JavaController {
     }
 
     /**
-     * 
+     * Put the current amount in a Json
      * @return Result(JSON) : amount of the id member
      */
     @Transactional(readOnly=true)
