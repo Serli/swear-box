@@ -4,7 +4,7 @@ import play.db.jpa.JPA;
 import models.*;
 
 /**
- * link an user and a person
+ * Link an user and a person
  *
  */
 public final class LinkUserPerson {
@@ -13,24 +13,24 @@ public final class LinkUserPerson {
     }
 
     /**
-     * link a person to an user
+     * Link a person to an user
      * @param long : person id
      * @param String : user id
      */
     public static void linkUserPerson(long idPerson,String idUser) {
         boolean test= true;
 
-        //recuperation de l'utilisateur
+        //Get the user
         Consumer user = JPA.em().find(Consumer.class,idUser); 
 
-        //regarde si il sont deja lier
+        //Check if they are linked
         for (Person p :user.getPeople()){
             if(p.getIdPerson()==idPerson){
                 test = false;
             }
         }
 
-        //lie les deux
+        //Link the person to the user
         if(test){
             Person pbd=JPA.em().find(Person.class,idPerson);
             user.setPerson(pbd);

@@ -17,18 +17,21 @@ public interface PersonDAO{
 
     /**
      * Add a person on the Person table
-     * link the user with it
+     * Link the user with it
      * @param Person : person to add
      * @param String : user id
      */
     public void add(Person p,String id);
+
 
     /**
      * Delete a person on the Person table
      * @param Person : person to add
      * @param String : user id
      */
+
 	public void delete(long id,String email);
+
 
     /**
      * List all persons for an user
@@ -38,15 +41,16 @@ public interface PersonDAO{
 	public List<Person> listByUser(String emailUser);
 
     /**
-     * discharge a person on the Person table
+     * Discharge a person on the Person table
      * @param long : person id
      * @param String : user id
      */
 	public void discharge(long id,String email);
+
 	
 	
 	/**
-     * update a person on the Person table
+     * Update a person on the Person table
      * @param long : person id
      * @param String : user id
      * @param String : new name
@@ -55,18 +59,21 @@ public interface PersonDAO{
 	public void updateNameFirstname(long id,String email,String vName, String vFirstname);
 	
 	/**
-     * update a person picture on the Person table
+     * Update a person picture on the Person table
      * @param long : person id
      * @param String : user id
      * @param String : new picture path
      */
 	public void updatePicture(long id,String email,String vPicture);
+	
 	 /**
      * Increase a person debt
      * @param long : person id
      * @param String : user id
      */
+
     public void incrementDebt(long id,String email);
+
 	
 
 }

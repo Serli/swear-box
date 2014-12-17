@@ -27,21 +27,21 @@ public class Global extends GlobalSettings{
     private Injector injector;
     
     /**
-     * add a user for an authentification  (OAuth2)
+     * Add a user for an authentification  (OAuth2)
      */
     @Override
     public void onStart(final Application app) {
         super.onStart(app);
 
-        //Récupération des données necessaires dans le fichier application.conf
+        //Get datas needed in the file application.conf
         final String googleId = Play.application().configuration().getString("GoogleId");
         final String googleSecret = Play.application().configuration().getString("GoogleSecret");
         final String baseUrl = Play.application().configuration().getString("baseUrl");
 
-        //Création du cient Google2Client pour la connexion Google via OAuth2
+        //Create a client Google2Client for the Google connection with OAuth2
         final Google2Client google2Client = new Google2Client(googleId, googleSecret);
 
-        //Ajout des clients à Config
+        //Add clients to Config
         final Clients clients = new Clients(baseUrl + "/oauth2callback", google2Client);
         Config.setClients(clients);
         
