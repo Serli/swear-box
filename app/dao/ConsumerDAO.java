@@ -44,4 +44,15 @@ public final class ConsumerDAO {
         JPA.em().flush();
     }
    
+    public static int getAmount(String email) {
+        //Recuperation de l'utilisateur
+        Consumer u = JPA.em().find(Consumer.class, email);
+        
+        //Si l'utilisateur n'existe pas il est ajouté
+        if (u != null) {
+            return u.getAmount();
+        }
+        
+        return -1;
+    }
 }
