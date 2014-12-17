@@ -4,4 +4,4 @@
 ##To start quickly :
 
     cd swear-box
-    activator run
+    activator -Dconfig.file=conf/dev.conf run
