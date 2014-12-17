@@ -6,6 +6,9 @@ import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
 
+
+import com.google.inject.Inject;
+
 import dao.ConsumerDAO;
 import dao.PersonDAO;
 import play.db.jpa.Transactional;
@@ -19,6 +22,12 @@ import views.html.*;
  */
 public class Welcome extends JavaController {
 
+    @Inject
+    private ConsumerDAO consumerDAO;
+    
+    @Inject
+    private PersonDAO personDAO;
+    
     /**
      * Action called when launching the app
      * @return connection view for an unconnected user or welcome view
@@ -37,14 +46,14 @@ public class Welcome extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result user() {
+    public Result user() {
         //Récupération du nom dans le profil google de l'utilisateur
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
 
         //Ajout de l'utilisateur dans la base de données si besoin
         String nom = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
-        ConsumerDAO.add(email);
+        consumerDAO.add(email);
 
         return ok(views.html.user.render(nom, new Boolean(true), new Integer(0)));
     }
@@ -56,10 +65,10 @@ public class Welcome extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result increaseDebt(Long id) {
+    public Result increaseDebt(Long id) {
     	Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        PersonDAO.incrementDebt(id,email);
+        personDAO.incrementDebt(id,email);
         return ok();
     }
 

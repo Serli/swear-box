@@ -4,17 +4,17 @@
 
 # === Home page 
 GET     /                           controllers.Welcome.index()
-GET     /user                       controllers.Welcome.user()
-PUT     /increase/:id               controllers.Welcome.increaseDebt(id: Long)
+GET     /user                       @controllers.Welcome.user()
+PUT     /increase/:id               @controllers.Welcome.increaseDebt(id: Long)
 
 # === Admin page
 GET     /admin                      controllers.Welcome.admin()
-GET     /members                 	controllers.Administration.listPerson()
-POST    /member            		    controllers.Administration.addPerson()
-DELETE  /members/:id                controllers.Administration.deletePerson(id: Long)
-PUT     /discharge/:id              controllers.Administration.discharge(id: Long)
-PUT     /user                       controllers.Administration.updateAmount()
-PUT     /member/:id                 controllers.Administration.updateNameFirstname(id: Long)
+GET     /members                 	@controllers.Administration.listPerson()
+POST    /member            		    @controllers.Administration.addPerson()
+DELETE  /members/:id                @controllers.Administration.deletePerson(id: Long)
+PUT     /discharge/:id              @controllers.Administration.discharge(id: Long)
+PUT     /user                       @controllers.Administration.updateAmount()
+PUT     /member/:id                 @controllers.Administration.updateNameFirstname(id: Long)
 
 # === Help page
 GET 	/help						controllers.Welcome.help()

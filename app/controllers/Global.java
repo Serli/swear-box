@@ -3,9 +3,19 @@ package controllers;
 import org.pac4j.core.client.Clients;
 import org.pac4j.oauth.client.Google2Client;
 import org.pac4j.play.Config;
+
 import play.Application;
 import play.GlobalSettings;
 import play.Play;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.AbstractModule;
+
+import dao.ConsumerDAO;
+import dao.ConsumerDAOImpl;
+import dao.PersonDAO;
+import dao.PersonDAOImpl;
 
 /**
  * Performs tasks in launching the application
@@ -14,6 +24,8 @@ import play.Play;
  */
 public class Global extends GlobalSettings{
 
+    private Injector injector;
+    
     /**
      * add a user for an authentification  (OAuth2)
      */
@@ -32,6 +44,19 @@ public class Global extends GlobalSettings{
         //Ajout des clients à Config
         final Clients clients = new Clients(baseUrl + "/oauth2callback", google2Client);
         Config.setClients(clients);
+        
+        injector = Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(ConsumerDAO.class).to(ConsumerDAOImpl.class);
+                bind(PersonDAO.class).to(PersonDAOImpl.class);
+            }
+        });
+    }
+
+    @Override
+    public <T> T getControllerInstance(Class<T> aClass) throws Exception {
+        return injector.getInstance(aClass);
     }
 
 }

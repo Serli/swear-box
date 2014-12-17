@@ -61,6 +61,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
+			console.log("success");
 			$('#deleteMember').modal('hide');
 			$http.get('/members')
 			.success(function(data, status, headers, config){
@@ -70,6 +71,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 			});
 		})
 		.error(function(data, status, headers, config){
+			console.log("error");
 		});
 
 	};

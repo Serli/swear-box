@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
 
 import dao.*;
 
@@ -22,6 +23,12 @@ import models.*;
  */
 public class Administration extends JavaController {
 
+    @Inject
+    private ConsumerDAO consumerDAO;
+    
+    @Inject
+    private PersonDAO personDAO;
+    
     /**
      * Add a person to a conected user
      * Use field informations to create a Person
@@ -30,7 +37,7 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result addPerson() {
+    public Result addPerson() {
         JsonNode json = request().body().asJson();
         if(json == null) {
             return badRequest("Expecting Json data");
@@ -44,7 +51,7 @@ public class Administration extends JavaController {
                 Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
-                PersonDAO.add(person,id);
+                personDAO.add(person,id);
                 return ok();
             }
         }
@@ -57,10 +64,10 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result deletePerson(Long id) {
+    public Result deletePerson(Long id) {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        PersonDAO.delete(id,email);
+        personDAO.delete(id,email);
         return ok();
     }
 
@@ -72,10 +79,10 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result discharge(Long idt) {
+    public Result discharge(Long idt) {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        PersonDAO.discharge(idt,email);
+        personDAO.discharge(idt,email);
         return ok();
     }
 
@@ -85,10 +92,10 @@ public class Administration extends JavaController {
      */
     @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result listPerson() {
+    public Result listPerson() {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String emailUser = googleProfile.getEmail();
-        List<Person> persons = PersonDAO.listByUser(emailUser);
+        List<Person> persons = personDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
     }
 
@@ -101,7 +108,7 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result updateAmount() {
+    public Result updateAmount() {
         JsonNode json = request().body().asJson();
         if(json == null) {
             return badRequest("Expecting Json data");
@@ -112,7 +119,7 @@ public class Administration extends JavaController {
             } else {
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
-                ConsumerDAO.updateAmount(email, Integer.parseInt(amount));
+                consumerDAO.updateAmount(email, Integer.parseInt(amount));
                 return ok();
             }
         }
@@ -127,7 +134,7 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result updateNameFirstname(Long id) {
+    public Result updateNameFirstname(Long id) {
         JsonNode json = request().body().asJson();
         if(json == null) {
             return badRequest("Expecting Json data");
@@ -139,7 +146,7 @@ public class Administration extends JavaController {
             } else {
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
-                PersonDAO.updateNameFirstname(id,email, name,firstname);
+                personDAO.updateNameFirstname(id,email, name,firstname);
                 return ok();
             }
         }
@@ -154,10 +161,10 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result updatePicture(Long id, String vPicture) {
+    public Result updatePicture(Long id, String vPicture) {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
-        PersonDAO.updatePicture(id,email, vPicture);
+        personDAO.updatePicture(id,email, vPicture);
         return ok();
     }
 
