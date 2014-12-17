@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import play.db.jpa.JPA;
 import models.*;
@@ -15,11 +16,8 @@ import models.*;
  * Groups the operations on the Person table
  *
  */
+@Singleton
 public final class PersonDAOImpl implements PersonDAO {
-
-    @Inject
-    private PersonDAOImpl(){
-    }
 
     /**
      * Add a person on the Person table

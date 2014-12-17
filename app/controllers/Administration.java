@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import dao.*;
 
@@ -21,6 +22,7 @@ import models.*;
  * Managed actions for administration view
  *
  */
+@Singleton
 public class Administration extends JavaController {
 
     @Inject
@@ -99,6 +101,18 @@ public class Administration extends JavaController {
         return ok(Json.toJson(persons));
     }
 
+    /**
+     * 
+     * @return Result(JSON) : amount of the id member
+     */
+    @Transactional(readOnly=true)
+    @RequiresAuthentication(clientName = "Google2Client")
+    public Result amount() {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String emailUser = googleProfile.getEmail();
+        Integer amount = consumerDAO.getAmount(emailUser);
+        return ok(Json.toJson(amount));
+    }
 
     /**
      * Update the default amount for a connected user

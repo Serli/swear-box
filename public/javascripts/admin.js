@@ -2,7 +2,7 @@ var adminApp = angular.module('adminApp',[]);
 
 adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
-	//declaration of the objects
+	//Objects declaration
 	//----------------------------------------------------------------------
 	$scope.members = {};
 	$scope.newMember = {};
@@ -13,6 +13,13 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$http.get('/members')
 	.success(function(data, status, headers, config){
 		$scope.members = data;
+	})
+	.error(function(data, status, headers, config){
+	});
+
+	$http.get('/amount')
+	.success(function(data, status, headers, config){
+		$scope.amountTag = data;
 	})
 	.error(function(data, status, headers, config){
 	});
@@ -108,6 +115,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		.error(function(data, status, headers, config){
 		});
 
+		$scope.amountTag= $scope.amount;
 		$scope.amount= '';
 
 	};

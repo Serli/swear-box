@@ -9,6 +9,7 @@ PUT     /increase/:id               @controllers.Welcome.increaseDebt(id: Long)
 
 # === Admin page
 GET     /admin                      controllers.Welcome.admin()
+GET     /amount                 	@controllers.Administration.amount()
 GET     /members                 	@controllers.Administration.listPerson()
 POST    /member            		    @controllers.Administration.addPerson()
 DELETE  /members/:id                @controllers.Administration.deletePerson(id: Long)
