@@ -20,20 +20,20 @@ public final class PersonDAO{
 
     /**
      * Add a person on the Person table
-     * link the user with it
+     * Link the user with it
      * @param Person : person to add
      * @param String : user id
      */
     public static void add(Person p,String id){
-        //enregistrement de la personne
+        //Recording a person
         JPA.em().persist(p);
 
-        //recuperation de l'utilisateur
+        //Get the user
         Consumer user = JPA.em().find(Consumer.class,id); 
         user.setPerson(p);
         p.setUser(user);
 
-        //liaison entre les deux
+        //Link the user with the person
         JPA.em().flush();
     }
 
@@ -43,22 +43,22 @@ public final class PersonDAO{
      * @param String : user id
      */
 	public static void delete(long id,String email){
-		//recuperation de la personne
+		//Get the person
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
-		//suppression des clé dans U_P
+		//Delete keys in U_P
 		if (user.getPeople().contains(pbd)){
 			for (Consumer u: pbd.getUsers()){	
 				u.getPeople().remove(pbd);
 			}
 		}
 	
-		//referesh BD
+		//Refresh the DB
 		JPA.em().flush();	
 		
-		//suppression de la personne
+		//Delete the person
 		JPA.em().remove(pbd);
 	}
 
@@ -83,95 +83,87 @@ public final class PersonDAO{
 	}
 
     /**
-     * discharge a person on the Person table
+     * Discharge a person on the Person table
      * @param long : person id
      * @param String : user id
      */
 	public static void discharge(long id,String email){
-		//recuperation de la personne
+		//Get the person
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
-		//suppression des clé dans U_P
-		
-		//si l'utilisateur a les droits
+		//If the user can
 		if (user.getPeople().contains(pbd)){
 			pbd.setDebt(0);
 		}
 	
-		//referesh BD
+		//Refresh DB
 		JPA.em().flush();	
-		
 	}
 	
 	
 	/**
-     * update a person on the Person table
+     * Update a person on the Person table
      * @param long : person id
      * @param String : user id
      * @param String : new name
      * @param String : new firstname
      */
 	public static void updateNameFirstname(long id,String email,String vName, String vFirstname){
-		//recuperation de la personne
+		//Get the person
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
-		//suppression des clé dans U_P
-		
-		//si l'utilisateur a les droits
+		//If the user can
 		if (user.getPeople().contains(pbd)){
 			pbd.setName(vName);
 			pbd.setFirstname(vFirstname);
 		}
-	
-		//referesh BD
+
+		//Refresh BD
 		JPA.em().flush();	
-		
 	}
 	
 	/**
-     * update a person picture on the Person table
+     * Update a person picture on the Person table
      * @param long : person id
      * @param String : user id
      * @param String : new picture path
      */
 	public static void updatePicture(long id,String email,String vPicture){
-		//recuperation de la personne
+		//Get the person
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
-		//suppression des clé dans U_P
-		
-		//si l'utilisateur a les droits
+		//If the user can
 		if (user.getPeople().contains(pbd)){
 			pbd.setAdrImage(vPicture);
 		}
 	
-		//referesh BD
+		//Refresh BD
 		JPA.em().flush();	
-		
 	}
+
 	 /**
      * Increase a person debt
      * @param long : person id
      * @param String : user id
      */
     public static void incrementDebt(long id,String email){
-		//recuperation de la personne
+		//Get the person
 		Query query = JPA.em().createQuery("Select p from Person p where p.idPerson =" + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
-		//si l'utilisateur a les droits
+		//If the user can
 		if (user.getPeople().contains(pbd)){
 			pbd.setDebt(pbd.getDebt()+user.getAmount());
 		}
 	
-		//referesh BD
+		//Refresh BD
 		JPA.em().flush();	
     }
 	
