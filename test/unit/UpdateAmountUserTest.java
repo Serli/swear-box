@@ -12,20 +12,22 @@ import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
 
 
+
+
 /**
- * Test for AddUser function
+ * Test UpadteAmountUser function
  * @author Geoffrey
  *
  */
-public class AddUserTest {
+public class UpdateAmountUserTest {
 
-	private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
-	
+    private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
+    
     /**
-     * test AddUser for an user
+     * Test adding an user
      */
     @Test
-    public void addUser() {
+    public void updateAmountUser() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()
         {
             public void run()
@@ -38,9 +40,11 @@ public class AddUserTest {
                         String email = "test@gmail.com";
                         consumerDAO.add(email);
 
+                        consumerDAO.updateAmount(email, 20);
+                        
                         //Recherche de l'utilisateur dans la base de données
                         Consumer u = JPA.em().find(Consumer.class, email);
-                        assertThat(u).isNotEqualTo(null);
+                        assertThat(u.getAmount()==20);
 
                         JPA.em().remove(u);
                     }

@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
+import models.Consumer;
+import models.Person;
 import play.db.jpa.JPA;
-import models.*;
+
+import com.google.inject.Singleton;
 
 /**
  * Groups the operations on the Person table

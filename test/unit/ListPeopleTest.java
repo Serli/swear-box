@@ -6,14 +6,14 @@ import static play.test.Helpers.running;
 
 import java.util.List;
 
+import models.Consumer;
+import models.Person;
+
 import org.junit.Test;
 
-import com.google.inject.Inject;
-
+import play.db.jpa.JPA;
 import dao.PersonDAO;
 import dao.PersonDAOImpl;
-import play.db.jpa.JPA;
-import models.*;
 
 /**
  * Test ListPeople function

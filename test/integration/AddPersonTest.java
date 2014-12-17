@@ -1,16 +1,18 @@
 package integration;
 
-import org.junit.*;
+import static org.fest.assertions.Assertions.assertThat;
+import static play.test.Helpers.fakeApplication;
+import static play.test.Helpers.inMemoryDatabase;
+import static play.test.Helpers.running;
+import models.Consumer;
+import models.Person;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import org.junit.Test;
 
-import dao.*;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
-import models.*;
+import dao.PersonDAO;
+import dao.PersonDAOImpl;
 
 /**
  * Test for AddPerson function
