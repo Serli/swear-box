@@ -68,7 +68,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
-			console.log("success");
 			$('#deleteMember').modal('hide');
 			$http.get('/members')
 			.success(function(data, status, headers, config){
@@ -78,7 +77,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 			});
 		})
 		.error(function(data, status, headers, config){
-			console.log("error");
 		});
 
 	};
@@ -129,7 +127,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 				firstname : $scope.modMember.firstname
 		};			
 
-		$http.put('/member/'+$scope.idt, dataObj)
+		$http.put('/member/name/'+$scope.idt, dataObj)
 		.success(function(data, status, headers, config){
 			$('#modifyMember').modal('hide');
 			$http.get('/members')
@@ -172,6 +170,31 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.firstname = firstname;
 		$scope.name = name;
 		$('#dischargeMember').modal('show');
+	};
+
+	//----------------------------------------------------------------------
+	$scope.browseImage = function () {
+		$('#hiddenfile').click();
+	};
+	
+	//----------------------------------------------------------------------
+	$scope.onChange = function (idt) {
+		var dataObj = {
+				picture : "images/"+$('#hiddenfile').val()
+		};			
+
+		$http.put('/member/picture/'+idt, dataObj)
+		.success(function(data, status, headers, config){
+			$http.get('/members')
+			.success(function(data, status, headers, config){
+				$scope.members = data;
+			})
+			.error(function(data, status, headers, config){
+			});
+		})
+		.error(function(data, status, headers, config){
+		});
+
 	};
 	
 }]);

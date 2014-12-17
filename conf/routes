@@ -15,7 +15,8 @@ POST    /member            		    @controllers.Administration.addPerson()
 DELETE  /members/:id                @controllers.Administration.deletePerson(id: Long)
 PUT     /discharge/:id              @controllers.Administration.discharge(id: Long)
 PUT     /user                       @controllers.Administration.updateAmount()
-PUT     /member/:id                 @controllers.Administration.updateNameFirstname(id: Long)
+PUT     /member/name/:id            @controllers.Administration.updateNameFirstname(id: Long)
+PUT     /member/picture/:id			@controllers.Administration.updatePicture(id: Long)
 
 # === Help page
 GET 	/help						controllers.Welcome.help()

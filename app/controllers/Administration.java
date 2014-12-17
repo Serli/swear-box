@@ -175,11 +175,22 @@ public class Administration extends JavaController {
      */
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result updatePicture(Long id, String vPicture) {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
-        String email = googleProfile.getEmail();
-        personDAO.updatePicture(id,email, vPicture);
-        return ok();
+    public Result updatePicture(Long id) {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            String picture = json.findPath("picture").textValue();
+            if(picture==null) {
+                return badRequest("Missing parameter [picture]");
+            } else {
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
+                personDAO.updatePicture(id,email, picture);
+                return ok();
+            }
+        }
+
     }
 
 }
