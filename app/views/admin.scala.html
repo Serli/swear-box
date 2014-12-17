@@ -26,7 +26,7 @@
                 <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
                 <td>
 
-                  <a ng-click="dischargeMember(member.idPerson)" title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
+                  <a ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)" title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
 
                   <a ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
@@ -113,7 +113,7 @@
 
       <div id="deleteMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-          <form ng-submit="deleteMember()">
+          <form ng-submit="dischargeMember(member.idPerson)">
             <div class="modal-content">
 
               <div class="modal-header">
@@ -135,6 +135,37 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" title="Modifier un membre" class="btn btn-success">Supprimer</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div id="dischargeMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <form ng-submit="dischargeMember()">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">X</button>
+                <label class="modal-title">Acquitter un membre</label>
+              </div>
+
+              <div class="modal-body">
+                <p>
+                  Prénom :
+                  <input readonly="true" type="firstname" class="form-control" placeHolder="{{firstname}}"/>
+                </p>
+                <p>
+                  Nom :
+                  <input readonly="true" type="name" class="form-control" placeHolder="{{name}}"/>
+                </p>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" title="Modifier un membre" class="btn btn-success">Acquitter</button>
               </div>
 
             </div>

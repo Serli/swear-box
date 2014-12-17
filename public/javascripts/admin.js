@@ -76,9 +76,10 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	
 	//Discharge the debt of member
 	//----------------------------------------------------------------------
-	$scope.dischargeMember = function (idt) {
-		$http.put('/discharge/'+idt, {})
+	$scope.dischargeMember = function () {
+		$http.put('/discharge/'+$scope.idt, {})
 		.success(function(data, status, headers, config){
+			$('#dischargeMember').modal('hide');
 			$http.get('/members')
 			.success(function(data, status, headers, config){
 				$scope.members = data;
@@ -152,6 +153,15 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.firstname = firstname;
 		$scope.name = name;
 		$('#deleteMember').modal('show');
+	};
+	
+	//Open the modify modal
+	//----------------------------------------------------------------------
+	$scope.openDischargeModal = function (idt, firstname, name) {
+		$scope.idt = idt;
+		$scope.firstname = firstname;
+		$scope.name = name;
+		$('#dischargeMember').modal('show');
 	};
 	
 }]);
