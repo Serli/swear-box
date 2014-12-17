@@ -2,6 +2,8 @@ package integration;
 
 import org.junit.*;
 
+import com.google.inject.Inject;
+
 import dao.*;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -15,6 +17,8 @@ import models.*;
  */
 public class AddPersonTest{
 
+	@Inject
+    private PersonDAO personDAO;
     /**
      * Test for AddPerson function
      * Verification of the link between the two tables
@@ -39,7 +43,7 @@ public class AddPersonTest{
                         assertThat(ubd.getEmail()).isEqualTo(u.getEmail());
 
                         //ajout de la personne
-                        PersonDAO.add(p,u.getEmail());
+                        personDAO.add(p,u.getEmail());
 
                         //recuperation de la personne en bd
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Toto'").getSingleResult();

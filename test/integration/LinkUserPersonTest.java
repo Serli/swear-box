@@ -1,6 +1,8 @@
 package integration;
 import org.junit.*;
 
+import com.google.inject.Inject;
+
 import dao.*;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -14,6 +16,9 @@ import models.*;
  */
 public class LinkUserPersonTest{
 
+	@Inject
+    private PersonDAO personDAO;
+	
     /**
      * Test if the class LinkUserPerson correctly binds a person to a user
      */
@@ -39,7 +44,7 @@ public class LinkUserPersonTest{
                         Consumer u2bd=JPA.em().find(Consumer.class,"Lier-email2@email");
 
                         //ajout de la personne a un utilisateur
-                        PersonDAO.add(p,u1.getEmail());
+                        personDAO.add(p,u1.getEmail());
 
                         //recuperation de la personne
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Lier-Toto'").getSingleResult();

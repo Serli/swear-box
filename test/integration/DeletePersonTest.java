@@ -1,6 +1,8 @@
 package integration;
 import org.junit.*;
 
+import com.google.inject.Inject;
+
 import dao.*;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -14,6 +16,8 @@ import models.*;
  */
 public class DeletePersonTest{
 
+	@Inject
+    private PersonDAO personDAO;
     /**
      * Test removal of a person for two users
      * Verification of the link between the two tables
@@ -41,7 +45,7 @@ public class DeletePersonTest{
                         Consumer u2bd=JPA.em().find(Consumer.class,"Suppr-email2@email");
 
                         //ajoute la personne et lie la personne a un autre utilisateur
-                        PersonDAO.add(p,u1.getEmail());
+                        personDAO.add(p,u1.getEmail());
                         Person pbd= (Person)JPA.em().createQuery("Select p FROM Person p WHERE p.name='Suppr-Toto'").getSingleResult();
                         LinkUserPerson.linkUserPerson(pbd.getIdPerson(),u2.getEmail());
 
@@ -61,7 +65,7 @@ public class DeletePersonTest{
                         JPA.em().flush();
 
                         //suppression de la personne pour les deux utilisateurs
-                        PersonDAO.delete(pbd.getIdPerson(),u1bd.getEmail());
+                        personDAO.delete(pbd.getIdPerson(),u1bd.getEmail());
 
                         //recuperation des utilisateurs en bd apres suppression
                         u1bd=JPA.em().find(Consumer.class,"Suppr-email1@email");
