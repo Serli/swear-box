@@ -2,7 +2,7 @@ var adminApp = angular.module('adminApp',[]);
 
 adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
-	//declaration of the objects
+	//Objects declaration
 	//----------------------------------------------------------------------
 	$scope.members = {};
 	$scope.newMember = {};

@@ -3,7 +3,7 @@
 @importedCss = { <link href="@routes.Assets.at("stylesheets/admin.css")" rel="stylesheet" media="screen">}
 
 @main("ISwear-Box", importedCss) {
-  @tags.navbar(isActive, numPage)
+  @templates.navbar(isActive, numPage)
 } {  
   <div class="container" ng-app="adminApp">
     <div class="row" ng-controller="listCtrl">
@@ -20,7 +20,7 @@
       
         <tbody ng-repeat="member in members">
 
-              <tr> <!-- Partie HTML à ajouter dynamiquement à chaque ajout de membre -->
+              <tr> <!-- Dynamic HTML part to add after every member addition -->
                 <td><img ng-src="@routes.Assets.at("{{member.picture}}")" alt="photo01" class="dimension-img"></td>
                 <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                 <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
