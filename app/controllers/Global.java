@@ -16,6 +16,8 @@ import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
 import dao.PersonDAO;
 import dao.PersonDAOImpl;
+import dao.StatisticsDAO;
+import dao.StatisticsDAOImpl;
 
 /**
  * Performs tasks in launching the application
@@ -50,6 +52,7 @@ public class Global extends GlobalSettings{
             protected void configure() {
                 bind(ConsumerDAO.class).to(ConsumerDAOImpl.class);
                 bind(PersonDAO.class).to(PersonDAOImpl.class);
+                bind(StatisticsDAO.class).to(StatisticsDAOImpl.class);
             }
         });
     }

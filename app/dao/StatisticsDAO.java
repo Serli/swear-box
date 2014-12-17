@@ -5,11 +5,6 @@ package dao;
  * @author Geoffrey
  *
  */
-public final class StatisticsDAO {
-
-    private StatisticsDAO() {
-    }
-    
-    
+public interface StatisticsDAO {
     
 }
