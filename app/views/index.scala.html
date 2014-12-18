@@ -6,43 +6,40 @@
   @templates.navbar(isActive, numPage)
 } {  
 	<div class="container">
-
-    	<div class="row">
-    		<div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
-					<div class="border-row">
-						<h4>L’application</h4>
-						<h5>L’application I-Swear Box a pour but de remplacer la traditionnelle “tirelire à gros mots”.
-							</br> L'application permet d'enregistrer tout les membres sa famille. Par un simple geste, l'utilisateur peut ensuite incrémenter la dette d'un membre d'une valeur choisie préalablement. Enfin, lorsque le membre a payé sa dette, un bouton permet de l'acquitter et de remettre sa dette à zéro.
-							</br> De plus, des statistiques permettent de voir l’évolution dans le temps du nombre de gros mots 
-							prononcés par un membre de la famille.</h5>
-					</div>
-
-					<div class="border-row">
+	<p>
+		<h1 class="form-signin-heading h-center">Connexion</h1>
+	</p>
+    	<div class="row separation-actions">
+    		<div class="col-xs-10 col-sm-5 col-sm-offset-1">
+                <div class="well well-sm ">
+                
+                	<div>
 						<h4>À quoi ça sert une tirelire à gros mots ?</h4>
-						<h5>Le but d’une tirelire à gros mots est d'infliger des pénalités aux membres d'une famille 
-							quand ils prononcent des gros mots, ceci afin de corriger de mauvaises habitudes de langage.</h5>
+						<ul>
+						    <li><h5>Infliger des pénalités aux membres de la famille.</h5></li>
+							<li><h5>Corriger de mauvaises habitudes de langage.</h5></li>
+						</ul>
+					</div>
+                <hr class="separator">
+					<div>
+						<h4>I-Swear Box</h4>
+						<ul>
+						    <li><h5>Version numérique de la traditionnelle “tirelire à gros mots”.</h5></li>
+							<li><h5>Enregistrez les membres de votre famille.</h5></li>
+							<li><h5>Par un simple geste, incrémentez la dette d'un membre.</h5></li>
+							<li><h5>Observez l’évolution dans le temps.</h5></li>
+						</ul>
 					</div>
 
-					<div>
-						<h4>Pourquoi une application ?</h4>
-						<h5>L'objectif de l'application est de proposer aux familles une version numérique de la tirelire
-							à gros mots.
-							</br> En effet, la tirelire prenant une certaine place, elle n'est généralement utilisée par une famille que dans son domicile.
-							</br> De plus, la personne jurant ne possède pas toujours de quoi acquitter sa dette dans l'instant. Dans ce cas, il faut tenir les comptes sur un bout de papier.
-							</br>I-Swear Box centralise et simplifie ce fonctionnement tout en permettant l'utilisation de la tirelire peu importe l'endroit et le moment.</h5>
-					</div>	
+
 
 				</div>
-			</div>
-
-			<div class="row">
-	      <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-2">
+		</div>
+	      <div class="col-xs-10 col-sm-5">
 					<div class="well well-sm">
 
-            	<h2 class="form-signin-heading h-center">Connexion avec votre compte google.</h2>
-						
-              <div class="h-center">
+            	<h3 class="form-signin-heading h-center">Connexion avec votre compte google</h3>
+              <div class="h-center ">
 								<a href=@urlGoogle>
 									<button  class="btn btn-login btn-danger"> 
 										<img src=@routes.Assets.at("images/googleIcone.png") class="btn-height-img"/> GOOGLE
@@ -53,6 +50,6 @@
           </div>
 	      </div>
 	    </div>
-    
+
   </div>   
 }
