@@ -20,7 +20,7 @@
       
         <tbody ng-repeat="member in members">
 
-              <tr>
+              <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
                 <td><img ng-src="@routes.Assets.at("{{member.picture}}")" alt="photo01" class="dimension-img" ng-click="browseImage()">
                   <input type="file" id="hiddenfile" style="display:none" onChange="angular.element(this).scope().onChange(angular.element(this).scope().member.idPerson)"/>
               </td>
@@ -38,9 +38,18 @@
               </tr>
 
         </tbody>
-
       </table>
-
+      
+	  	<div ng-if="members.length > itemsPerPage" class="h-center" >
+	  	
+			<ul ng-repeat="i in range"  class="pagination">
+ 			
+        		<li><a ng-click="pagination($index)" href="#">{{i}}</a></li>
+   
+    		</ul>
+	  	</div>
+	  
+	  
       <div class="container">
         <form ng-submit="addMember()">
           <div class="row separation-actions">

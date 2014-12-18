@@ -8,11 +8,19 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.newMember = {};
 	$scope.modMember = {};
 
+	$scope.range = [];
+	$scope.itemsPerPage = 5;
+	$scope.numPage = 0;
+	
 	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
 	.success(function(data, status, headers, config){
 		$scope.members = data;
+		$scope.range = [];
+		for (var i=0; i<$scope.members.length/$scope.itemsPerPage; i++) {
+		    $scope.range.push(i+1);
+		  }
 	})
 	.error(function(data, status, headers, config){
 	});
@@ -24,6 +32,25 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
+	//----------------------------------------------------------------------
+	$scope.getMembers = function() {
+		$http.get('/members')
+		.success(function(data, status, headers, config){
+			$scope.members = data;				
+			$scope.range = [];
+			for (var i=0; i<$scope.members.length/$scope.itemsPerPage; i++) {
+			    $scope.range.push(i+1);
+			  }
+		})
+		.error(function(data, status, headers, config){
+		});
+	}
+	
+	//----------------------------------------------------------------------
+	$scope.pagination = function(id) {
+		$scope.numPage = id;
+	}
+	
 	//Checks if the pressed key is a number, a tab or <-
 	//----------------------------------------------------------------------
 	$scope.isNumeric = function(event) {
@@ -46,12 +73,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.post('/member', dataObj)
 		.success(function(data, status, headers, config){
-			$http.get('/members')
-			.success(function(data, status, headers, config){
-				$scope.members = data;
-			})
-			.error(function(data, status, headers, config){
-			});
+			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -64,17 +86,16 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//Deleted a member in the database through the server
 	//----------------------------------------------------------------------
 	$scope.deleteMember = function () {
+		if( ($scope.members.length % $scope.itemsPerPage == 1) && ($scope.idx+1 == $scope.members.length)) {
+			$scope.numPage = $scope.numPage-1;
+		}
+		
 		$scope.members.splice($scope.idx,1);
 
 		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
 			$('#deleteMember').modal('hide');
-			$http.get('/members')
-			.success(function(data, status, headers, config){
-				$scope.members = data;
-			})
-			.error(function(data, status, headers, config){
-			});
+			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -87,12 +108,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$http.put('/discharge/'+$scope.idt, {})
 		.success(function(data, status, headers, config){
 			$('#dischargeMember').modal('hide');
-			$http.get('/members')
-			.success(function(data, status, headers, config){
-				$scope.members = data;
-			})
-			.error(function(data, status, headers, config){
-			});
+			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -130,12 +146,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$http.put('/member/name/'+$scope.idt, dataObj)
 		.success(function(data, status, headers, config){
 			$('#modifyMember').modal('hide');
-			$http.get('/members')
-			.success(function(data, status, headers, config){
-				$scope.members = data;
-			})
-			.error(function(data, status, headers, config){
-			});
+			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -190,12 +201,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.put('/member/picture/'+idt, dataObj)
 		.success(function(data, status, headers, config){
-			$http.get('/members')
-			.success(function(data, status, headers, config){
-				$scope.members = data;
-			})
-			.error(function(data, status, headers, config){
-			});
+			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});

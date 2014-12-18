@@ -23,7 +23,7 @@
 
   			<tbody ng-repeat="member in members">
 
-  				<tr>
+  				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
   					<!-- Dynamic HTML part to add for every member -->
   					<td><img ng-src="@routes.Assets.at("{{member.picture}}")" alt="photo01" class="dimension-img"></td>
                       <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
@@ -36,8 +36,17 @@
   				</tr>
 
   			</tbody>
-
   		</table>
+
+	  	<div ng-if="members.length > itemsPerPage" class="h-center" >
+	  	
+			<ul ng-repeat="i in range"  class="pagination">
+ 			
+        		<li><a ng-click="pagination($index)" href="#">{{i}}</a></li>
+   
+    		</ul>
+	  	</div>
+
 
   	</div>
   </div>
