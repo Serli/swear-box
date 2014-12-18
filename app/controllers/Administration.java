@@ -24,6 +24,8 @@ import models.*;
  */
 @Singleton
 public class Administration extends JavaController {
+	
+	private static final String jsonMess = "Expecting Json data";
 
     @Inject
     private ConsumerDAO consumerDAO;
@@ -42,7 +44,7 @@ public class Administration extends JavaController {
     public Result addPerson() {
         JsonNode json = request().body().asJson();
         if(json == null) {
-            return badRequest("Expecting Json data");
+            return badRequest(jsonMess);
         } else {
             String name = json.findPath("name").textValue();
             String firstname = json.findPath("firstname").textValue();
@@ -125,7 +127,7 @@ public class Administration extends JavaController {
     public Result updateAmount() {
         JsonNode json = request().body().asJson();
         if(json == null) {
-            return badRequest("Expecting Json data");
+            return badRequest(jsonMess);
         } else {
             String amount = json.findPath("amount").textValue();
             if(amount == null) {
@@ -151,7 +153,7 @@ public class Administration extends JavaController {
     public Result updateNameFirstname(Long id) {
         JsonNode json = request().body().asJson();
         if(json == null) {
-            return badRequest("Expecting Json data");
+            return badRequest(jsonMess);
         } else {
             String name = json.findPath("name").textValue();
             String firstname = json.findPath("firstname").textValue();
@@ -178,7 +180,7 @@ public class Administration extends JavaController {
     public Result updatePicture(Long id) {
         JsonNode json = request().body().asJson();
         if(json == null) {
-            return badRequest("Expecting Json data");
+            return badRequest(jsonMess);
         } else {
             String picture = json.findPath("picture").textValue();
             if(picture==null) {

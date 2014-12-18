@@ -18,7 +18,7 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public final class PersonDAOImpl implements PersonDAO {
-	private final String queryPerson = "Select p from Person p where p.idPerson =";
+	private static final String queryPerson = "Select p from Person p where p.idPerson =";
 
     /**
      * Add a person on the Person table
