@@ -77,7 +77,7 @@ public final class PersonDAOImpl implements PersonDAO {
 	    {
 	        public int compare(Person o1, Person o2)
 	        {
-	            return o1.getFirstname().compareTo(o2.getFirstname());
+	            return o1.getFirstname().toLowerCase().compareTo(o2.getFirstname().toLowerCase());
 	        }
 	    });
 	    
