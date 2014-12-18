@@ -17,7 +17,7 @@ import dao.ConsumerDAOImpl;
  * @author Geoffrey
  *
  */
-public class AddUserTest {
+public class AddUSerTest {
 
 	private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
 	
