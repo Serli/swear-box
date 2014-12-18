@@ -17,7 +17,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * Add a new user if he doesn't exist
      * @param String : User email 
      */
-    public void add(String email) {
+    public boolean add(String email) {
         //Get the user
         Consumer u = JPA.em().find(Consumer.class, email);
         
@@ -25,7 +25,9 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         if (u == null) {
             u = new Consumer(email);
             JPA.em().persist(u);
+            return true;
         }
+        return false;
     }
     
     /**

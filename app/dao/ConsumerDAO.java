@@ -11,7 +11,7 @@ public interface ConsumerDAO {
      * @param String : User email 
      */
 
-    public void add(String email);
+    public boolean add(String email);
     
     /**
      * Update the user amount

@@ -1,9 +1,12 @@
 package controllers;
 
 
+import models.Person;
+
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
+
 
 
 
@@ -13,6 +16,7 @@ import com.google.inject.Singleton;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
+import play.Play;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
@@ -54,13 +58,18 @@ public class Welcome extends JavaController {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
 
         //Add the user to the data if it is needed
-        String name = googleProfile.getFirstName();
+        String firstname = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
-        consumerDAO.add(email);
-
-        return ok(views.html.user.render(name, new Boolean(true), new Integer(0)));
+        if(consumerDAO.add(email)){
+            //Add a member with the name and the firstname of the user
+            String name = googleProfile.getFamilyName();
+            final String picture = Play.application().configuration().getString("AvatarDefault");
+            Person person = new Person(name,firstname,0,picture);
+            personDAO.add(person,email);
+        }
+        return ok(views.html.user.render(firstname, new Boolean(true), new Integer(0)));
     }
-    
+
 
     /**
      * Action called for increase a person debt
