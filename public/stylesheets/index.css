@@ -9,12 +9,7 @@
 
 .btn-height-img {
 	height:40px
-}
-
-.border-row {
-    border-bottom: 1px solid #ccc;
-}
-.separator {
+}.separator {
 	border: 0;
 	height: 0;
 	border-bottom: 2px solid #e5e5e5;
