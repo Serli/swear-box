@@ -24,7 +24,7 @@ import com.google.inject.Singleton;
 public final class PersonDAOImpl implements PersonDAO {
     private static final String QUERY_PERSON = "Select p from Person p where p.idPerson =";
 
-    private Cloudinary cloudinary = new Cloudinary();
+    private Cloudinary cloudinary = com.cloudinary.Singleton.getCloudinary();
 
     /**
      * Add a person on the Person table

@@ -7,6 +7,8 @@ import play.Application;
 import play.GlobalSettings;
 import play.Play;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.SingletonManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -55,6 +57,11 @@ public class Global extends GlobalSettings{
             }
         });
         
+        final String cloudUrl = Play.application().configuration().getString("cloudinaryURL");
+        
+        SingletonManager manager = new SingletonManager();
+        manager.setCloudinary(new Cloudinary(cloudUrl));
+        manager.init();
     }
 
     @Override

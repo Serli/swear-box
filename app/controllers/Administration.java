@@ -42,7 +42,7 @@ public class Administration extends JavaController {
     @Inject
     private PersonDAO personDAO;
 
-    private Cloudinary cloudinary = new Cloudinary();
+    private Cloudinary cloudinary = com.cloudinary.Singleton.getCloudinary();
 
     /**
      * Add a person to a connected user
