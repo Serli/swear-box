@@ -27,6 +27,11 @@ import dao.PersonDAO;
 @Singleton
 public class Welcome extends JavaController {
 
+    private static final Integer USER_PAGE = 0;
+    private static final Integer STATISTICS_PAGE = 1;
+    private static final Integer ADMIN_PAGE = 2;
+    private static final Integer HELP_PAGE = 3;
+    
     @Inject
     private ConsumerDAO consumerDAO;
     
@@ -42,7 +47,7 @@ public class Welcome extends JavaController {
     public static Result index() {
         if(!isConnected()) {
             final String urlGoogle = getRedirectAction("Google2Client").getLocation();
-            return ok(index.render(urlGoogle, new Boolean(false), new Integer(0)));
+            return ok(index.render(urlGoogle, new Boolean(false), USER_PAGE));
         }
         return redirect(routes.Welcome.user());
     }
@@ -68,7 +73,7 @@ public class Welcome extends JavaController {
             Person person = new Person(name,firstname,0,picture);
             personDAO.add(person,email);
         }
-        return ok(views.html.user.render(firstname, new Boolean(true), new Integer(0)));
+        return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
     }
 
 
@@ -91,7 +96,7 @@ public class Welcome extends JavaController {
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result admin() {
-        return ok(views.html.admin.render(new Boolean(true), new Integer(2)));
+        return ok(views.html.admin.render(new Boolean(true), ADMIN_PAGE));
     }
 
     /**
@@ -99,7 +104,7 @@ public class Welcome extends JavaController {
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     public static Result help() {
-        return ok(views.html.help.render(isConnected(), new Integer(3)));
+        return ok(views.html.help.render(isConnected(), HELP_PAGE));
     }
 
     /**
@@ -108,7 +113,7 @@ public class Welcome extends JavaController {
      */
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {
-        return ok(views.html.statistics.render(new Boolean(true), new Integer(1)));
+        return ok(views.html.statistics.render(new Boolean(true), STATISTICS_PAGE));
     }
 
     /**

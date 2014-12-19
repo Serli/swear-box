@@ -24,7 +24,7 @@ public interface PersonDAO{
      * @param String : user id
      */
 
-	public void delete(long id,String email);
+    public void delete(long id,String email);
 
 
     /**
@@ -32,35 +32,35 @@ public interface PersonDAO{
      * @param String : user id
      * @return List<Person> : list of persons
      */
-	public List<Person> listByUser(String emailUser);
+    public List<Person> listByUser(String emailUser);
 
     /**
      * Discharge a person on the Person table
      * @param long : person id
      * @param String : user id
      */
-	public void discharge(long id,String email);
+    public void discharge(long id,String email);
 
-	
-	
-	/**
+
+
+    /**
      * Update a person on the Person table
      * @param long : person id
      * @param String : user id
      * @param String : new name
      * @param String : new firstname
      */
-	public void updateNameFirstname(long id,String email,String vName, String vFirstname);
-	
-	/**
+    public void updateNameFirstname(long id,String email,String vName, String vFirstname);
+
+    /**
      * Update a person picture on the Person table
      * @param long : person id
      * @param String : user id
      * @param String : new picture path
      */
-	public void updatePicture(long id,String email,String vPicture);
-	
-	 /**
+    public void updatePicture(long id,String email,String vPicture);
+
+    /**
      * Increase a person debt
      * @param long : person id
      * @param String : user id

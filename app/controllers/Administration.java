@@ -11,6 +11,7 @@ import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
+import play.Logger;
 import play.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -32,17 +33,17 @@ import dao.PersonDAO;
  */
 @Singleton
 public class Administration extends JavaController {
-	
-	private static final String JSON_MESSG = "Expecting Json data";
+
+    private static final String JSON_MESSG = "Expecting Json data";
 
     @Inject
     private ConsumerDAO consumerDAO;
-    
+
     @Inject
     private PersonDAO personDAO;
-    
+
     private Cloudinary cloudinary = new Cloudinary();
-    
+
     /**
      * Add a person to a connected user
      * Use field informations to create a Person
@@ -61,8 +62,8 @@ public class Administration extends JavaController {
             if(name == null || firstname==null) {
                 return badRequest("Missing parameter [name] or [firstname]");	
             } else {
-            	String picture = cloudinary.url().format("png")
-            			  .generate(Play.application().configuration().getString("AvatarDefault"));
+                String picture = cloudinary.url().format("png")
+                        .generate(Play.application().configuration().getString("AvatarDefault"));
                 Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
@@ -177,9 +178,9 @@ public class Administration extends JavaController {
                 return ok();
             }
         }
-        
+
     }
-    
+
     /**
      * Update a person picture for a connected user
      * @param Long : user id 
@@ -189,22 +190,22 @@ public class Administration extends JavaController {
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result updatePicture(Long id) {
-    	MultipartFormData fd = request().body().asMultipartFormData();
-    	FilePart fp = fd.getFile("file");
-    	if (fp!= null){
-        	try {
-        		File f = fp.getFile();
-				Map uploadResult = cloudinary.uploader().upload(f,null);
-				Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        MultipartFormData fd = request().body().asMultipartFormData();
+        FilePart fp = fd.getFile("file");
+        if (fp!= null){
+            try {
+                File f = fp.getFile();
+                Map uploadResult = cloudinary.uploader().upload(f,null);
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
                 personDAO.updatePicture(id,email, (String)uploadResult.get("url"));
                 return ok();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	}
-    	return badRequest();
+            } catch (IOException e) {
+                Logger.info("IOException", e);
+                return badRequest(e.toString());
+            }
+        }
+        return badRequest();
     }
 
 }
