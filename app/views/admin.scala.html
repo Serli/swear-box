@@ -41,8 +41,7 @@
       </table>
       
 	  	<div ng-if="members.length > itemsPerPage" class="h-center" >
-	  	
-			<ul ng-repeat="i in range"  class="pagination">
+			  <ul ng-repeat="i in range"  class="pagination">
 
           <li ng-if="($index != numPage)">
             <a ng-click="pagination($index)" href="#">{{i}}</a>
@@ -120,7 +119,7 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ne pas modifier</button>
                 <button type="submit" title="Modifier un membre" class="btn btn-success">Modifier</button>
               </div>
 
@@ -141,17 +140,12 @@
 
               <div class="modal-body">
                 <p>
-                  Prénom :
-                  <input readonly="true" type="firstname" class="form-control" placeHolder="{{firstname}}"/>
-                </p>
-                <p>
-                  Nom :
-                  <input readonly="true" type="name" class="form-control" placeHolder="{{name}}"/>
+                  Êtes vous certain de vouloir supprimer <b>{{firstname}} {{name}}</b> de votre liste ?
                 </p>
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ne pas supprimer</button>
                 <button type="submit" title="Modifier un membre" class="btn btn-success">Supprimer</button>
               </div>
 
@@ -172,17 +166,12 @@
 
               <div class="modal-body">
                 <p>
-                  Prénom :
-                  <input readonly="true" type="firstname" class="form-control" placeHolder="{{firstname}}"/>
-                </p>
-                <p>
-                  Nom :
-                  <input readonly="true" type="name" class="form-control" placeHolder="{{name}}"/>
+                  Êtes vous certain de vouloir acquitter <b>{{firstname}} {{name}}</b> de sa dette ?
                 </p>
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ne pas acquitter</button>
                 <button type="submit" title="Modifier un membre" class="btn btn-success">Acquitter</button>
               </div>
 
