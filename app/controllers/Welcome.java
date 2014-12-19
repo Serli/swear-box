@@ -11,6 +11,10 @@ import org.pac4j.play.java.RequiresAuthentication;
 
 
 
+
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -34,6 +38,8 @@ public class Welcome extends JavaController {
     
     @Inject
     private PersonDAO personDAO;
+    
+    private Cloudinary cloudinary = new Cloudinary();
     
     /**
      * Action called when launching the app
@@ -62,8 +68,10 @@ public class Welcome extends JavaController {
         String email = googleProfile.getEmail();
         if(consumerDAO.add(email)){
             //Add a member with the name and the firstname of the user
+            String picture = cloudinary.url().format("png")
+                    .transformation(new Transformation().width(250).height(168).crop("fit"))
+                    .generate(Play.application().configuration().getString("AvatarDefault"));
             String name = googleProfile.getFamilyName();
-            final String picture = Play.application().configuration().getString("AvatarDefault");
             Person person = new Person(name,firstname,0,picture);
             personDAO.add(person,email);
         }
