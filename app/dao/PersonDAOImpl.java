@@ -18,7 +18,7 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public final class PersonDAOImpl implements PersonDAO {
-	private static final String queryPerson = "Select p from Person p where p.idPerson =";
+	private static final String QUERY_PERSON = "Select p from Person p where p.idPerson =";
 
     /**
      * Add a person on the Person table
@@ -46,7 +46,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
 	public void delete(long id,String email){
 		//Get the person
-		Query query = JPA.em().createQuery(queryPerson + id);
+		Query query = JPA.em().createQuery(QUERY_PERSON + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
@@ -91,7 +91,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
 	public void discharge(long id,String email){
 		//Get the person
-		Query query = JPA.em().createQuery(queryPerson + id);
+		Query query = JPA.em().createQuery(QUERY_PERSON + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
@@ -115,7 +115,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
 	public void updateNameFirstname(long id,String email,String vName, String vFirstname){
 		//Get the person
-		Query query = JPA.em().createQuery(queryPerson + id);
+		Query query = JPA.em().createQuery(QUERY_PERSON + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
@@ -138,7 +138,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
 	public void updatePicture(long id,String email,String vPicture){
 		//Get the person
-		Query query = JPA.em().createQuery(queryPerson + id);
+		Query query = JPA.em().createQuery(QUERY_PERSON + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
@@ -158,7 +158,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void incrementDebt(long id,String email){
 		//Get the person
-		Query query = JPA.em().createQuery(queryPerson + id);
+		Query query = JPA.em().createQuery(QUERY_PERSON + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		
