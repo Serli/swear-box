@@ -88,7 +88,7 @@
             <div class="pull-right col-xs-10 col-sm-5">
               <div class="input-group">
                 <span class="input-group-addon">Pénalité : {{amountTag}}</span>
-                <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="10" placeholder="Montant de la nouvelle pénalité" required>
+                <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="9" placeholder="Montant de la nouvelle pénalité" required>
                 <span class="input-group-addon">cts</span>
               </div>
             </div>
@@ -110,11 +110,11 @@
               <div class="modal-body">
                 <p>
                   Prénom :
-                  <input type="firstname" class="form-control" ng-model="modMember.firstname" placeHolder="{{firstname}}"/>
+                  <input type="firstname" maxlength="30" class="form-control" ng-model="modMember.firstname" placeHolder="{{firstname}}"/>
                 </p>
                 <p>
                   Nom :
-                  <input type="name" class="form-control" ng-model="modMember.name" placeHolder="{{name}}"/>
+                  <input type="name" maxlength="30" class="form-control" ng-model="modMember.name" placeHolder="{{name}}"/>
                 </p>
               </div>
 

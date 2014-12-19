@@ -182,7 +182,12 @@ public final class PersonDAOImpl implements PersonDAO {
 
         //If the user has rights
         if (user.getPeople().contains(pbd)){
-            pbd.setDebt(pbd.getDebt()+user.getAmount());
+            if(Integer.MAX_VALUE-pbd.getDebt()>user.getAmount()) {
+                pbd.setDebt(pbd.getDebt()+user.getAmount());
+            }
+            else {
+                pbd.setDebt(Integer.MAX_VALUE);
+            }
         }
 
         //Refresh DB
