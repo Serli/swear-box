@@ -57,7 +57,7 @@ public class Global extends GlobalSettings{
             }
         });
         
-        final String cloudUrl = Play.application().configuration().getString("cloudinaryURL");
+        final String cloudUrl = System.getenv("CLOUDINARY_URL");
         
         SingletonManager manager = new SingletonManager();
         manager.setCloudinary(new Cloudinary(cloudUrl));
