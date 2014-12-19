@@ -31,15 +31,15 @@ public class Welcome extends JavaController {
     private static final Integer STATISTICS_PAGE = 1;
     private static final Integer ADMIN_PAGE = 2;
     private static final Integer HELP_PAGE = 3;
-    
+
     @Inject
     private ConsumerDAO consumerDAO;
-    
+
     @Inject
     private PersonDAO personDAO;
-    
+
     private Cloudinary cloudinary = new Cloudinary();
-    
+
     /**
      * Action called when launching the app
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
@@ -84,7 +84,7 @@ public class Welcome extends JavaController {
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result increaseDebt(Long id) {
-    	Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
         personDAO.incrementDebt(id,email);
         return ok();
@@ -117,9 +117,9 @@ public class Welcome extends JavaController {
     }
 
     /**
-    * Method which get the user google profile and return if the user is connected
-    * @return Boolean : true = User connected
-    */
+     * Method which get the user google profile and return if the user is connected
+     * @return Boolean : true = User connected
+     */
     private static Boolean isConnected() {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         return !(googleProfile == null);
