@@ -1,4 +1,5 @@
 package controllers;
+import com.cloudinary.*;
 
 import org.pac4j.core.client.Clients;
 import org.pac4j.oauth.client.Google2Client;
@@ -55,6 +56,7 @@ public class Global extends GlobalSettings{
                 bind(StatisticsDAO.class).to(StatisticsDAOImpl.class);
             }
         });
+        
     }
 
     @Override

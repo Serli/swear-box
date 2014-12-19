@@ -190,16 +190,14 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	
 	//----------------------------------------------------------------------
 	$scope.onChange = function (idt) {
-		var filePath = $('#hiddenfile').val();
-		if(filePath.match(/fakepath/)) {
-            filePath = filePath.replace(/C:\\fakepath\\/i, '');
-        }
-		console.log(filePath);
-		var dataObj = {
-				picture : "images/"+filePath
-		};			
+		var file = document.getElementById('hiddenfile').files[0];
 
-		$http.put('/member/picture/'+idt, dataObj)
+		var fd = new FormData();
+		fd.append('file',file);		
+		$http.put('/member/picture/'+idt, fd, {
+			transformRequest: angular.identity,
+			headers: {'Content-Type': undefined}
+		})
 		.success(function(data, status, headers, config){
 			$scope.getMembers();
 		})

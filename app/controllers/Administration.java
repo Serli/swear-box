@@ -1,7 +1,12 @@
 package controllers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -15,6 +20,8 @@ import org.pac4j.play.java.RequiresAuthentication;
 import play.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import models.*;
 
@@ -33,6 +40,8 @@ public class Administration extends JavaController {
     @Inject
     private PersonDAO personDAO;
     
+    private Cloudinary cloudinary = new Cloudinary();
+    
     /**
      * Add a person to a connected user
      * Use field informations to create a Person
@@ -49,9 +58,11 @@ public class Administration extends JavaController {
             String name = json.findPath("name").textValue();
             String firstname = json.findPath("firstname").textValue();
             if(name == null || firstname==null) {
-                return badRequest("Missing parameter [name] or [firstname]");
+                return badRequest("Missing parameter [name] or [firstname]");	
             } else {
-                final String picture = Play.application().configuration().getString("AvatarDefault");
+            	String picture = cloudinary.url().format("png")
+            			  .transformation(new Transformation().width(250).height(168).crop("fit"))
+            			  .generate(Play.application().configuration().getString("AvatarDefault"));
                 Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
@@ -178,21 +189,22 @@ public class Administration extends JavaController {
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result updatePicture(Long id) {
-        JsonNode json = request().body().asJson();
-        if(json == null) {
-            return badRequest(JSON_MESSG);
-        } else {
-            String picture = json.findPath("picture").textValue();
-            if(picture==null) {
-                return badRequest("Missing parameter [picture]");
-            } else {
-                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+    	MultipartFormData fd = request().body().asMultipartFormData();
+    	FilePart fp = fd.getFile("file");
+    	if (fp!= null){
+        	try {
+        		File f = fp.getFile();
+				Map uploadResult = cloudinary.uploader().upload(f,null);
+				Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
-                personDAO.updatePicture(id,email, picture);
+                personDAO.updatePicture(id,email, (String)uploadResult.get("url"));
                 return ok();
-            }
-        }
-
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return badRequest();
     }
 
 }

@@ -25,7 +25,7 @@
 
   				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
   					<!-- Dynamic HTML part to add for every member -->
-  					<td><img ng-src="@routes.Assets.at("{{member.picture}}")" alt="photo01" class="dimension-img"></td>
+  					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img"></td>
                       <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                       <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
   					<td>
