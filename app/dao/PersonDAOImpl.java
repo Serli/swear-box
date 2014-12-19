@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,8 +9,10 @@ import javax.persistence.Query;
 
 import models.Consumer;
 import models.Person;
+import play.Play;
 import play.db.jpa.JPA;
 
+import com.cloudinary.Cloudinary;
 import com.google.inject.Singleton;
 
 /**
@@ -20,6 +23,8 @@ import com.google.inject.Singleton;
 public final class PersonDAOImpl implements PersonDAO {
 	private static final String QUERY_PERSON = "Select p from Person p where p.idPerson =";
 
+	private Cloudinary cloudinary = new Cloudinary();
+	
     /**
      * Add a person on the Person table
      * link the user with it
@@ -142,10 +147,18 @@ public final class PersonDAOImpl implements PersonDAO {
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
 		//If the user has rights
-		if (user.getPeople().contains(pbd)){
+		if (user.getPeople().contains(pbd)){	    
+            try { 
+                String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
+                url = url.substring(1,url.length()-4);
+                System.out.println(url);
+                if(!url.equals(Play.application().configuration().getString("AvatarDefault")))
+                    cloudinary.api().deleteResources(Arrays.asList(url),null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 			pbd.setAdrImage(vPicture);
 		}
-	
 		//Refresh DB
 		JPA.em().flush();	
 		

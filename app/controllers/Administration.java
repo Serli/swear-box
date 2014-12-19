@@ -5,13 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
-import dao.*;
+import models.Person;
 
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
@@ -23,7 +17,14 @@ import play.libs.Json;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
-import models.*;
+
+import com.cloudinary.Cloudinary;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import dao.ConsumerDAO;
+import dao.PersonDAO;
 
 /**
  * Managed actions for administration view
@@ -61,7 +62,6 @@ public class Administration extends JavaController {
                 return badRequest("Missing parameter [name] or [firstname]");	
             } else {
             	String picture = cloudinary.url().format("png")
-            			  .transformation(new Transformation().width(250).height(168).crop("fit"))
             			  .generate(Play.application().configuration().getString("AvatarDefault"));
                 Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();

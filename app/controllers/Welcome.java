@@ -7,23 +7,17 @@ import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
-
-
-
-
-
+import play.Play;
+import play.db.jpa.Transactional;
+import play.mvc.Result;
+import views.html.index;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
-import play.Play;
-import play.db.jpa.Transactional;
-import play.mvc.*;
-import views.html.*;
 
 /**
  * Managed actions for welcome view
@@ -69,7 +63,6 @@ public class Welcome extends JavaController {
         if(consumerDAO.add(email)){
             //Add a member with the name and the firstname of the user
             String picture = cloudinary.url().format("png")
-                    .transformation(new Transformation().width(250).height(168).crop("fit"))
                     .generate(Play.application().configuration().getString("AvatarDefault"));
             String name = googleProfile.getFamilyName();
             Person person = new Person(name,firstname,0,picture);
