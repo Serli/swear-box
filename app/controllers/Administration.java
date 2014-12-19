@@ -62,8 +62,9 @@ public class Administration extends JavaController {
             if(name == null || firstname==null) {
                 return badRequest("Missing parameter [name] or [firstname]");	
             } else {
-                String picture = cloudinary.url().format("png")
+                String url = cloudinary.url().format("png")
                         .generate(Play.application().configuration().getString("AvatarDefault"));
+                String picture = url.replace("http", "https");
                 Person person = new Person(name,firstname,0,picture);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String id = googleProfile.getEmail();
@@ -199,7 +200,8 @@ public class Administration extends JavaController {
                 Map uploadResult = cloudinary.uploader().upload(f,null);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
-                personDAO.updatePicture(id,email, (String)uploadResult.get("url"));
+                System.out.println((String)uploadResult.get("secure_url"));
+                personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 return ok();
             } catch (IOException e) {
                 Logger.info("IOException", e);

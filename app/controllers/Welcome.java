@@ -67,8 +67,9 @@ public class Welcome extends JavaController {
         String email = googleProfile.getEmail();
         if(consumerDAO.add(email)){
             //Add a member with the name and the firstname of the user
-            String picture = cloudinary.url().format("png")
+            String url = cloudinary.url().format("png")
                     .generate(Play.application().configuration().getString("AvatarDefault"));
+            String picture = url.replace("http", "https");
             String name = googleProfile.getFamilyName();
             Person person = new Person(name,firstname,0,picture);
             personDAO.add(person,email);
