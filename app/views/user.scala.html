@@ -42,7 +42,13 @@
 	  	
 			<ul ng-repeat="i in range"  class="pagination">
  			
-        		<li><a ng-click="pagination($index)" href="#">{{i}}</a></li>
+        	<li ng-if="($index != numPage)">
+            <a ng-click="pagination($index)" href="#">{{i}}</a>
+          </li>
+
+          <li ng-if="($index == numPage)" class="active">
+            <a ng-click="pagination($index)" href="#">{{i}}</a>
+          </li>
    
     		</ul>
 	  	</div>
