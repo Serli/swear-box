@@ -38,7 +38,7 @@ public class Welcome extends JavaController {
     @Inject
     private PersonDAO personDAO;
 
-    private Cloudinary cloudinary = new Cloudinary();
+    private Cloudinary cloudinary = com.cloudinary.Singleton.getCloudinary();
 
     /**
      * Action called when launching the app
