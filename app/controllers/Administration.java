@@ -200,7 +200,6 @@ public class Administration extends JavaController {
                 Map uploadResult = cloudinary.uploader().upload(f,null);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
-                System.out.println((String)uploadResult.get("secure_url"));
                 personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 return ok();
             } catch (IOException e) {
