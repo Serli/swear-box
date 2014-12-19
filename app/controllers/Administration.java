@@ -195,6 +195,7 @@ public class Administration extends JavaController {
         if (fp!= null){
             try {
                 File f = fp.getFile();
+                @SuppressWarnings("rawtypes")
                 Map uploadResult = cloudinary.uploader().upload(f,null);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
