@@ -141,7 +141,6 @@ public final class PersonDAOImpl implements PersonDAO {
 		Query query = JPA.em().createQuery(QUERY_PERSON + id);
 		Person pbd = (Person) query.getSingleResult();
 		Consumer user = JPA.em().find(Consumer.class,email);
-		
 		//If the user has rights
 		if (user.getPeople().contains(pbd)){
 			pbd.setAdrImage(vPicture);

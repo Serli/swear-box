@@ -12,6 +12,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.itemsPerPage = 5;
 	$scope.numPage = 0;
 	
+	$scope.idImage = 0;	
 	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
@@ -184,17 +185,17 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	};
 
 	//----------------------------------------------------------------------
-	$scope.browseImage = function () {
+	$scope.browseImage = function (idt) {
 		$('#hiddenfile').click();
+		$scope.idImage = idt;
 	};
 	
 	//----------------------------------------------------------------------
-	$scope.onChange = function (idt) {
+	$scope.onChange = function () {
 		var file = document.getElementById('hiddenfile').files[0];
-
 		var fd = new FormData();
 		fd.append('file',file);		
-		$http.put('/member/picture/'+idt, fd, {
+		$http.put('/member/picture/'+$scope.idImage, fd, {
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
 		})
