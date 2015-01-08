@@ -65,7 +65,7 @@
             </div>
 
             <div class="col-xs-10 col-sm-5">
-              <input type="text" class="form-control" ng-model="newMember.name" maxlength="30"  placeholder="Nom" required>
+              <input type="text" class="form-control" ng-model="newMember.name" maxlength="30"  placeholder="Nom">
             </div>
 
             <div class="col-xs-2 col-sm-2">
@@ -111,11 +111,11 @@
               <div class="modal-body">
                 <p>
                   Prénom :
-                  <input type="firstname" maxlength="30" class="form-control" ng-model="modMember.firstname" placeHolder="{{firstname}}"/>
+                  <input type="text" maxlength="30" class="form-control" ng-model="modMember.firstname" placeHolder="{{firstname}}" required/>
                 </p>
                 <p>
                   Nom :
-                  <input type="name" maxlength="30" class="form-control" ng-model="modMember.name" placeHolder="{{name}}"/>
+                  <input type="text" maxlength="30" class="form-control" ng-model="modMember.name" placeHolder="{{name}}"/>
                 </p>
               </div>
 

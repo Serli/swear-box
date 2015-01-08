@@ -30,7 +30,6 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPerson;
 
-    @NotEmpty
     @Size(max = 50)
     private String name;
 

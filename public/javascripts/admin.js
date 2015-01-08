@@ -6,7 +6,9 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//----------------------------------------------------------------------
 	$scope.members = {};
 	$scope.newMember = {};
+	$scope.newMember.name= '';
 	$scope.modMember = {};
+	$scope.modMember.name= '';
 
 	$scope.range = [];
 	$scope.itemsPerPage = 5;
