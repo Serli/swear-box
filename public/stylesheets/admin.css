@@ -33,3 +33,7 @@
 .pagination > .active > span:focus {
   z-index: 0;
 }
+
+.image-click{
+    cursor: pointer ;
+}

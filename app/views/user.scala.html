@@ -17,7 +17,6 @@
   					<th>Photo</th>
   					<th>Prénom</th>
   					<th>Dettes</th>
-  					<th>Incrémenter</th>
   				</tr>
   			</thead>
 
@@ -25,14 +24,10 @@
 
   				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
   					<!-- Dynamic HTML part to add for every member -->
-  					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img"></td>
+  					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img image-click" ng-click="increase(member.idPerson)"></td>
                       <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                       <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
-  					<td>
-  					
-  					<a ng-click="increase(member.idPerson)" title="Incrementer" href="#"><span class="glyphicon glyphicon-plus font-glyph v-adjust-table-icon"></span></a>
 
-  					</td>
   				</tr>
 
   			</tbody>
