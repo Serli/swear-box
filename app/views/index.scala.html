@@ -5,10 +5,23 @@
 @main("ISwear-Box", importedCss) {
   @templates.navbar(isActive, numPage)
 } {  
-	<div class="container">
-
+	<div class="container padding-page">
     	<div class="row separation-actions">
-    		<div class="col-xs-10 col-sm-5 col-sm-offset-1">
+
+			<div class="col-xs-10 col-xs-offset-1 col-xs-pull-1 col-sm-5 col-sm-offset-1 col-sm-pull-1 pull-right">
+				<div class="well well-sm">
+            		<h3 class="form-signin-heading h-center">Connexion avec votre compte google</h3>
+              		<div class="h-center ">
+						<a href=@urlGoogle>
+							<button  class="btn btn-login btn-danger"> 
+								<img src=@routes.Assets.at("images/googleIcone.png") class="btn-height-img"/> GOOGLE
+							</button>
+						</a>			
+		    		</div>
+				</div>
+        	</div>
+
+    		<div class="col-xs-10 col-xs-offset-1 col-sm-5">
                 <div class="well well-sm ">
                 
                 	<div>
@@ -30,34 +43,18 @@
 						</ul>
 					</div>
 
-
-
 				</div>
-		</div>
-	      <div class="col-xs-10 col-sm-5">
-					<div class="well well-sm">
+			</div>
 
-            	<h3 class="form-signin-heading h-center">Connexion avec votre compte google</h3>
-              <div class="h-center ">
-								<a href=@urlGoogle>
-									<button  class="btn btn-login btn-danger"> 
-										<img src=@routes.Assets.at("images/googleIcone.png") class="btn-height-img"/> GOOGLE
-									</button>
-								</a>
-								
-		      </div>
-		  </div>
-        </div>
-		<div class="col-xs-10 col-sm-5">
-            <div class="well well-sm">
-			  <span class="h-center ">
-                   <img src=@routes.Assets.at("images/Connexion_image.png") class="img-size"/>
-              </span>
-          </div>
-       </div>
+			<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-0">
+            	<div class="well well-sm">
+			  		<span class="h-center ">
+                		<img src=@routes.Assets.at("images/Connexion_image.png") class="img-size"/>
+            		</span>
+          		</div>
+       		</div>
 	      
-	</div>
-
-  </div>   
+		</div>
+	</div>   
 
 }
