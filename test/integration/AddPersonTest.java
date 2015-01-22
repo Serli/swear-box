@@ -26,7 +26,6 @@ public class AddPersonTest{
      * Test for AddPerson function
      * Verification of the link between the two tables
      */
-    @Transactional
     @Test
     public void addPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

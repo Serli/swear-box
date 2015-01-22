@@ -27,7 +27,6 @@ public class DeletePersonTest{
      * Verification of the link between the two tables
      * Verification of the removal of the person in both the user and in the table U_P
      */
-    @Transactional
     @Test
     public void deletePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

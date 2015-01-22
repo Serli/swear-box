@@ -25,7 +25,6 @@ public class LinkUserPersonTest{
     /**
      * Test a link between two users and a person
      */
-    @Transactional
     @Test
     public void linkUserToPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

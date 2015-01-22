@@ -28,7 +28,6 @@ public class DischargePersonTest{
     /**
      * Test deleting a person
      */
-    @Transactional
     @Test
     public void debtPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

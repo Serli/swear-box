@@ -25,7 +25,6 @@ public class AddPersonTest{
     /**
      * Test AddPerson function for a user
      */
-    @Transactional
     @Test
     public void addPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

@@ -28,7 +28,6 @@ public class IncreaseDebtPersonTest{
     /**
      * Test increasing debt for a person
      */
-    @Transactional
     @Test
     public void updateNameFirstnamePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

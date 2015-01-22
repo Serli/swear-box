@@ -29,7 +29,6 @@ public class UpdateNameFirstnamePersonTest{
     /**
      * Test updating a person
      */
-    @Transactional
     @Test
     public void updateNameFirstnamePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

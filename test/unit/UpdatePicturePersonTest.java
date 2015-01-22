@@ -27,7 +27,6 @@ public class UpdatePicturePersonTest{
     /**
      * Test updating the picture path for a person
      */
-    @Transactional
     @Test
     public void updatePicturePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

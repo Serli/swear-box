@@ -27,7 +27,6 @@ public class DeletePersonTest{
     /**
      * Test deleting a person
      */
-    @Transactional
     @Test
     public void deletePerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

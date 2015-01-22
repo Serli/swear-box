@@ -25,7 +25,6 @@ public class LinkUserPersonTest{
     /**
      * Test if the class LinkUserPerson correctly binds a person to a user
      */
-    @Transactional
     @Test
     public void linkUserToPerson() {
         running(fakeApplication(inMemoryDatabase()), new Runnable()

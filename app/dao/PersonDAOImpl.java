@@ -58,14 +58,16 @@ public final class PersonDAOImpl implements PersonDAO {
 
         //Delete keys in U_P
         if (user.getPeople().contains(pbd)){
-        	try { 
-                String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
-                url = url.substring(1,url.lastIndexOf("."));
-                if(!url.equals(Play.application().configuration().getString("AvatarDefault"))) {
-                    cloudinary.api().deleteResources(Arrays.asList(url),null);
+            if(pbd.getPicture().startsWith("https")) {
+                try { 
+                    String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
+                    url = url.substring(1,url.lastIndexOf("."));
+                    if(!url.equals(Play.application().configuration().getString("AvatarDefault"))) {
+                        cloudinary.api().deleteResources(Arrays.asList(url),null);
+                    }
+                } catch (Exception e) {
+                    Logger.info("Delete image on Cloudinary", e);
                 }
-            } catch (Exception e) {
-                Logger.info("Delete image on Cloudinary", e);
             }
             for (Consumer u: pbd.getUsers()){	
                 u.getPeople().remove(pbd);
@@ -154,15 +156,17 @@ public final class PersonDAOImpl implements PersonDAO {
         Person pbd = (Person) query.getSingleResult();
         Consumer user = JPA.em().find(Consumer.class,email);
         //If the user has rights
-        if (user.getPeople().contains(pbd)){	    
-            try { 
-                String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
-                url = url.substring(1,url.lastIndexOf("."));
-                if(!url.equals(Play.application().configuration().getString("AvatarDefault"))) {
-                    cloudinary.api().deleteResources(Arrays.asList(url),null);
+        if (user.getPeople().contains(pbd)){	
+            if(pbd.getPicture().startsWith("https")) {
+                try { 
+                    String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
+                    url = url.substring(1,url.lastIndexOf("."));
+                    if(!url.equals(Play.application().configuration().getString("AvatarDefault"))) {
+                        cloudinary.api().deleteResources(Arrays.asList(url),null);
+                    }
+                } catch (Exception e) {
+                    Logger.info("Delete image on Cloudinary", e);
                 }
-            } catch (Exception e) {
-                Logger.info("Delete image on Cloudinary", e);
             }
             pbd.setAdrImage(vPicture);
         }
