@@ -47,23 +47,21 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		})
 		.error(function(data, status, headers, config){
 		});
-	}
+	};
 	
 	//----------------------------------------------------------------------
 	$scope.pagination = function(id) {
 		$scope.numPage = id;
-	}
+	};
 	
 	//Checks if the pressed key is a number, a tab or <-
 	//----------------------------------------------------------------------
 	$scope.isNumeric = function(event) {
-		if ((event.which < 48 || event.which > 57) 
-				&& (event.which != 0) 
-				&& (event.which != 8)) {
+		if ((event.which < 48 || event.which > 57) && (event.which !== 0) && (event.which !== 8)) {
 			event.preventDefault();
 			return false;
 		}
-	}
+	};
 
 	//Add a member to the database through the server
 	//----------------------------------------------------------------------
@@ -84,7 +82,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.newMember.name= '';
 		$scope.newMember.firstname= '';
 
-	}
+	};
 
 	//Deleted a member in the database through the server
 	//----------------------------------------------------------------------

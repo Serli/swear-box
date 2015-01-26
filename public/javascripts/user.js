@@ -48,7 +48,7 @@ userApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//----------------------------------------------------------------------
 	$scope.pagination = function(id) {
 		$scope.numPage = id;
-	}
+	};
 	
 }]);
 
