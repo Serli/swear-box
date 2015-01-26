@@ -20,6 +20,7 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -196,8 +197,12 @@ public class Administration extends JavaController {
         if (fp!= null){
             try {
                 File f = fp.getFile();
+                Map options = Cloudinary.asMap(
+                		  "transformation",
+                		  new Transformation().width(67).height(67).crop("scale")
+                		);
                 @SuppressWarnings("rawtypes")
-                Map uploadResult = cloudinary.uploader().upload(f,null);
+                Map uploadResult = cloudinary.uploader().upload(f,options);
                 Google2Profile googleProfile = (Google2Profile) getUserProfile();
                 String email = googleProfile.getEmail();
                 personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
