@@ -197,9 +197,10 @@ public class Administration extends JavaController {
         if (fp!= null){
             try {
                 File f = fp.getFile();
-                Map options = Cloudinary.asMap(
+                @SuppressWarnings("rawtypes")
+				Map options = Cloudinary.asMap(
                 		  "transformation",
-                		  new Transformation().width(67).height(67).crop("scale")
+                		  new Transformation().width(64).height(64).crop("scale")
                 		);
                 @SuppressWarnings("rawtypes")
                 Map uploadResult = cloudinary.uploader().upload(f,options);
