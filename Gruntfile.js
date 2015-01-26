@@ -1,8 +1,10 @@
 module.exports = function(grunt) {
 	
+	require('load-grunt-tasks')(grunt);
+	
 	grunt.initConfig({
 		jshint: {
-		    all: ['public/javascripts/*.js','!public/javascripts/min.js','!public/javascripts/bootstrap.js']
+		    all: ['public/javascripts/*.js','!public/javascripts/swearbox.min.js','!public/javascripts/bootstrap.js']
 		},
 		uglify: {
 			options:{
@@ -10,15 +12,20 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-			        'public/javascripts/min.js': ['!public/javascripts/bootstrap.js','public/javascripts/*.js']
+			        'public/javascripts/swearbox.min.js': ['!public/javascripts/bootstrap.js','public/javascripts/*.js']
 			     }
 			 }
-		}
+		},
+		cssmin: {
+			  target: {
+			    files: {
+			      'public/stylesheets/swearbox.min.css': ['public/stylesheets/main.css', 'public/stylesheets/admin.css','public/stylesheets/index.css','public/stylesheets/user.css']
+			    }
+			  }
+			}
 			  
 	});
-	
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.registerTask('default',['jshint','uglify']);
+
+	grunt.registerTask('default',['jshint','uglify','cssmin']);
 
 }
