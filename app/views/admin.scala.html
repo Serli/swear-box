@@ -56,7 +56,7 @@
 	  	</div>
 	  
 	  
-      <div class="container">
+      <div class="container  well well-sm " >
         <form ng-submit="addMember()">
           <div class="row separation-actions">
 
@@ -77,23 +77,28 @@
           </div>
         </form>
         
-        <form ng-submit="updateAmount()">
-          <div class="row separation-actions">
-
-            <div class="pull-right col-xs-2 col-sm-2">
-              <button title="Changer la pénalité" type="submit" class="btn btn-success">
-                <span class="glyphicon glyphicon-ok"/>
-              </button>
+        <form ng-submit="updateAmount()" >
+          <div class="row separation-actions" >
+          
+            <div class="col-xs-10 col-sm-5">
+              <div class="h-center v-adjust-table-icon">
+                <span >Pénalité actuelle : {{amountTag}} centimes</span>
+              </div>
             </div>
 
-            <div class="pull-right col-xs-10 col-sm-5">
+            <div class="col-xs-10 col-sm-5">
               <div class="input-group">
-                <span class="input-group-addon">Pénalité : {{amountTag}}</span>
                 <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="9" placeholder="Montant de la nouvelle pénalité" required>
                 <span class="input-group-addon">cts</span>
               </div>
             </div>
-
+            
+            <div class="col-xs-2 col-sm-2">
+              <button title="Changer la pénalité" type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"/>
+              </button>
+            </div>
+            
           </div>
 		</form>
       </div>
