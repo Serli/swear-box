@@ -196,6 +196,8 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.onChange = function () {
 		var file = document.getElementById('hiddenfile').files[0];
 		var fd = new FormData();
+		var $load = $('#span-load'+$scope.idImage).show();
+		var $unload = $('#img'+$scope.idImage).hide();
 		fd.append('file',file);		
 		$http.put('/member/picture/'+$scope.idImage, fd, {
 			transformRequest: angular.identity,
@@ -203,6 +205,8 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		})
 		.success(function(data, status, headers, config){
 			$scope.getMembers();
+			$load.hide();
+			$unload.show();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -210,4 +214,3 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	};
 	
 }]);
-

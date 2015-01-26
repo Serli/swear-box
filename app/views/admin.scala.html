@@ -21,10 +21,17 @@
         <tbody ng-repeat="member in members">
 
               <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
-                <td><img ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
-                  <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"
-                  resize-max-height="64" resize-max-width="64" resize-quality="0.7"/>
-              </td>
+                <td>
+                  <img id="img{{member.idPerson}}"ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
+
+                  <div>
+                    <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"/>
+
+                    <span id="span-load{{member.idPerson}}" style="display: none">
+                      <img class="dimension-img" src=@routes.Assets.at("images/loading.gif") resize-max-width="64"/>
+                    </span>
+                  </div>
+                </td>
                 <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                 <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
                 <td>
