@@ -28,5 +28,11 @@ public interface ConsumerDAO {
      */
     public int getAmount(String email);
 
+    /**
+     * Link a person to an user
+     * @param long : person id
+     * @param String : user id
+     */
+    public void linkUserPerson(long idPerson,String idUser);
 
 }
