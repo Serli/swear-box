@@ -10,6 +10,7 @@ userApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.itemsPerPage = 5;
 	$scope.numPage = 0;
 	
+	
 	//Retrieves the data of the BDD through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
@@ -26,7 +27,7 @@ userApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//Increase the member debt
 	//----------------------------------------------------------------------
 	$scope.increase = function (idt) {
-		$http.put('/increase/'+idt, {})
+		$http.put('/members/increase/'+idt, {})
 		.success(function(data, status, headers, config){
 			$http.get('/members')
 			.success(function(data, status, headers, config){
