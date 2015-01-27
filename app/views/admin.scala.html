@@ -36,7 +36,7 @@
 
                   <a ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)" title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
 
-                  <a ng-click="OpenModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
+                  <a ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
                   <a ng-click="openDeleteModal($index,member.idPerson,member.firstname,member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
 
@@ -195,5 +195,5 @@
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
-  <script src="@routes.Assets.at("javascripts/swearbox.min.js")"></script>
+  <script src="@routes.Assets.at("javascripts/admin.js")"></script>
 }

@@ -16,8 +16,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	
 	$scope.idImage = 0;	
 	
-	
-	
 	//controller
 	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
@@ -99,7 +97,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
-			//$('#deleteMember').modal('hide');
 			ModalHide('#deleteMember');
 			$scope.getMembers();
 		})
@@ -113,7 +110,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.dischargeMember = function () {
 		$http.put('/members/discharge/'+$scope.idt, {})
 		.success(function(data, status, headers, config){
-			//$('#dischargeMember').modal('hide');
 			ModalHide('#dischargeMember');
 			$scope.getMembers();
 		})
@@ -152,7 +148,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.put('/members/name/'+$scope.idt, dataObj)
 		.success(function(data, status, headers, config){
-			//$('#modifyMember').modal('hide');
 			ModalHide('#modifyMember');
 			$scope.getMembers();
 		})
@@ -174,8 +169,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.onChange = function () {
 		var file = document.getElementById('hiddenfile').files[0];
 		var fd = new FormData();
-		//var $load = $('#span-load'+$scope.idImage).show();
-		//var $unload = $('#img'+$scope.idImage).hide();
 		ChargementImage('#span-load'+$scope.idImage,'#img'+$scope.idImage);
 		fd.append('file',file);		
 		$http.put('/members/picture/'+$scope.idImage, fd, {
@@ -185,8 +178,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		.success(function(data, status, headers, config){
 			$scope.getMembers();
 			ChargementImage('#img'+$scope.idImage,'#span-load'+$scope.idImage);
-			//$load.hide();
-			//$unload.show();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -200,7 +191,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.idt = idt;
 		$scope.firstname = firstname;
 		$scope.name = name;
-		//$('#deleteMember').modal('show');
 		ModalShow('#deleteMember');
 	};
 	
@@ -210,24 +200,17 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.idt = idt;
 		$scope.firstname = firstname;
 		$scope.name = name;
-		//$('#dischargeMember').modal('show');
 		ModalShow('#dischargeMember');
 	};
 	
 	//Open the modify modal
 	//----------------------------------------------------------------------
-	var OpenModifyModal = function (idt, firstname, name) {
-		scope.idt = idt;
-		scope.modMember.firstname = firstname;
-		scope.modMember.name = name;
-		//$('#modifyMember').modal('show');
+	$scope.openModifyModal = function (idt, firstname, name) {
+		$scope.idt = idt;
+		$scope.modMember.firstname = firstname;
+		$scope.modMember.name = name;
 		ModalShow('#modifyMember');
 	};
-	
-	
-	
-	
-	
 }]);
 
 var ModalShow = function (vModal){

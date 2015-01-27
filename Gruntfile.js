@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 	
 	grunt.initConfig({
 		jshint: {
-		    all: ['public/javascripts/*.js','!public/javascripts/swearbox.min.js','!public/javascripts/bootstrap.js']
+		    all: ['public/javascripts/*.js','!public/javascripts/swearbox.min.js','!public/javascripts/bootstrap.min.js']
 		},
 		uglify: {
 			options:{
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-			        'public/javascripts/swearbox.min.js': ['!public/javascripts/bootstrap.js','public/javascripts/*.js']
+			        'public/javascripts/swearbox.min.js': ['!public/javascripts/bootstrap.min.js','public/javascripts/*.js']
 			     }
 			 }
 		},
