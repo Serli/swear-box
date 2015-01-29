@@ -1,34 +1,40 @@
-var adminApp = angular.module('adminApp',[]);
-
-adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
+app.controller('adminCtrl', ['$scope', '$http', 'membersService', function($scope, $http, membersService){
 
 	//Objects declaration
 	//----------------------------------------------------------------------
+	$scope.idImage = 0;	
+	$scope.numPage = 0;
+	$scope.itemsPerPage = 5;
 	$scope.members = {};
 	$scope.newMember = {};
 	$scope.newMember.name= '';
 	$scope.modMember = {};
 	$scope.modMember.name= '';
-
 	$scope.range = [];
-	$scope.itemsPerPage = 5;
-	$scope.numPage = 0;
+
+	getMembers();
 	
-	$scope.idImage = 0;	
-	
-	//controller
-	//Retrieves data from the database through the server
+	// Function which retrieves the list of members of the database calling 
+	// corresponding function through the server.
 	//----------------------------------------------------------------------
-	$http.get('/members')
-	.success(function(data, status, headers, config){
-		$scope.members = data;
-		$scope.range = [];
+	function getMembers() {
+        membersService.getMembers()
+        .success(function (membs) {
+            $scope.members = membs;
+            getRange();
+        })
+        .error(function (error) {
+            alert( 'Unable to load members data: ' + error.message);
+        });
+    };
+    
+    // Function which fill the range with all the pages.
+	//----------------------------------------------------------------------
+    function getRange() {
 		for (var i=0; i<$scope.members.length/$scope.itemsPerPage; i++) {
-		    $scope.range.push(i+1);
-		  }
-	})
-	.error(function(data, status, headers, config){
-	});
+			$scope.range.push(i+1);
+		}
+	};
 
 	$http.get('/amount')
 	.success(function(data, status, headers, config){
@@ -37,19 +43,6 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	.error(function(data, status, headers, config){
 	});
 
-	//----------------------------------------------------------------------
-	$scope.getMembers = function() {
-		$http.get('/members')
-		.success(function(data, status, headers, config){
-			$scope.members = data;				
-			$scope.range = [];
-			for (var i=0; i<$scope.members.length/$scope.itemsPerPage; i++) {
-			    $scope.range.push(i+1);
-			  }
-		})
-		.error(function(data, status, headers, config){
-		});
-	};
 	
 	//----------------------------------------------------------------------
 	$scope.pagination = function(id) {
@@ -76,7 +69,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.post('/members', dataObj)
 		.success(function(data, status, headers, config){
-			$scope.getMembers();
+			getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -98,7 +91,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
 			ModalHide('#deleteMember');
-			$scope.getMembers();
+			getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -111,7 +104,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$http.put('/members/discharge/'+$scope.idt, {})
 		.success(function(data, status, headers, config){
 			ModalHide('#dischargeMember');
-			$scope.getMembers();
+			getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -149,7 +142,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$http.put('/members/name/'+$scope.idt, dataObj)
 		.success(function(data, status, headers, config){
 			ModalHide('#modifyMember');
-			$scope.getMembers();
+			getMembers();
 		})
 		.error(function(data, status, headers, config){
 		});
@@ -176,7 +169,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 			headers: {'Content-Type': undefined}
 		})
 		.success(function(data, status, headers, config){
-			$scope.getMembers();
+			getMembers();
 			ChargementImage('#img'+$scope.idImage,'#span-load'+$scope.idImage);
 		})
 		.error(function(data, status, headers, config){
