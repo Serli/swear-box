@@ -15,6 +15,8 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.numPage = 0;
 	
 	$scope.idImage = 0;	
+	
+	//controller
 	//Retrieves data from the database through the server
 	//----------------------------------------------------------------------
 	$http.get('/members')
@@ -72,7 +74,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 				firstname : $scope.newMember.firstname
 		};			
 
-		$http.post('/member', dataObj)
+		$http.post('/members', dataObj)
 		.success(function(data, status, headers, config){
 			$scope.getMembers();
 		})
@@ -87,7 +89,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//Deleted a member in the database through the server
 	//----------------------------------------------------------------------
 	$scope.deleteMember = function () {
-		if( ($scope.members.length % $scope.itemsPerPage == 1) && ($scope.idx+1 == $scope.members.length)) {
+		if( ($scope.members.length % $scope.itemsPerPage == 1) && ($scope.idx+1 == $scope.members.length) && ($scope.members.length!==1) ) {
 			$scope.numPage = $scope.numPage-1;
 		}
 		
@@ -95,7 +97,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 
 		$http.delete('/members/'+$scope.idt)
 		.success(function(data, status, headers, config){
-			$('#deleteMember').modal('hide');
+			ModalHide('#deleteMember');
 			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
@@ -106,9 +108,9 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	//Discharge the debt of member
 	//----------------------------------------------------------------------
 	$scope.dischargeMember = function () {
-		$http.put('/discharge/'+$scope.idt, {})
+		$http.put('/members/discharge/'+$scope.idt, {})
 		.success(function(data, status, headers, config){
-			$('#dischargeMember').modal('hide');
+			ModalHide('#dischargeMember');
 			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
@@ -144,9 +146,9 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 				firstname : $scope.modMember.firstname
 		};			
 
-		$http.put('/member/name/'+$scope.idt, dataObj)
+		$http.put('/members/name/'+$scope.idt, dataObj)
 		.success(function(data, status, headers, config){
-			$('#modifyMember').modal('hide');
+			ModalHide('#modifyMember');
 			$scope.getMembers();
 		})
 		.error(function(data, status, headers, config){
@@ -156,34 +158,7 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.modMember.firstname= '';
 	};
 
-	//Open the modify modal
-	//----------------------------------------------------------------------
-	$scope.openModifyModal = function (idt, firstname, name) {
-		$scope.idt = idt;
-		$scope.modMember.firstname = firstname;
-		$scope.modMember.name = name;
-		$('#modifyMember').modal('show');
-	};
-
-	//Open the delete modal
-	//----------------------------------------------------------------------
-	$scope.openDeleteModal = function (idx, idt, firstname, name) {
-		$scope.idx = idx;
-		$scope.idt = idt;
-		$scope.firstname = firstname;
-		$scope.name = name;
-		$('#deleteMember').modal('show');
-	};
 	
-	//Open the modify modal
-	//----------------------------------------------------------------------
-	$scope.openDischargeModal = function (idt, firstname, name) {
-		$scope.idt = idt;
-		$scope.firstname = firstname;
-		$scope.name = name;
-		$('#dischargeMember').modal('show');
-	};
-
 	//----------------------------------------------------------------------
 	$scope.browseImage = function (idt) {
 		$('#hiddenfile').click();
@@ -194,21 +169,59 @@ adminApp.controller('listCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.onChange = function () {
 		var file = document.getElementById('hiddenfile').files[0];
 		var fd = new FormData();
-		var $load = $('#span-load'+$scope.idImage).show();
-		var $unload = $('#img'+$scope.idImage).hide();
+		ChargementImage('#span-load'+$scope.idImage,'#img'+$scope.idImage);
 		fd.append('file',file);		
-		$http.put('/member/picture/'+$scope.idImage, fd, {
+		$http.put('/members/picture/'+$scope.idImage, fd, {
 			transformRequest: angular.identity,
 			headers: {'Content-Type': undefined}
 		})
 		.success(function(data, status, headers, config){
 			$scope.getMembers();
-			$load.hide();
-			$unload.show();
+			ChargementImage('#img'+$scope.idImage,'#span-load'+$scope.idImage);
 		})
 		.error(function(data, status, headers, config){
 		});
 
 	};
+
+	//Open the delete modal
+	//----------------------------------------------------------------------
+	$scope.openDeleteModal = function (idx, idt, firstname, name) {
+		$scope.idx = idx;
+		$scope.idt = idt;
+		$scope.firstname = firstname;
+		$scope.name = name;
+		ModalShow('#deleteMember');
+	};
 	
+	//Open the modify modal
+	//----------------------------------------------------------------------
+	$scope.openDischargeModal = function (idt, firstname, name) {
+		$scope.idt = idt;
+		$scope.firstname = firstname;
+		$scope.name = name;
+		ModalShow('#dischargeMember');
+	};
+	
+	//Open the modify modal
+	//----------------------------------------------------------------------
+	$scope.openModifyModal = function (idt, firstname, name) {
+		$scope.idt = idt;
+		$scope.modMember.firstname = firstname;
+		$scope.modMember.name = name;
+		ModalShow('#modifyMember');
+	};
 }]);
+
+var ModalShow = function (vModal){
+	$(vModal).modal('show');
+};
+
+var ModalHide = function (vModal){
+	$(vModal).modal('hide');
+};
+
+var ChargementImage = function (s,h){
+	$(s).show();
+	$(h).hide();
+};
