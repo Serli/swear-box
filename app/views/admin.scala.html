@@ -3,6 +3,7 @@
 @main("ISwear-Box") {
   @templates.navbar(isActive, numPage)
 } {  
+  <script src="@routes.Assets.at("javascripts/services/user.js")"></script>
   <script src="@routes.Assets.at("javascripts/controllers/admin_controller.js")"></script>
   
   <div class="container" ng-controller="adminCtrl">
@@ -40,7 +41,7 @@
 
                   <a ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
-                  <a ng-click="openDeleteModal($index,member.idPerson,member.firstname,member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
+                  <a ng-click="openDeleteModal($index, member.idPerson, member.firstname, member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
 
                 </td>
               </tr>
@@ -143,7 +144,7 @@
 
       <div id="deleteMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-          <form ng-submit="deleteMember(member.idPerson)">
+          <form ng-submit="deleteMember()">
             <div class="modal-content">
 
               <div class="modal-header">
