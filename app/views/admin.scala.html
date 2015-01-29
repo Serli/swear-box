@@ -3,8 +3,10 @@
 @main("ISwear-Box") {
   @templates.navbar(isActive, numPage)
 } {  
-  <div class="container" ng-app="adminApp">
-    <div class="row" ng-controller="listCtrl">
+  <script src="@routes.Assets.at("javascripts/controllers/admin_controller.js")"></script>
+  
+  <div class="container" ng-controller="adminCtrl">
+    <div class="row">
       <table class="table table-hover">
 
         <thead>
@@ -193,7 +195,4 @@
 
     </div>
   </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
-  <script src="@routes.Assets.at("javascripts/admin.js")"></script>
 }
