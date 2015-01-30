@@ -47,7 +47,7 @@ public class Global extends GlobalSettings{
         //Add clients to Config
         final Clients clients = new Clients(baseUrl + "/oauth2callback", google2Client);
         Config.setClients(clients);
-        //Config.setDefaultSuccessUrl("oauthflow-google://callback/app");
+        Config.setDefaultSuccessUrl("oauthflow-google://callback/app");
         
         injector = Guice.createInjector(new AbstractModule() {
             @Override
