@@ -3,18 +3,6 @@ app.controller('adminCtrl',
 		function ($scope, $http, membersService, userService) {
 
 	/*----------------------------------------------------------------------*
-	 *--- Declaration of the objects used in this controller (userCtrl) ----*
-	 *----------------------------------------------------------------------*/
-
-	$scope.members;
-	$scope.range;
-	$scope.amount;
-	$scope.amountTag;
-	
-	/*----------------------------------------------------------------------*/
-
-
-	/*----------------------------------------------------------------------*
 	 *-- Initialisation of the objects used in this controller (userCtrl) --*
 	 *----------------------------------------------------------------------*/
 	
@@ -44,7 +32,7 @@ app.controller('adminCtrl',
 		.error(function (error) {
 			 alert('Unable to load amount data: ' + error.message);
 		});
-	};	
+	}	
 
 	// Scope's function which update the amount of penalty in the database  
 	// calling corresponding function through the server.
@@ -81,7 +69,7 @@ app.controller('adminCtrl',
         .error(function (error) {
             alert('Unable to load members data: ' + error.message);
         });
-    };
+    }
 
 	// Scope's function which add a member to the database calling 
 	// corresponding function through the server.
@@ -222,7 +210,7 @@ app.controller('adminCtrl',
 		for(var i=0; i<$scope.members.length/$scope.itemsPerPage; i++) {
 			$scope.range.push(i+1);
 		}
-	};
+	}
 
 	// Scope's function which get the current page showed in the view.
 	//----------------------------------------------------------------------
@@ -250,20 +238,20 @@ app.controller('adminCtrl',
 	//----------------------------------------------------------------------
 	function ModalShow(vModal) {
 		$(vModal).modal('show');
-	};
+	}
 	
 	// Function which hide the modal gived in parameter.
 	//----------------------------------------------------------------------
 	function ModalHide(vModal) {
 		$(vModal).modal('hide');
-	};
+	}
 	
 	// Function which manage the loading picture.
 	//----------------------------------------------------------------------
 	function ChargementImage(s, h) {
 		$(s).show();
 		$(h).hide();
-	};
+	}
 
 	/*----------------------------------------------------------------------*/
 }]);

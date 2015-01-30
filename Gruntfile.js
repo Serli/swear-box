@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		
 		jshint: {
-		    all: ['public/javascripts/*.js','!public/javascripts/swearbox.min.js','!public/javascripts/bootstrap.min.js']
+		    all: ['public/javascripts/*/*.js','!public/javascripts/swearbox.min.js','!public/javascripts/bootstrap.min.js']
 		},
 		
 		uglify: {
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				files: {
-			        'public/javascripts/swearbox.min.js': ['!public/javascripts/bootstrap.min.js','public/javascripts/*.js']
+			        'public/javascripts/swearbox.min.js': ['!public/javascripts/bootstrap.min.js','public/javascripts/app.js','public/javascripts/services/*.js','public/javascripts/controllers/*.js']
 			     }
 			 }
 		},
@@ -62,10 +62,7 @@ module.exports = function(grunt) {
 			  
 	});
 
-<<<<<<< HEAD
 	grunt.registerTask('default',['devUpdate','jshint','uglify','cssmin']);
-=======
-	grunt.registerTask('default',['jshint','uglify']);
->>>>>>> origin/sprint3
+
 
 }

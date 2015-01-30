@@ -3,16 +3,6 @@ app.controller('userCtrl',
 		function ($scope, membersService) {
 
 	/*----------------------------------------------------------------------*
-	 *--- Declaration of the objects used in this controller (userCtrl) ----*
-	 *----------------------------------------------------------------------*/
-
-	$scope.members;
-	$scope.range;
-
-	/*----------------------------------------------------------------------*/
-
-
-	/*----------------------------------------------------------------------*
 	 *-- Initialisation of the objects used in this controller (userCtrl) --*
 	 *----------------------------------------------------------------------*/
 	
@@ -38,7 +28,7 @@ app.controller('userCtrl',
         .error(function (error) {
             alert('Unable to load members data: ' + error.message);
         });
-    };
+    }
 
 	// Scope's function which increases the id-member's debt calling the 
 	// corresponding function through the server and refresh the list of 
@@ -66,7 +56,7 @@ app.controller('userCtrl',
 		for(var i=0; i<$scope.members.length/$scope.itemsPerPage; i++) {
 			$scope.range.push(i+1);
 		}
-	};
+	}
 
 	// Scope's function which get the current page showed in the view.
 	$scope.pagination = function (id) {
