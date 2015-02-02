@@ -6,3 +6,8 @@ body {
 	width: 100%;
 	text-align: center;
 }
+
+.img-size{
+	height: 100%;
+    width: 100%;
+}

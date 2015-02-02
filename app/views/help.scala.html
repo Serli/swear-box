@@ -3,9 +3,199 @@
 @main("ISwear-Box") {
   @templates.navbar(isActive, numPage)
 } {
-  <div class="container">
-    <div class="row">
-      <h2 class="form-signin-heading h-center">Help interface not implemented yet.</h2>
-    </div>
-  </div>
+	<div class="container">
+		<div class="row separation-actions">
+			<h3 class="form-signin-heading h-center">Interface d'aide</h3>
+			
+			<div class="col-md-10 col-md-offset-1">
+				<!--<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>-->
+
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a title ="Information sur la page d'informations" href="#help" role="tab" data-toggle="tab">
+								Aide
+							</a>
+						</li>
+
+						<li role="presentation">
+							<a title ="Information sur la page de connexion" href="#index" role="tab" data-toggle="tab">
+								Connexion
+							</a>
+						</li>
+
+						<li role="presentation">
+							<a title ="Information sur la page principale" href="#user" role="tab" data-toggle="tab">
+								Utilisation
+							</a>
+						</li>
+
+						<li role="presentation">
+							<a title ="Information sur la page administrateur" href="#admin" role="tab" data-toggle="tab">
+								Administration
+							</a>
+						</li>
+					</ul>
+
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane fade in active" id="help">
+						<div class="list-group">
+							<div class="list-group-item">
+								<label class="padding-label">Page d'aide</label>
+								<p> Sur cette page sont répertoriés des conseils pour aider à l'utilisation de l'application ISwearBox. </p>
+								<p> Déplacez vous dans l'aide en utilisant les onglets : "Aide, Connexion, Utilisation et Administration". </p>
+							</div>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane fade" id="index">
+						<div class="list-group">
+							<div class="list-group-item">
+								<label id="summary"><a href="#summary">Sommaire</a></label>
+								
+								<ul>
+									<li>
+										<label><a href="#item-connection">Page de connexion</a></label>
+									</li>
+									
+									<ul>
+										<li>
+											<label><a href="#item-connection-navigation">Barre de navigation</a></label>
+										</li>
+										
+										<li>
+											<label><a href="#item-connection-google">Connexion au compte google</a></label>
+											
+										</li>
+									</ul>
+									
+									<li>
+										<label><a href="#item-authorization">Autorisations</a></label>
+									</li>
+								</ul>
+							</div>
+
+							<div class="list-group-item" id="item-connection">
+								<label class="padding-label">Page de connexion</label>
+								
+								<img src=@routes.Assets.at("images/help/index.png") class="img-size"/>
+								
+								<ul>
+									<li>
+										<p class="legend-title" id="item-connection-navigation"> <span class="legend-number">1</span> - Barre de navigation : </p>
+										<p class="padding-p"> Cette barre de navigation est présente sur chaque page de l'application ISwearBox. Elle permet d'accéder aux autres pages de l'application. </p>
+									</li>
+									<li>
+										<p class="legend-title" id="item-connection-google"> <span class="legend-number">2</span> - Connection au compte google : </p>
+										<p> L'utilisation de l'application ISwearBox requiert la connexion à un compte Google. En cliquant sur le bouton, l'application permet à l'utilisateur de se connecter sur son compte Google ou bien d'en créer un. </p>
+									</li>
+								</ul>
+							</div>
+
+							<div class="list-group-item" id="item-authorization">
+								<label class="padding-label">Autorisations</label>
+								
+								<p class="padding-p">Lors de la première utilisation de l'application, Google demande des autorisations nécessaires à l'utilisation de l'application ISwearBox.</p>
+
+								<p class="padding-p">Ci dessous, la liste exhaustive de ces autorisations :</p>
+								
+								<ul>
+									<li>Informations de base relatives au compte</li>
+									
+									<ul>
+										<li>Afficher les informations de base de votre profil</li>
+										<li>Afficher votre adresse e-mail.</li>
+									</ul>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane fade" id="user">
+						<div class="list-group">
+							<div class="list-group-item">
+								<label id="summary"><a href="#summary">Sommaire</a></label>
+								
+								<ul>
+									<li>
+										<label><a href="#item-user">Page principale</a></label>
+									</li>
+									
+									<ul>
+										<li>
+											<label><a href="#item-user-list">Liste des membres</a></label>
+										</li>
+										
+										<li>
+											<label><a href="#item-user-picture">Photo du membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-user-firstname">Prénom du membres</a></label>
+										</li>
+										<li>
+											<label><a href="#item-user-debt">Dettes du membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-user-pagination">Pagination</a></label>
+										</li>
+									</ul>
+								</ul>
+							</div>
+							
+							<div class="list-group-item" id="item-user">
+								<label class="padding-label">Page principale</label>
+								
+								<img src=@routes.Assets.at("images/help/user.png") class="img-size"/>
+								
+								<ul>
+									<li>
+										<p class="legend-title" id="item-user-list"> <span class="legend-number">1</span> - Liste des membres : </p>
+										<p class="padding-p"> La liste des membres de la famille est affichée sur cette page de l'application. Pour un affichage propre, il sont listé dans l'ordre alphabétique de leur prénom et seulement 5 membres sont visibles sur la même page. Au lancement de l'application, l'utilisateur fait déjà parti de cette liste.</p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-user-picture"> <span class="legend-number">2</span> - Photo du membre : </p>
+										<p class="padding-p"> Chaque membre possède une photo. Par défaut, il y a une image de base. Celle-ci peut être modifiée dans la page d'administration. Quand on clique sur la photo, on incrémente la dette du membre. </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-user-firstname"> <span class="legend-number">3</span> - Prénom du membre : </p>
+										<p class="padding-p"> Chaque membre a son prénom d'affiché. Celui-ci pourra être modifié dans la page d'administration. </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-user-debt"> <span class="legend-number">4</span> - Dette du membre : </p>
+										<p class="padding-p"> Chaque membre possède une dette, le montant qu'il doit à la famille. Après chaque appuis sur la photo d'un membre, cette est incrémentée d'un montant personnalisable dans la page d'administration. </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-user-pagination"> <span class="legend-number">5</span> - Pagination : </p>
+										<p class="padding-p"> La liste affiche les membres de la famille par 5. Par conséquent, si la famille a une taille supérieure à 5 membres, Un système de pagination apparait en bas de la page. Celle ci permet d'afficher les autres membres de la famille. </p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane fade" id="admin">
+						<div class="list-group">
+							<div class="list-group-item">
+								<label class="padding-label">Compte google</label>
+								<p>
+									L'utilisation de l'application ISwearBox requiert la connexion à un compte google existant. 
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 }

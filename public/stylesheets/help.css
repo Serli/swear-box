@@ -1,0 +1,25 @@
+p{
+	text-align : justify;
+	margin: 0 0 0px;
+}
+
+.legend-number{
+	color:red;
+}
+
+.legend-title{
+	font-weight:bold;
+}
+
+.padding-p{
+	padding-bottom: 5px;
+}
+
+.padding-label{
+	padding-bottom: 10px;
+}
+
+
+.icon-bar{
+	background-color: black;
+}
