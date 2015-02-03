@@ -1,12 +1,15 @@
 package controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import models.Person;
 
+import org.apache.commons.codec.binary.Base64;
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
@@ -186,7 +189,6 @@ public class Administration extends JavaController {
     /**
      * Update a person picture for a connected user
      * @param Long : user id 
-     * @param String : new picture path
      * @return Result : fonction result, Ok|pb
      */
     @Transactional
@@ -216,4 +218,45 @@ public class Administration extends JavaController {
         return badRequest();
     }
 
+    /**
+     * Update a person picture for a connected user in the mobile app
+     * @param Long : user id 
+     * @return Result : fonction result, Ok|pb
+     */
+    @Transactional
+    @RequiresAuthentication(clientName = "Google2Client")
+    public Result updateImage(Long id) {
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest(JSON_MESSG);
+        } else {
+            String image64 = json.findPath("image64").textValue();
+            if(image64 == null) {
+                return badRequest("Missing parameter [image]");
+            } else {
+                try {
+                    byte[] data = Base64.decodeBase64(image64);
+                    File f = new File("tmp.jpg");
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(data);
+                    fos.close();
+                    @SuppressWarnings("rawtypes")
+                    Map options = Cloudinary.asMap(
+                              "transformation",
+                              new Transformation().width(200).height(200).crop("scale")
+                            );
+                    @SuppressWarnings("rawtypes")
+                    Map uploadResult = cloudinary.uploader().upload(f,options);
+                    Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                    String email = googleProfile.getEmail();
+                    personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
+                } catch (FileNotFoundException e) {
+                    Logger.info("FileNotFoundException", e);
+                } catch (IOException e) {
+                    Logger.info("IOException", e);
+                }
+                return ok();
+            }
+        }
+    } 
 }
