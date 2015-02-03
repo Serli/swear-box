@@ -200,7 +200,7 @@ public class Administration extends JavaController {
                 @SuppressWarnings("rawtypes")
 				Map options = Cloudinary.asMap(
                 		  "transformation",
-                		  new Transformation().width(64).height(64).crop("scale")
+                		  new Transformation().width(200).height(200).crop("scale")
                 		);
                 @SuppressWarnings("rawtypes")
                 Map uploadResult = cloudinary.uploader().upload(f,options);
