@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 		cssmin: {
 			  target: {
 			    files: {
-			      'public/stylesheets/swearbox.min.css': ['public/stylesheets/main.css', 'public/stylesheets/admin.css','public/stylesheets/index.css','public/stylesheets/user.css']
+			      'public/stylesheets/swearbox.min.css': ['public/stylesheets/main.css', 'public/stylesheets/admin.css','public/stylesheets/help.css','public/stylesheets/index.css','public/stylesheets/user.css']
 			    }
 			  }
 			},

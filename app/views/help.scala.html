@@ -186,10 +186,72 @@
 					<div role="tabpanel" class="tab-pane fade" id="admin">
 						<div class="list-group">
 							<div class="list-group-item">
-								<label class="padding-label">Compte google</label>
-								<p>
-									L'utilisation de l'application ISwearBox requiert la connexion à un compte google existant. 
-								</p>
+								<label id="summary"><a href="#summary">Sommaire</a></label>
+								
+								<ul>
+									<li>
+										<label><a href="#item-admin">Page administrateur</a></label>
+									</li>
+									
+									<ul>
+										<li>
+											<label><a href="#item-admin-picture">Modification de la photo d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-admin-discharge">Acquittement de la dette d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-admin-firstname">Modification d'un prénom et/ou d'un nom</a></label>
+										</li>
+										<li>
+											<label><a href="#item-admin-delete">Suppression d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-admin-add">Ajout d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-admin-amount">Modification du montant de la pénalité</a></label>
+										</li>
+									</ul>
+								</ul>
+							</div>
+							
+							<div class="list-group-item" id="item-admin">
+								<label class="padding-label">Page administrateur</label>
+								
+								<img src=@routes.Assets.at("images/help/admin.png") class="img-size"/>
+								
+								<ul>
+									<li>
+										<p class="legend-title" id="item-admin-picture"> <span class="legend-number">1</span> - Modification de la photo d'un membre : </p>
+										<p class="padding-p"> La photo d'un membre est modifiable. Cliquer sur la photo dans la page d'administration permet d'ouvrir une fenêtre pour choisir une image que l'utilisateur possède. Attention, celle ci sera hébergée sur internet ! </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-admin-discharge"> <span class="legend-number">2</span> - Acquittement de la dette d'un membre : </p>
+										<p class="padding-p"> Pour acquitter la dette d'un membre, il suffit d'appuyer sur ce bouton. Une fenêtre de confirmation demandera à l'utilisateur de confirmer son choix. </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-admin-firstname"> <span class="legend-number">3</span> - Modification d'un prénom et/ou d'un nom : </p>
+										<p class="padding-p"> Modifier le prénom et le nom d'un membre est possible avec l'utilisation de ce bouton. Il ouvre une fenêtre qui permet de modifier ces valeurs. </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-admin-delete"> <span class="legend-number">4</span> - Suppression d'un membre : </p>
+										<p class="padding-p"> Pour supprimer un membre, l'utilisateur doit simplement presser ce bouton puis confirmer son choix. </p>
+									</li>
+									
+									<li>
+										<p class="legend-title" id="item-admin-add"> <span class="legend-number">5</span> - Ajout d'un membre : </p>
+										<p class="padding-p"> L'utilisateur peut ajouter le nombre de membres qu'il désire. Pour en ajouter un nouveau, il doit rentrer le prénom du membre et peut aussi ajouter son nom. Une fois ces données renseignées il doit valider son choix en pressant le bouton. </p>
+									</li>
+
+									<li>
+										<p class="legend-title" id="item-admin-amount"> <span class="legend-number">6</span> - Modification du montant de la pénalité : </p>
+										<p class="padding-p"> Par défaut le montant de la pénalité est de 50 centimes. Ce montant est modifiable en bas de la page d'administration. </p>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>
