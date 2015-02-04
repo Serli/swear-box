@@ -10,7 +10,7 @@ import java.util.Map;
 import models.Person;
 
 import org.apache.commons.codec.binary.Base64;
-import org.pac4j.oauth.profile.google2.Google2Profile;
+import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
@@ -70,7 +70,7 @@ public class Administration extends JavaController {
                         .generate(Play.application().configuration().getString("AvatarDefault"));
                 String picture = url.replace("http", "https");
                 Person person = new Person(name,firstname,0,picture);
-                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                CommonProfile googleProfile = getUserProfile();
                 String id = googleProfile.getEmail();
                 personDAO.add(person,id);
                 return ok();
@@ -86,7 +86,7 @@ public class Administration extends JavaController {
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result deletePerson(Long id) {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        CommonProfile googleProfile = getUserProfile();
         String email = googleProfile.getEmail();
         personDAO.delete(id,email);
         return ok();
@@ -101,7 +101,7 @@ public class Administration extends JavaController {
     @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result discharge(Long idt) {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        CommonProfile googleProfile = getUserProfile();
         String email = googleProfile.getEmail();
         personDAO.discharge(idt,email);
         return ok();
@@ -114,7 +114,7 @@ public class Administration extends JavaController {
     @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
     public Result listPerson() {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        CommonProfile googleProfile = getUserProfile();
         String emailUser = googleProfile.getEmail();
         List<Person> persons = personDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
@@ -127,7 +127,7 @@ public class Administration extends JavaController {
     @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
     public Result amount() {
-        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        CommonProfile googleProfile = getUserProfile();
         String emailUser = googleProfile.getEmail();
         Integer amount = consumerDAO.getAmount(emailUser);
         return ok(Json.toJson(amount));
@@ -150,7 +150,7 @@ public class Administration extends JavaController {
             if(amount == null) {
                 return badRequest("Missing parameter [amount]");
             } else {
-                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                CommonProfile googleProfile = getUserProfile();
                 String email = googleProfile.getEmail();
                 consumerDAO.updateAmount(email, Integer.parseInt(amount));
                 return ok();
@@ -177,7 +177,7 @@ public class Administration extends JavaController {
             if(name == null || firstname==null) {
                 return badRequest("Missing parameter [name] or [firstname]");
             } else {
-                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                CommonProfile googleProfile = getUserProfile();
                 String email = googleProfile.getEmail();
                 personDAO.updateNameFirstname(id,email, name,firstname);
                 return ok();
@@ -206,7 +206,7 @@ public class Administration extends JavaController {
                 		);
                 @SuppressWarnings("rawtypes")
                 Map uploadResult = cloudinary.uploader().upload(f,options);
-                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                CommonProfile googleProfile = getUserProfile();
                 String email = googleProfile.getEmail();
                 personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 return ok();
@@ -247,7 +247,7 @@ public class Administration extends JavaController {
                             );
                     @SuppressWarnings("rawtypes")
                     Map uploadResult = cloudinary.uploader().upload(f,options);
-                    Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                    CommonProfile googleProfile = getUserProfile();
                     String email = googleProfile.getEmail();
                     personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 } catch (FileNotFoundException e) {
