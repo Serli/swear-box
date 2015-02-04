@@ -236,17 +236,13 @@ public class Administration extends JavaController {
             } else {
                 try {
                     byte[] data = Base64.decodeBase64(image64);
-                    File f = new File("tmp.jpg");
-                    FileOutputStream fos = new FileOutputStream(f);
-                    fos.write(data);
-                    fos.close();
                     @SuppressWarnings("rawtypes")
                     Map options = Cloudinary.asMap(
                               "transformation",
                               new Transformation().width(200).height(200).crop("scale")
                             );
                     @SuppressWarnings("rawtypes")
-                    Map uploadResult = cloudinary.uploader().upload(f,options);
+                    Map uploadResult = cloudinary.uploader().uploadLargeRaw(data,options);
                     Google2Profile googleProfile = (Google2Profile) getUserProfile();
                     String email = googleProfile.getEmail();
                     personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
