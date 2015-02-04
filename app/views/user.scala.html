@@ -1,22 +1,18 @@
 @(name: String, isActive: Boolean, numPage: Integer)
 
-@importedCss = {
-  <link href="@routes.Assets.at("stylesheets/user.css")" rel="stylesheet" media="screen">
-  <link href="@routes.Assets.at("stylesheets/admin.css")" rel="stylesheet" media="screen">
-}
-
-@main("ISwear-Box", importedCss)  {
+@main("ISwear-Box")  {
   @templates.navbar(isActive, numPage)
 } {
-  <div class="container" ng-app="userApp">
-  	<div class="row" ng-controller="listCtrl">
+
+  <div class="container" ng-controller="userCtrl">
+  	<div class="row">
   		<table class="table table-hover">
 
   			<thead>
   				<tr>
   					<th>Photo</th>
   					<th>Prénom</th>
-  					<th>Dettes</th>
+  					<th>Dette</th>
   				</tr>
   			</thead>
 
@@ -51,6 +47,4 @@
 
   	</div>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
-  <script src="@routes.Assets.at("javascripts/user.js")"></script>
 }

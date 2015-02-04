@@ -2,6 +2,7 @@ package dao;
 
 
 import models.Consumer;
+import models.Person;
 import play.db.jpa.JPA;
 
 import com.google.inject.Singleton;
@@ -57,5 +58,31 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         }
         
         return -1;
+    }
+    
+    /**
+     * Link a person to an user
+     * @param long : person id
+     * @param String : user id
+     */
+    public void linkUserPerson(long idPerson,String idUser) {
+        boolean test= true;
+
+        //Get the user
+        Consumer user = JPA.em().find(Consumer.class,idUser); 
+
+        //Check if they are linked
+        for (Person p :user.getPeople()){
+            if(p.getIdPerson()==idPerson){
+                test = false;
+            }
+        }
+
+        //Link the person to the user
+        if(test){
+            Person pbd=JPA.em().find(Person.class,idPerson);
+            user.setPerson(pbd);
+            pbd.setUser(user);
+        }
     }
 }

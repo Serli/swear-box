@@ -5,24 +5,21 @@
 # === Home page 
 GET     /                           controllers.Welcome.index()
 GET     /user                       @controllers.Welcome.user()
-PUT     /increase/:id               @controllers.Welcome.increaseDebt(id: Long)
+PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: Long)
 
 # === Admin page
 GET     /admin                      controllers.Welcome.admin()
 GET     /amount                 	@controllers.Administration.amount()
 GET     /members                 	@controllers.Administration.listPerson()
-POST    /member            		    @controllers.Administration.addPerson()
+POST    /members            		@controllers.Administration.addPerson()
 DELETE  /members/:id                @controllers.Administration.deletePerson(id: Long)
-PUT     /discharge/:id              @controllers.Administration.discharge(id: Long)
 PUT     /user                       @controllers.Administration.updateAmount()
-PUT     /member/name/:id            @controllers.Administration.updateNameFirstname(id: Long)
-PUT     /member/picture/:id			@controllers.Administration.updatePicture(id: Long)
+PUT     /members/discharge/:id      @controllers.Administration.discharge(id: Long)
+PUT     /members/name/:id           @controllers.Administration.updateNameFirstname(id: Long)
+PUT     /members/picture/:id		@controllers.Administration.updatePicture(id: Long)
 
 # === Help page
 GET 	/help						controllers.Welcome.help()
-
-# === Statistics page
-GET 	/statistics					controllers.Welcome.statistics()
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
@@ -30,6 +27,9 @@ POST  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackControl
 GET   /oauth2callback                             org.pac4j.play.CallbackController.callback()
 POST  /oauth2callback                             org.pac4j.play.CallbackController.callback()
 GET   /logout                                     org.pac4j.play.CallbackController.logoutAndRedirect()
+
+# === Mobile
+PUT     /members/image/:id		    @controllers.Administration.updateImage(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

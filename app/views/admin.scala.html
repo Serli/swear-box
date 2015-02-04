@@ -1,30 +1,37 @@
 @(isActive: Boolean, numPage: Integer)
 
-@importedCss = { <link href="@routes.Assets.at("stylesheets/admin.css")" rel="stylesheet" media="screen">}
-
-@main("ISwear-Box", importedCss) {
+@main("ISwear-Box") {
   @templates.navbar(isActive, numPage)
 } {  
-  <div class="container" ng-app="adminApp">
-    <div class="row" ng-controller="listCtrl">
+
+  
+  <div class="container" ng-controller="adminCtrl">
+    <div class="row">
       <table class="table table-hover">
 
         <thead>
           <tr>
             <th>Photo</th>
             <th>Prénom</th>
-            <th>Dettes</th>
-            <th>Fonctionnalités</th>
+            <th>Dette</th>
+            <th>Options</th>
           </tr>
         </thead>
       
         <tbody ng-repeat="member in members">
 
-              <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
-                <td><img ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
-                  <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"
-                  resize-max-height="64" resize-max-width="64" resize-quality="0.7"/>
-              </td>
+              <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage) " >
+                <td>
+                  <img id="img{{member.idPerson}}"ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
+
+                  <div>
+                    <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"/>
+
+                    <span id="span-load{{member.idPerson}}" style="display: none">
+                      <img class="dimension-img" src=@routes.Assets.at("images/loading.gif") resize-max-width="64"/>
+                    </span>
+                  </div>
+                </td>
                 <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                 <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
                 <td>
@@ -33,7 +40,7 @@
 
                   <a ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
-                  <a ng-click="openDeleteModal($index,member.idPerson,member.firstname,member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
+                  <a ng-click="openDeleteModal($index, member.idPerson, member.firstname, member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
 
                 </td>
               </tr>
@@ -56,7 +63,7 @@
 	  	</div>
 	  
 	  
-      <div class="container">
+      <div class="container  well well-sm " >
         <form ng-submit="addMember()">
           <div class="row separation-actions">
 
@@ -77,23 +84,28 @@
           </div>
         </form>
         
-        <form ng-submit="updateAmount()">
-          <div class="row separation-actions">
-
-            <div class="pull-right col-xs-2 col-sm-2">
-              <button title="Changer la pénalité" type="submit" class="btn btn-success">
-                <span class="glyphicon glyphicon-ok"/>
-              </button>
+        <form ng-submit="updateAmount()" >
+          <div class="row separation-actions" >
+          
+            <div class="col-xs-10 col-sm-5">
+              <div class="h-center v-adjust-table-icon">
+                <span >Pénalité actuelle : {{amountTag}} centimes</span>
+              </div>
             </div>
 
-            <div class="pull-right col-xs-10 col-sm-5">
+            <div class="col-xs-10 col-sm-5">
               <div class="input-group">
-                <span class="input-group-addon">Pénalité : {{amountTag}}</span>
                 <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="9" placeholder="Montant de la nouvelle pénalité" required>
                 <span class="input-group-addon">cts</span>
               </div>
             </div>
-
+            
+            <div class="col-xs-2 col-sm-2">
+              <button title="Changer la pénalité" type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"/>
+              </button>
+            </div>
+            
           </div>
 		</form>
       </div>
@@ -131,7 +143,7 @@
 
       <div id="deleteMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-          <form ng-submit="deleteMember(member.idPerson)">
+          <form ng-submit="deleteMember()">
             <div class="modal-content">
 
               <div class="modal-header">
@@ -183,7 +195,4 @@
 
     </div>
   </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
-  <script src="@routes.Assets.at("javascripts/admin.js")"></script>
 }

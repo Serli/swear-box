@@ -1,8 +1,5 @@
 @(urlGoogle: String, isActive: Boolean, numPage: Integer)
-
-@importedCss = { <link href="@routes.Assets.at("stylesheets/index.css")" rel="stylesheet" media="screen">}
-
-@main("ISwear-Box", importedCss) {
+@main("ISwear-Box") {
   @templates.navbar(isActive, numPage)
 } {  
 	<div class="container padding-page">

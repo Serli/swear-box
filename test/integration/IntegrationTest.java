@@ -1,4 +1,4 @@
-package unit;
+package integration;
 import org.junit.*;
 
 import play.test.*;

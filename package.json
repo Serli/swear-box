@@ -1,0 +1,28 @@
+{
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-cssmin": "~0.11.0",
+    "grunt-contrib-jshint": "~0.11.0",
+    "grunt-contrib-uglify": "~0.7.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-dev-update": "^1.0.2",
+    "load-grunt-tasks": "~3.0.0"
+  },
+  "name": "swear-box",
+  "description": "cd swear-box\r     activator -Dconfig.file=conf/dev.conf run",
+  "version": "0.0.0",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Serli/swear-box.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Serli/swear-box/issues"
+  }
+}
