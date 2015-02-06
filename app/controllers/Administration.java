@@ -190,13 +190,13 @@ public class Administration extends JavaController {
         if (fp!= null){
             try {
                 File f = fp.getFile();
-                @SuppressWarnings("rawtypes")
-				Map options = Cloudinary.asMap(
+
+				Map<?,?> options = Cloudinary.asMap(
                 		  "transformation",
                 		  new Transformation().width(200).height(200).crop("scale")
                 		);
-                @SuppressWarnings("rawtypes")
-                Map uploadResult = cloudinary.uploader().upload(f,options);
+ 
+                Map<?,?> uploadResult = cloudinary.uploader().upload(f,options);
                 String email = getUserProfile().getEmail();
                 personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 return ok();
@@ -226,13 +226,11 @@ public class Administration extends JavaController {
             } else {
                 try {
                     byte[] data = Base64.decodeBase64(image64);
-                    @SuppressWarnings("rawtypes")
-                    Map options = Cloudinary.asMap(
+                    Map<?,?> options = Cloudinary.asMap(
                               "transformation",
                               new Transformation().width(200).height(200).crop("scale")
                             );
-                    @SuppressWarnings("rawtypes")
-                    Map uploadResult = cloudinary.uploader().uploadLargeRaw(data,options);
+                    Map<?,?> uploadResult = cloudinary.uploader().uploadLargeRaw(data,options);
                     String email = getUserProfile().getEmail();
                     personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 } catch (FileNotFoundException e) {
