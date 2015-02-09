@@ -22,7 +22,9 @@ PUT     /members/picture/:id		@controllers.Administration.updatePicture(id: Long
 GET 	/help						controllers.Welcome.help()
 
 # === Statistics page
-GET 	/statistics						controllers.Welcome.statistics()
+GET 	/statistics					controllers.Welcome.statistics()
+GET     /stats                 	    @controllers.Statistics.listStatistics()
+
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()

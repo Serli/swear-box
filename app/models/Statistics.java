@@ -27,6 +27,9 @@ public class Statistics implements Serializable{
     @JoinColumn(name="idPerson")
     private Person person;
 
+    public Statistics() {
+    }
+    
     public Statistics(Date vDate, Person vPerson) {
         super();
         this.date = vDate;

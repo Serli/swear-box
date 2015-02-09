@@ -1,14 +1,15 @@
 package dao;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Query;
 
-import play.db.jpa.JPA;
+import models.Consumer;
 import models.Person;
 import models.Statistics;
+import play.db.jpa.JPA;
 
 import com.google.inject.Singleton;
 
@@ -28,6 +29,14 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
         Person person = (Person) query.getSingleResult();
 		Statistics stats = new Statistics(date,person);
 		JPA.em().persist(stats);
+	}
+	
+	public List<Statistics> listByUser(String emailUser) {
+		Consumer user = JPA.em().find(Consumer.class,emailUser);
+		List<Statistics> stats = JPA.em().createQuery("SELECT s "
+				+ "FROM Statistics s "
+				+ "WHERE s.person IN (:members)",Statistics.class).setParameter("members", user.getPeople()).getResultList();
+		return stats;
 	}
     
     
