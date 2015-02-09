@@ -24,6 +24,11 @@
           } else {
             <li><a href="/">Liste des membres</a></li>  
           }
+          @if(numPage == 1) {
+            <li class="active"><a href="/statistics">Statistiques</a></li>   
+          } else {
+            <li><a href="/statistics">Statistiques</a></li>  
+          }
           @if(numPage == 2) {
             <li class="active"><a href="/admin">Administration</a></li>   
           } else {

@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 		cssmin: {
 			  target: {
 			    files: {
-			      'public/stylesheets/swearbox.min.css': ['public/stylesheets/main.css', 'public/stylesheets/admin.css','public/stylesheets/help.css','public/stylesheets/index.css','public/stylesheets/user.css']
+			      'public/stylesheets/swearbox.min.css': ['public/stylesheets/*.css','!public/stylesheets/bootstrap.min.css','!public/stylesheets/bootstrap.css.map','!public/stylesheets/swearbox.min.css']
 			    }
 			  }
 			},
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 			    }
 			  },
 			css: {
-			    files: ['public/stylesheets/*.css','!public/stylesheets/bootstrap.css','!public/stylesheets/swearbox.min.css'],
+			    files: ['public/stylesheets/*.css','!public/stylesheets/bootstrap.min.css','!public/stylesheets/bootstrap.css.map','!public/stylesheets/swearbox.min.css'],
 			    tasks: ['cssmin'],
 			    options: {
 			      spawn: false
