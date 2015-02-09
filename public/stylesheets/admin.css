@@ -35,5 +35,13 @@
 }
 
 .image-click{
-    cursor: pointer ;
+    cursor: pointer;
+}
+
+.settings-span{
+	color: #428bca;
+}
+
+a.settings-span:hover{
+	color: #2a6496;
 }
