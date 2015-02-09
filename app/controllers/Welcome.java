@@ -18,6 +18,7 @@ import com.google.inject.Singleton;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
+import dao.StatisticsDAO;
 
 /**
  * Managed actions for welcome view
@@ -37,6 +38,9 @@ public class Welcome extends JavaController {
 
     @Inject
     private PersonDAO personDAO;
+    
+    @Inject
+    private StatisticsDAO statisticsDAO;
 
     private Cloudinary cloudinary = com.cloudinary.Singleton.getCloudinary();
 
@@ -88,6 +92,7 @@ public class Welcome extends JavaController {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
         personDAO.incrementDebt(id,email);
+        statisticsDAO.add(id);
         return ok();
     }
 

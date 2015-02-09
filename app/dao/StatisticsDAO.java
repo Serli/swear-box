@@ -1,5 +1,7 @@
 package dao;
 
+import models.Person;
+
 /**
  * Groups the operations on the Statistics table
  * @author Geoffrey
@@ -7,4 +9,6 @@ package dao;
  */
 public interface StatisticsDAO {
     
+    public void add(Long idPerson);
+	
 }
