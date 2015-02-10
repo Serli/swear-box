@@ -103,6 +103,9 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 							else if(calTmp.before(calFin)) {
 								end = true;
 							}
+							else if(calTmp.get(Calendar.MONTH) < month && calTmp.get(Calendar.YEAR) == year 
+									||  calTmp.get(Calendar.YEAR) < year)
+								break;
 						}
 						else {
 							cptmember++;
