@@ -1,14 +1,14 @@
 package controllers;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.Result;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -21,21 +21,24 @@ import dao.StatisticsDAO;
 @Singleton
 public class Statistics extends JavaController {
 
-    private static final String JSON_MESSG = "Expecting Json data";
-
     @Inject
     private StatisticsDAO statisticsDAO;
 
     /**
-     * List all persons for a connected user
-     * @return Result(JSON) : list of membres
+     * List data stats for a connected user and a members list 
+     * @return Result(JSON) : list of data stats
      */
     @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result listStatistics() {
+    public Result listStatistics(String ids, int nb, int granularity) {
+    	String[] idsString = ids.split(",");
+    	ArrayList<Long> idsLong = new ArrayList<Long>();
+    	for(int i=0;i<idsString.length;i++) {
+    		idsLong.add(Long.parseLong(idsString[i]));
+    	}
         String emailUser = getUserProfile().getEmail();
-        List<models.Statistics> statistics = statisticsDAO.listByUser(emailUser);
-        return ok(Json.toJson(statistics));
+        ObjectNode statistics = statisticsDAO.list(emailUser,idsLong,nb,granularity);
+        return ok(statistics);
     }
 
 }

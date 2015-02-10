@@ -1,8 +1,8 @@
 package dao;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import models.Statistics;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * Groups the operations on the Statistics table
@@ -13,5 +13,5 @@ public interface StatisticsDAO {
     
     public void add(Long idPerson);
 	
-    public List<Statistics> listByUser(String emailUser);
+    public ObjectNode list(String emailUser,ArrayList<Long> ids, int nb, int granularity);
 }

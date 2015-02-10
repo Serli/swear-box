@@ -1,14 +1,6 @@
 package unit;
 
-import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.inMemoryDatabase;
-
-import java.util.List;
-
-import javax.persistence.Query;
-
-import models.Consumer;
-import models.Person;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,10 +11,6 @@ import org.junit.Test;
 import play.db.jpa.JPA;
 import play.test.FakeApplication;
 import play.test.Helpers;
-import dao.ConsumerDAO;
-import dao.ConsumerDAOImpl;
-import dao.PersonDAO;
-import dao.PersonDAOImpl;
 import dao.StatisticsDAO;
 import dao.StatisticsDAOImpl;
 
