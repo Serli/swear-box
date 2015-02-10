@@ -3,7 +3,7 @@ app.controller('statsCtrl',
 		function ($scope, $http) {
 
 	/*----------------------------------------------------------------------*
-	 *-- Initialisation of the objects used in this controller (statsCtrl) --*
+	 *-- Initialisation of the objects used in this controller (statsCtrl) -*
 	 *----------------------------------------------------------------------*/
 	
 	$scope.stats = {};
@@ -13,7 +13,7 @@ app.controller('statsCtrl',
 
 
 	/*----------------------------------------------------------------------*
-	 *--- Functions which use statsService from ../services/stats.js ---*
+	 *----- Functions which use statsService from ../services/stats.js -----*
 	 *----------------------------------------------------------------------*/
 
 	// Function which retrieves the data list to draw the stats.
@@ -41,6 +41,7 @@ app.controller('statsCtrl',
                     show: true
                 },
                 renderer:$.jqplot.BarRenderer,
+
                 rendererOptions: {
                 	fillToZero: true,
                 	highlightMouseOver: false,
@@ -57,7 +58,14 @@ app.controller('statsCtrl',
                 }
             }
         });
+
+        window.onresize = function (e) {
+            plot1.destroy();
+            drawStats();
+        };
     }
+
+    /*----------------------------------------------------------------------*/
 	
 }]);
 
