@@ -1,6 +1,6 @@
 app.controller('statsCtrl',
-	['$scope', 
-		function ($scope) {
+	['$scope', '$http',
+		function ($scope, $http) {
 
 	/*----------------------------------------------------------------------*
 	 *-- Initialisation of the objects used in this controller (statsCtrl) --*
@@ -18,7 +18,7 @@ app.controller('statsCtrl',
 
 	// Function which retrieves the data list to draw the stats.
     function getStats() {
-    	$http.get(/stats)
+    	$http.get('/stats')
         .success(function (data) {
             $scope.stats = data;
         })
@@ -27,7 +27,7 @@ app.controller('statsCtrl',
         });
         
         drawStats();
-    };
+    }
 
     //Function which draws the stats in the canvas
     function drawStats() {
@@ -57,7 +57,7 @@ app.controller('statsCtrl',
                 }
             }
         });
-    };
+    }
 	
 }]);
 

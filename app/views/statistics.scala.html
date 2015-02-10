@@ -3,9 +3,8 @@
 @main("ISwear-Box")  {
   @templates.navbar(isActive, numPage)
 } {
-        <script src="@routes.Assets.at("javascripts/statistics.js")"></script>
 
-   	<div class="container padding-page">
+   	<div class="container padding-page" ng-controller="statsCtrl">
     	<div class="row">
 
     		<div class="col-xs-12">
