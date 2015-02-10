@@ -1,15 +1,36 @@
 app.controller('statsCtrl',
-	['$scope', '$http',
-		function ($scope, $http) {
+	['$scope', '$http', 'membersService',
+		function ($scope, $http, membersService) {
 
 	/*----------------------------------------------------------------------*
 	 *-- Initialisation of the objects used in this controller (statsCtrl) -*
 	 *----------------------------------------------------------------------*/
 	
+    $scope.members = {};
 	$scope.stats = {};
 	getStats();
+    getMembers();
 
-	/*----------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------*/
+
+
+    /*----------------------------------------------------------------------*
+     *--- Functions which use membersService from ../services/members.js ---*
+     *----------------------------------------------------------------------*/
+
+    // Function which retrieves the list of members of the database calling 
+    // corresponding function through the server.
+    function getMembers() {
+        membersService.getMembers()
+        .success(function (membs) {
+            $scope.members = membs;
+        })
+        .error(function (error) {
+            alert('Unable to load members data: ' + error.message);
+        });
+    }
+
+    /*----------------------------------------------------------------------*/
 
 
 	/*----------------------------------------------------------------------*

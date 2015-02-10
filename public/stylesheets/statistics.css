@@ -1,0 +1,11 @@
+.v-adjust-radio-label {
+	padding-top: 0.25em;
+}
+
+.form-control[disabled] {
+  cursor: default;
+}
+
+.padding-charts{
+	padding: 30px 0px;
+}
