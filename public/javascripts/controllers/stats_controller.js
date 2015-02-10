@@ -32,20 +32,26 @@ app.controller('statsCtrl',
     //Function which draws the stats in the canvas
     function drawStats() {
         var s1 = [5, 4, 2, 8, 5, 4, 9, 6, 5, 4, 1, 8];
+        var s2 = [3, 1, 9, 2, 8, 1, 5, 3, 2, 1, 3, 7];
+        var s3 = [6, 4, 4, 1, 6, 3, 4, 8, 1, 3, 5, 4];
+        var s4 = [9, 5, 2, 3, 3, 8, 1, 6, 4, 8, 9, 4];
 
         var ticks = ['JAN', 'FEV', 'MAR', 'AVR','MAI', 'JUN', 'JUL', 'AOU','SEP', 'OCT', 'NOV', 'DEC'];
          
-        var plot1 = $.jqplot('chart1', [s1], {
+        var plot1 = $.jqplot('chart1', [s1,s2], {
+        	seriesColors: [ "#428bca", "#5cb85c"],
             seriesDefaults:{
                 pointLabels: {
                     show: true
                 },
+                shadow: false,
+                shadowOffset: 0,
                 renderer:$.jqplot.BarRenderer,
                 rendererOptions: {
                 	fillToZero: true,
                 	highlightMouseOver: false,
-                    barMargin: 5},
-                color : '#d9534f'
+                    barPadding: 1,
+                    barMargin: 5}
             },
             axes: {
                 xaxis: {

@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +35,9 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		List<Statistics> stats = JPA.em().createQuery("SELECT s "
 				+ "FROM Statistics s "
 				+ "WHERE s.person IN (:members)",Statistics.class).setParameter("members", user.getPeople()).getResultList();
+		
+		
+		
 		return stats;
 	}
     
