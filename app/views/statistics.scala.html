@@ -4,14 +4,58 @@
   @templates.navbar(isActive, numPage)
 } {
 
-   	<div class="container padding-page" ng-controller="statsCtrl">
+   	<div class="container" ng-controller="statsCtrl">
     	<div class="row">
 
-    		<div class="col-xs-12">
+    		<div class="padding-charts">
     			<div id="chart1"></div>
     		</div>
-</div>
-</div>
-  
 
+    		<div class="container  well well-sm" >
+    			<div class="col-xs-12 col-sm-4 col-sm-offset-1">
+	    			<form>
+	    				<h4 class="h-center">Membres</h4>
+				        <div ng-repeat="member in members" class="row">
+							<div class="input-group">
+				        		<span class="input-group-addon">
+									<input type="checkbox" name="checkbox" id="checkbox{{member.idPerson}}" class="checkbox"/>
+								</span>
+								<label class="form-control" for="checkbox{{member.idPerson}}">
+									{{member.firstname}}
+								</label>
+							</div>
+
+				    	</div>
+				    </form>
+    			</div> 
+		        
+		        <div class="col-xs-12 col-sm-4 col-sm-offset-2">
+    				<form>
+	    				<h4 class="h-center">Paramètres</h4>
+				        <div>
+				        	<div class="input-group">
+				        		<span class="input-group-addon">
+									<input type="radio" name="radio" id="weeks" class="radio" checked/>
+								</span>
+								<label class="form-control" for="weeks"  disabled>
+									Semaines
+								</label>
+							</div>
+
+							<div class="input-group">
+								<span class="input-group-addon">
+									<input type="radio" name="radio" id="months" class="radio"/>
+								</span>
+								<label class="form-control" for="months"  disabled>
+									Mois
+								</label>
+							</div>
+						<div>
+				    </form>
+						
+    			</div> 
+    		</div>
+
+		</div>
+	</div>
 }
