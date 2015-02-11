@@ -76,6 +76,12 @@ public final class PersonDAOImpl implements PersonDAO {
 
         //Refresh DB
         JPA.em().flush();	
+        
+        //Delete member statistics
+        JPA.em().createQuery("DELETE FROM Statistics WHERE person = :member").setParameter("member", pbd).executeUpdate();
+        
+        //Refresh DB
+        JPA.em().flush();	
 
         //Delete the person
         JPA.em().remove(pbd);
