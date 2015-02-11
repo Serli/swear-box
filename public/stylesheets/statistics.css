@@ -8,5 +8,16 @@
 }
 
 .padding-charts{
-	padding: 30px 0px;
+	padding: 50px 0px 30px;
+}
+
+div.jqplot-table-legend-swatch {
+	padding: 0px 2px 0px;
+}
+
+div.jqplot-table-legend-swatch-outline {
+    border: 1px solid #666666;
+    margin-left : 6px;
+    margin-right : 1px;
+    padding : 0px;
 }

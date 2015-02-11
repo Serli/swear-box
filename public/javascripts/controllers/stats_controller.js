@@ -83,24 +83,31 @@ app.controller('statsCtrl',
         .error(function (error) {
             alert('Unable to load stats data');
         });
-    }
+    };
 
     //Function which draws the stats in the canvas
     function drawStats() {
 
     	var series = [];
+    	var legend = [];
     	var j =0;
     	for(var i in $scope.stats) {
     		if(i !== 'ticks') {
     			series[j] = $scope.stats[i];
+    			for(var m in $scope.members) {
+    				if(i == ('p'+$scope.members[m].idPerson))
+    				legend[j] = $scope.members[m].firstname+'  ';
+    			}
     		}
     		j++;
     	}
-
-        var ticks = $scope.stats.ticks;
+    	
+        var ticks = $scope.stats.ticks;	
          
         plot1 = $.jqplot('chart1', series, {
-        	seriesColors: [ "#428bca", "#5cb85c", "#5bc0de", "#f0ad4e", "#AA6708", "#d9534f"],
+        	
+        	seriesColors: [ "#428bca", "#5cb85c", "#5bc0de", "#f0ad4e", "#d9534f", "#8A6DE9", "#444444" ],
+        	
             seriesDefaults:{
                 pointLabels: {
                     show: true
@@ -115,15 +122,29 @@ app.controller('statsCtrl',
                     barPadding: 1,
                     barMargin: 5}
             },
+
+            legend: {
+            	border : 'none',
+            	labels : legend,
+            	renderer: $.jqplot.EnhancedLegendRenderer,
+            	show: true,
+            	placement: 'outside',
+            	location: 'n',
+            	rendererOptions: {
+            		numberRows: 1
+            	}
+            },
+            
             axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ticks
-                },
-                yaxis: {
-                	showTicks: false 
-                }
+            	xaxis: {
+            		renderer: $.jqplot.CategoryAxisRenderer,
+            		ticks: ticks
+            	},
+            	yaxis: {
+            		showTicks: false 
+            	}
             }
+            
         });
 
         window.onresize = function (e) {
