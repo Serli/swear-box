@@ -8,7 +8,12 @@ app.controller('statsCtrl',
 	
     $scope.members = {};
 	$scope.series = {};
-	getStats();
+    var plot1 = {};
+    var bd_unit = 12;
+    var bd_type_unit = 1;
+    $scope.unit = bd_unit;
+    $scope.type_unit = bd_type_unit;
+    getStats();
     getMembers();
 
     /*----------------------------------------------------------------------*/
@@ -37,9 +42,9 @@ app.controller('statsCtrl',
 	 *----- Functions which use statsService from ../services/stats.js -----*
 	 *----------------------------------------------------------------------*/
 
-	// Function which retrieves the data list to draw the stats.
+    // Function which retrieves the data list to draw the stats.
     function getStats() {
-    	$http.get('/stats/10/2?ids=1,4')
+        $http.get('/stats/2/2?ids=1,4')
         .success(function (data) {
             $scope.stats = data;
             drawStats();
@@ -47,8 +52,37 @@ app.controller('statsCtrl',
         .error(function (error) {
             alert('Unable to load stats data');
         });
-        
-        
+    }
+
+	// Function which retrieves the data list to redraw the stats.
+    $scope.getStats = function () {
+        if(document.getElementById('weeks').checked) {
+            $scope.type_unit = 1;
+        }
+        if(document.getElementById('months').checked) {
+            $scope.type_unit = 2;
+        }
+        var ids = '';
+        var cpt = 0;
+        for(var i in $scope.members) {
+            if(document.getElementById('checkbox'+$scope.members[i].idPerson).checked) {
+                if(cpt > 0) {
+                    ids = ids +',';
+                }
+                ids = ids + $scope.members[i].idPerson;
+                cpt = cpt +1;
+            }
+        }
+
+    	$http.get('/stats/'+$scope.unit+'/'+$scope.type_unit+'?ids='+ids)
+        .success(function (data) {
+            $scope.stats = data;
+            plot1.destroy();
+            drawStats();
+        })
+        .error(function (error) {
+            alert('Unable to load stats data');
+        });
     }
 
     //Function which draws the stats in the canvas
@@ -65,7 +99,7 @@ app.controller('statsCtrl',
 
         var ticks = $scope.stats.ticks;
          
-        var plot1 = $.jqplot('chart1', series, {
+        plot1 = $.jqplot('chart1', series, {
         	seriesColors: [ "#428bca", "#5cb85c", "#5bc0de", "#f0ad4e", "#AA6708", "#d9534f"],
             seriesDefaults:{
                 pointLabels: {

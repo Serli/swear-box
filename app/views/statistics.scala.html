@@ -12,8 +12,8 @@
     		</div>
 
     		<div class="container  well well-sm" >
-    			<div class="col-xs-12 col-sm-4 col-sm-offset-1">
-	    			<form>
+    			<div class="col-xs-12 col-sm-4">
+	    			<form class="col-sm-12 col-md-8 col-md-offset-2">
 	    				<h4 class="h-center">Membres</h4>
 				        <div ng-repeat="member in members" class="row">
 							<div class="input-group">
@@ -28,17 +28,17 @@
 				    	</div>
 				    </form>
     			</div> 
-		        
-		        <div class="col-xs-12 col-sm-4 col-sm-offset-2">
-    				<form>
+
+		        <div class="col-xs-12 col-sm-4">
+    				<form class="col-sm-12 col-md-8 col-md-offset-2">
 	    				<h4 class="h-center">Paramètres</h4>
-				        <div>
+				        <div class="row">
 				        	<div class="input-group">
 				        		<span class="input-group-addon">
 									<input type="radio" name="radio" id="weeks" class="radio" checked/>
 								</span>
 								<label class="form-control" for="weeks"  disabled>
-									Semaines
+									{{unit}} Semaines
 								</label>
 							</div>
 
@@ -47,13 +47,30 @@
 									<input type="radio" name="radio" id="months" class="radio"/>
 								</span>
 								<label class="form-control" for="months"  disabled>
-									Mois
+									{{unit}} Mois
 								</label>
 							</div>
-						<div>
+
+							<div>
+				        		<input type="range" name="range" id="slider" class="form-control" min="1" max="12" ng-model="unit"/>
+							</div>
+						</div>
 				    </form>
-						
-    			</div> 
+    			</div>
+
+    			<div class="col-xs-12 col-sm-4">
+    				<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2">
+						<h4 class="h-center">
+							Valider les paramètres
+						</h4>
+					</div>
+    				<div class="col-xs-4 col-xs-offset-4 col-sm-8 col-sm-offset-2 ">
+						<button class="btn btn-danger h-center" ng-click="getStats()">
+							Valider
+						</button>
+					</div>
+		        </div>
+
     		</div>
 
 		</div>

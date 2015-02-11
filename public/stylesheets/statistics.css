@@ -4,6 +4,7 @@
 
 .form-control[disabled] {
   cursor: default;
+  background-color: #fff;
 }
 
 .padding-charts{
