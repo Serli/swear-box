@@ -21,3 +21,12 @@ div.jqplot-table-legend-swatch-outline {
     margin-right : 1px;
     padding : 0px;
 }
+
+.jqplot-point-label {
+  color: #1E1E1E;
+  font-weight:bold;
+}
+
+.jqplot-yaxis {
+	  color: #0A0A0A;
+}

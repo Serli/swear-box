@@ -1,6 +1,13 @@
 package unit;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.inMemoryDatabase;
+
+import java.util.List;
+
+import models.Consumer;
+import models.Person;
+import models.Statistics;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,6 +18,8 @@ import org.junit.Test;
 import play.db.jpa.JPA;
 import play.test.FakeApplication;
 import play.test.Helpers;
+import dao.PersonDAO;
+import dao.PersonDAOImpl;
 import dao.StatisticsDAO;
 import dao.StatisticsDAOImpl;
 
@@ -21,6 +30,7 @@ import dao.StatisticsDAOImpl;
 public class StatisticsTest{
 
     private StatisticsDAO statisticsDAO = new StatisticsDAOImpl();
+    private PersonDAO personDAO = new PersonDAOImpl();
 
     private static FakeApplication app;
 
@@ -42,17 +52,17 @@ public class StatisticsTest{
      */
     @Test
     public void add() {
+    	Person p =new Person("pName", "pFirstname",0,"https://url");
+        Consumer u= new Consumer("email@email",100);
+        JPA.em().persist(u);
+        personDAO.add(p,u.getEmail());
         
-    }
-    
-    /**
-     * Test ListByUser function for a user
-     */
-    @Test
-    public void listByUser() {
+        statisticsDAO.add(p.getIdPerson(), u.getEmail());
+        statisticsDAO.add(p.getIdPerson(), u.getEmail());
         
+        List<Statistics> lp= JPA.em().createQuery("Select s FROM Statistics s WHERE s.person = :member",Statistics.class).setParameter("member", p).getResultList();
+        assertThat(lp.size()==2);
     }
-
 
     @After
     public void tearDown() {

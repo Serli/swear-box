@@ -103,14 +103,17 @@ app.controller('statsCtrl',
     	}
     	
         var ticks = $scope.stats.ticks;	
-         
+
         plot1 = $.jqplot('chart1', series, {
         	
         	seriesColors: [ "#428bca", "#5cb85c", "#5bc0de", "#f0ad4e", "#d9534f", "#8A6DE9", "#444444" ],
         	
             seriesDefaults:{
                 pointLabels: {
-                    show: true
+                    show: true,
+                    ypadding : 0,
+                    location : 's',
+                    hideZeros : true
                 },
                 shadow: false,
                 shadowOffset: 0,
@@ -122,8 +125,9 @@ app.controller('statsCtrl',
                     barPadding: 1,
                     barMargin: 5}
             },
-
+            
             legend: {
+            	textColor : '#0A0A0A',
             	border : 'none',
             	labels : legend,
             	renderer: $.jqplot.EnhancedLegendRenderer,

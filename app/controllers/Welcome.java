@@ -92,7 +92,7 @@ public class Welcome extends JavaController {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
         personDAO.incrementDebt(id,email);
-        statisticsDAO.add(id);
+        statisticsDAO.add(id, email);
         return ok();
     }
 

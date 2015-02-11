@@ -35,12 +35,17 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
      * Add a statistic on the Statistics table
      * @param idPerson : person who swore
      */
-	public void add(Long idPerson) {
-		Calendar cal = Calendar.getInstance();
+	public void add(Long idPerson, String email) {
 		Query query = JPA.em().createQuery(QUERY_PERSON + idPerson);
-		Person person = (Person) query.getSingleResult();
-		Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),person);
-		JPA.em().persist(stats);
+		Person member = (Person) query.getSingleResult();
+        Consumer user = JPA.em().find(Consumer.class,email);
+        
+        if (user.getPeople().contains(member)){
+    		Calendar cal = Calendar.getInstance();
+    		Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),member);
+    		JPA.em().persist(stats);
+        }
+
 	}
 
 	
