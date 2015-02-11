@@ -39,7 +39,7 @@ app.controller('statsCtrl',
 
 	// Function which retrieves the data list to draw the stats.
     function getStats() {
-    	$http.get('/stats/10/2?ids=1,4')
+    	$http.get('/stats/12/2?ids=1,2,3,4,5,6')
         .success(function (data) {
             $scope.stats = data;
             drawStats();

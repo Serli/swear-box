@@ -76,10 +76,10 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		});
 
 		if(granularity == 1) {
-			return resultWeek(members,stats,nb);
+			return result(members,stats,nb,Calendar.WEEK_OF_YEAR,Calendar.DATE,7);
 		}		
 		else { //(granularity == 2) 
-			return resultMonth(members,stats,nb);
+			return result(members,stats,nb,Calendar.MONTH,Calendar.MONTH,1);
 		}
 	}
 
@@ -90,7 +90,8 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
      * @param stats : statistics that must extract data
      * @param nb : number of data
 	 */
-	private ObjectNode resultMonth(ArrayList<Person> members, ArrayList<Statistics> stats, int nb) {
+	private ObjectNode result(ArrayList<Person> members, ArrayList<Statistics> stats, int nb, int calendarRef, int calendar, int nbCalendar) {
+		
 		//Get the actual date
 		Date date = new Date();
 		Calendar calRef = Calendar.getInstance();
@@ -99,15 +100,11 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		//Create the Json
 		ObjectNode result = Json.newObject();
 
-		//Granularity : Month
-		//Get actuals month and year
-		int monthRef = calRef.get(Calendar.MONTH);
-		int yearRef = calRef.get(Calendar.YEAR);
-
 		//Get the last possible date (actual - nb*Month)
 		Calendar calFin = Calendar.getInstance();
 		calFin.setTime(date);
-		calFin.add(Calendar.MONTH, -nb);
+		
+		calFin.add(calendar, -nb*nbCalendar);
 
 		//Variables loop initialization
 		Calendar calTmp = Calendar.getInstance();
@@ -115,38 +112,42 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		int cptmember = 0;
 		boolean end = false;
 		int index = 0;
-		int month = monthRef;
-		int year = yearRef;
+		int valRef;
+		if(calendar == Calendar.MONTH) {
+			valRef = calRef.get(calendarRef);;
+		}
+		else {
+			valRef = calRef.get(calendarRef);
+		}
+		int year = calRef.get(Calendar.YEAR);
 
 		//Create the list of data statistics for the view (one number per month)
 		for(Person m : members) {
 			ArrayList<Integer> list = new ArrayList<Integer>();
-			month = monthRef;
-			year = yearRef;
 			while(!end && list.size() < nb) {
 				for(int i = 0; i<stats.size(); i++) {
 					calTmp.setTime(stats.get(i).getDate());
 					if(stats.get(i).getPerson().getIdPerson() == m.getIdPerson()) {
-						if(calTmp.get(Calendar.MONTH) == month && calTmp.get(Calendar.YEAR) == year) {
+						if(calTmp.get(calendarRef) == valRef && calTmp.get(Calendar.YEAR) == year) {
 							cpt ++;
 						}
 						else if(calTmp.before(calFin)) {
 							end = true;
 						}
-						else if(calTmp.get(Calendar.MONTH) < month && calTmp.get(Calendar.YEAR) == year 
+						else if(calTmp.get(calendarRef) < valRef && calTmp.get(Calendar.YEAR) == year 
 								||  calTmp.get(Calendar.YEAR) < year)
 							break;
 					}
-					else if(calTmp.get(Calendar.MONTH) < month && calTmp.get(Calendar.YEAR) == year 
+					else if(calTmp.get(calendarRef) < valRef && calTmp.get(Calendar.YEAR) == year 
 							||  calTmp.get(Calendar.YEAR) < year)
 						break;
 					else {
 						cptmember++;
 					}
-				}
+				}	
 				index=index+cpt+cptmember;
-				calRef.add(Calendar.MONTH, -1);
-				month = calRef.get(Calendar.MONTH);
+				calRef.add(calendar, -nbCalendar);
+				valRef = calRef.get(calendarRef);
 				year = calRef.get(Calendar.YEAR);
 				list.add(cpt);
 				cpt = 0;
@@ -160,35 +161,24 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 			index = 0;
 			cptmember = 0;
 			calRef.setTime(date);
+			valRef = calRef.get(calendarRef);
+			year = calRef.get(Calendar.YEAR);
 			end = false;
 		}
-		String ticks[] = new String[nb]; 
-		for(int i=nb-1; i>=0; i--){
-			ticks[i] = MONTH[calRef.get(Calendar.MONTH)];
-			calRef.add(Calendar.MONTH, -1);
+		String ticks[] = new String[nb];
+		if(calendar == Calendar.MONTH) {
+			for(int i=nb-1; i>=0; i--){
+				ticks[i] = MONTH[calRef.get(Calendar.MONTH)];
+				calRef.add(calendar, -nbCalendar);
+			}
+		}
+		else {
+			for(int i=nb-1; i>=0; i--){
+				ticks[i] = "S"+String.valueOf((calRef.get(Calendar.WEEK_OF_YEAR)));
+				calRef.add(calendar, -nbCalendar);
+			}
 		}
 		result.put("ticks", Json.toJson(ticks));
 		return result;
 	}
-
-	
-	/**
-	 * List the data statistics with the Week granularity
-     * @param members : list of members concerned
-     * @param stats : statistics that must extract data
-     * @param nb : number of data
-	 */
-	private ObjectNode resultWeek(ArrayList<Person> members, ArrayList<Statistics> stats, int nb) {
-		//Get the actual date
-		Date date = new Date();
-		Calendar calRef = Calendar.getInstance();
-		calRef.setTime(date);
-
-		//Create the Json
-		ObjectNode result = Json.newObject();
-
-		
-		return result;
-	}
-	
 }
