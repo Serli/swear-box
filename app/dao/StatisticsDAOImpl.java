@@ -27,6 +27,8 @@ import com.google.inject.Singleton;
 public final class StatisticsDAOImpl implements StatisticsDAO{
 
 	private static final String QUERY_PERSON = "Select p from Person p where p.idPerson =";
+	
+	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
 
 	
     /**
@@ -154,12 +156,18 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 				list.add(0);
 			}
 			Collections.reverse(list);
-			result.put(m.getIdPerson().toString(),Json.toJson(list));
+			result.put("p"+m.getIdPerson().toString(),Json.toJson(list));
 			index = 0;
 			cptmember = 0;
 			calRef.setTime(date);
+			end = false;
 		}
-
+		String ticks[] = new String[nb]; 
+		for(int i=nb-1; i>=0; i--){
+			ticks[i] = MONTH[calRef.get(Calendar.MONTH)];
+			calRef.add(Calendar.MONTH, -1);
+		}
+		result.put("ticks", Json.toJson(ticks));
 		return result;
 	}
 
