@@ -7,13 +7,15 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import models.Consumer;
 import models.Person;
 import models.Statistics;
-import play.db.jpa.JPA;
+import net.vz.mongodb.jackson.DBCursor;
+import net.vz.mongodb.jackson.DBQuery;
+import net.vz.mongodb.jackson.DBRef;
+import net.vz.mongodb.jackson.JacksonDBCollection;
 import play.libs.Json;
+import play.modules.mongodb.jackson.MongoDB;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Singleton;
@@ -26,53 +28,55 @@ import com.google.inject.Singleton;
 @Singleton
 public final class StatisticsDAOImpl implements StatisticsDAO{
 
-	private static final String QUERY_PERSON = "Select p from Person p where p.idPerson =";
-	
+	private static JacksonDBCollection<Consumer, String> consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
+	private static JacksonDBCollection<Person, String> people = MongoDB.getCollection("Person", Person.class, String.class);
+	private static JacksonDBCollection<Statistics, String> statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
+
 	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
 
-	
-    /**
-     * Add a statistic on the Statistics table
-     * @param idPerson : person who swore
-     */
-	public void add(Long idPerson, String email) {
-		Query query = JPA.em().createQuery(QUERY_PERSON + idPerson);
-		Person member = (Person) query.getSingleResult();
-        Consumer user = JPA.em().find(Consumer.class,email);
-        
-        if (user.getPeople().contains(member)){
-    		Calendar cal = Calendar.getInstance();
-    		Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),member);
-    		JPA.em().persist(stats);
-        }
 
+	/**
+	 * Add a statistic on the Statistics table
+	 * @param idPerson : person who swore
+	 */
+	public void add(String idPerson, String email) {
+		Person pbd = people.findOneById(idPerson);
+		Consumer user = consumers.findOneById(email);
+
+		for(DBRef<Person,String> p : user.getPeople()) {
+			if(p.getId().equals(pbd.getIdPerson())) {
+				Calendar cal = Calendar.getInstance();
+				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),pbd);
+				statistics.insert(stats);
+				break;
+			}
+		}
 	}
 
-	
+
 	/**
 	 * List the data to display statistics in the view
-     * @param emailUser : user id
-     * @param ids : members id
-     * @param nb : number of data
-     * @param granularity : 1 = Week, 2 = Month
+	 * @param emailUser : user id
+	 * @param ids : members id
+	 * @param nb : number of data
+	 * @param granularity : 1 = Week, 2 = Month
 	 */
-	public ObjectNode list(String emailUser, ArrayList<Long> ids, int nb, int granularity) {
+	public ObjectNode list(String emailUser, ArrayList<String> ids, int nb, int granularity) {
 		//Get the members (ids contains the id member)
-		Consumer user = JPA.em().find(Consumer.class,emailUser);
+		Consumer user = consumers.findOneById(emailUser);
+		List<Person> l = consumers.fetch(user.getPeople());
 		ArrayList<Person> members = new ArrayList<Person>();
-		for (Person p : user.getPeople()) {
+		for (Person p : l) {
 			if(ids.contains(p.getIdPerson()) ) {
 				members.add(p);
 			}
 		}
 
 		//Get the members statistics
-		List<Statistics> statistics = JPA.em().createQuery("SELECT s "
-				+ "FROM Statistics s "
-				+ "WHERE s.person IN (:members)",Statistics.class).setParameter("members", members).getResultList();
-
-		ArrayList<Statistics> stats = new ArrayList<Statistics>(statistics);
-
+		DBCursor<Statistics> cursor = statistics.find(DBQuery.in( "person.$id" , ids));
+		List<Statistics> statsTmp = cursor.toArray();
+		ArrayList<Statistics> stats = new ArrayList<Statistics>(statsTmp);
+		
 		//Sort by date
 		Collections.sort(stats, new Comparator<Statistics>() {
 			public int compare(Statistics s1, Statistics s2) {
@@ -88,15 +92,15 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		}
 	}
 
-	
+
 	/**
 	 * List the data statistics with the Month granularity
-     * @param members : list of members concerned
-     * @param stats : statistics that must extract data
-     * @param nb : number of data
+	 * @param members : list of members concerned
+	 * @param stats : statistics that must extract data
+	 * @param nb : number of data
 	 */
 	private ObjectNode result(ArrayList<Person> members, ArrayList<Statistics> stats, int nb, int calendarRef, int calendar, int nbCalendar) {
-		
+
 		//Get the actual date
 		Date date = new Date();
 		Calendar calRef = Calendar.getInstance();
@@ -108,7 +112,6 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		//Get the last possible date (actual - nb*Month)
 		Calendar calFin = Calendar.getInstance();
 		calFin.setTime(date);
-		
 		calFin.add(calendar, -nb*nbCalendar);
 
 		//Variables loop initialization
@@ -118,21 +121,21 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		boolean end = false;
 		int index = 0;
 		int valRef;
+		int year = calRef.get(Calendar.YEAR);
 		if(calendar == Calendar.MONTH) {
 			valRef = calRef.get(calendarRef);;
 		}
 		else {
 			valRef = calRef.get(calendarRef);
 		}
-		int year = calRef.get(Calendar.YEAR);
-
+		
 		//Create the list of data statistics for the view (one number per month)
 		for(Person m : members) {
 			ArrayList<Integer> list = new ArrayList<Integer>();
 			while(!end && list.size() < nb) {
 				for(int i = 0; i<stats.size(); i++) {
 					calTmp.setTime(stats.get(i).getDate());
-					if(stats.get(i).getPerson().getIdPerson() == m.getIdPerson()) {
+					if(stats.get(i).getPerson().fetch().getIdPerson().equals(m.getIdPerson())) {
 						if(calTmp.get(calendarRef) == valRef && calTmp.get(Calendar.YEAR) == year) {
 							cpt ++;
 						}

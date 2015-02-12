@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public interface StatisticsDAO {
     
-    public void add(Long idPerson, String email);
+    public void add(String idPerson, String email);
 	
-    public ObjectNode list(String emailUser,ArrayList<Long> ids, int nb, int granularity);
+    public ObjectNode list(String emailUser,ArrayList<String> ids, int nb, int granularity);
 }

@@ -28,13 +28,12 @@ public class Statistics extends JavaController {
      * List data stats for a connected user and a members list 
      * @return Result(JSON) : list of data stats
      */
-    @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
     public Result listStatistics(String ids, int nb, int granularity) {
     	String[] idsString = ids.split(",");
-    	ArrayList<Long> idsLong = new ArrayList<Long>();
+    	ArrayList<String> idsLong = new ArrayList<String>();
     	for(int i=0;i<idsString.length;i++) {
-    		idsLong.add(Long.parseLong(idsString[i]));
+    		idsLong.add(idsString[i]);
     	}
         String emailUser = getUserProfile().getEmail();
         ObjectNode statistics = statisticsDAO.list(emailUser,idsLong,nb,granularity);

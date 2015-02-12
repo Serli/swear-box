@@ -13,7 +13,7 @@ app.controller('statsCtrl',
     var bd_type_unit = 1;
     $scope.unit = bd_unit;
     $scope.type_unit = bd_type_unit;
-    getStats();
+    
     getMembers();
 
     /*----------------------------------------------------------------------*/
@@ -29,6 +29,13 @@ app.controller('statsCtrl',
         membersService.getMembers()
         .success(function (membs) {
             $scope.members = membs;
+            if($scope.members.length > 0) {
+            	getStats($scope.members[0].idPerson);
+            }
+            else {
+            	alert("Impossible d'afficher les statistiques : aucun membre");
+            }
+            	
         })
         .error(function (error) {
             alert('Unable to load members data: ' + error.message);
@@ -43,8 +50,8 @@ app.controller('statsCtrl',
 	 *----------------------------------------------------------------------*/
 
     // Function which retrieves the data list to draw the stats.
-    function getStats() {
-    	$http.get('/stats/12/2?ids=1,2,3,4,5,6')
+    function getStats(idPerson) {
+    	$http.get('/stats/12/2?ids='+idPerson)
         .success(function (data) {
             $scope.stats = data;
             drawStats();

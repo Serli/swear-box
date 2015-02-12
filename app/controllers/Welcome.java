@@ -3,12 +3,12 @@ package controllers;
 
 import models.Person;
 
+import org.bson.types.ObjectId;
 import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
 import play.Play;
-import play.db.jpa.Transactional;
 import play.mvc.Result;
 import views.html.index;
 
@@ -60,7 +60,6 @@ public class Welcome extends JavaController {
      * Action called for displaying the user view
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result user() {
         //Get the name in the user google profile
@@ -75,7 +74,7 @@ public class Welcome extends JavaController {
                     .generate(Play.application().configuration().getString("AvatarDefault"));
             String picture = url.replace("http", "https");
             String name = googleProfile.getFamilyName();
-            Person person = new Person(name,firstname,0,picture);
+            Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
             personDAO.add(person,email);
         }
         return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
@@ -86,9 +85,8 @@ public class Welcome extends JavaController {
      * Action called for increase a person debt
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result increaseDebt(Long id) {
+    public Result increaseDebt(String id) {
         Google2Profile googleProfile = (Google2Profile) getUserProfile();
         String email = googleProfile.getEmail();
         personDAO.incrementDebt(id,email);

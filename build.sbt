@@ -18,7 +18,9 @@ libraryDependencies ++= Seq(
   "org.webjars" % "angularjs" % "1.3.2",
   "com.google.inject" % "guice" % "4.0-beta",
   "com.cloudinary" % "cloudinary" % "1.0.14",
-  "com.cloudinary" % "cloudinary-taglib" % "1.0.14"
+  "com.cloudinary" % "cloudinary-taglib" % "1.0.14",
+  "net.vz.mongodb.jackson" % "play-mongo-jackson-mapper_2.10" % "1.1.0",
+  "org.mongodb" % "mongo-java-driver" % "2.8.0"
 )
 
 resolvers ++= Seq(

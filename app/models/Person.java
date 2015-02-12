@@ -4,64 +4,51 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import net.vz.mongodb.jackson.DBRef;
+import net.vz.mongodb.jackson.Id;
+import net.vz.mongodb.jackson.MongoCollection;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 /**
  * Represent a family member person
  * It is linked to one or more users
  *
  */
-@Entity
+
+@MongoCollection(name = "Person")
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPerson;
+    private String idPerson;
 
-    @Size(max = 50)
     private String name;
-
-    @NotEmpty
-    @Size(max = 50)
+    
     private String firstname;
 
-    @NotNull
+    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private int debt;
 
-    @NotEmpty
+    @JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
     private String picture;
-
-    @ManyToMany(mappedBy = "people")
-    @JsonBackReference
-    private List<Consumer> users;
-
+    
+    public List <DBRef<Consumer,String>> users;
+    
     public Person() {
-        this.users = new ArrayList<Consumer>();
+        this.users = new ArrayList<DBRef<Consumer,String>>();
     }
-
-    public Person(String vName, String vFirstName, int vDebt, String vPicture) {
+ 
+    public Person(String idPerson, String vName, String vFirstName, int vDebt, String vPicture) {
         this();
+        this.idPerson = idPerson;
         this.name = vName;
         this.firstname = vFirstName;
         this.debt = vDebt;
         this.picture = vPicture;
     }
-
-    public Long getIdPerson() {
-        return this.idPerson;
-    }
+   
+    
 
     public String getName() {
         return this.name;
@@ -95,11 +82,25 @@ public class Person implements Serializable {
         this.picture = vPicture;
     }
 
-    public List<Consumer> getUsers() {
+    public List <DBRef<Consumer,String>> getUsers() {
         return this.users;
     }
 
-    public void setUser(Consumer vUser) {
-        this.users.add(vUser);
+    public void setUser(DBRef<Consumer,String> vUser) {
+    	this.users.add(vUser);
     }
+    
+    //@ObjectId
+    //@JsonProperty("_id")
+	public String getIdPerson() {
+		return idPerson;
+	}
+    
+    //@ObjectId
+    //@JsonProperty("_id")
+	public void setIdPerson(String id) {
+		this.idPerson = id;
+	}
+    
+
 }

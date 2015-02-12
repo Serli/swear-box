@@ -33,6 +33,6 @@ public interface ConsumerDAO {
      * @param long : person id
      * @param String : user id
      */
-    public void linkUserPerson(long idPerson,String idUser);
+    public void linkUserPerson(String idPerson,String idUser);
 
 }
