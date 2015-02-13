@@ -7,7 +7,7 @@
   background-color: #fff;
 }
 
-.padding-charts{
+.padding-charts {
 	padding: 50px 0px 30px;
 }
 
@@ -29,4 +29,10 @@ div.jqplot-table-legend-swatch-outline {
 
 .jqplot-yaxis {
 	  color: #0A0A0A;
+}
+
+.div-scrollable {
+   /* 5 * 34(member) = 170 */
+    max-height: 170px;  
+    overflow: auto;
 }
