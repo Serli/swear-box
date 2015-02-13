@@ -1,23 +1,29 @@
 package unit;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static play.test.Helpers.inMemoryDatabase;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import models.Consumer;
 import models.Person;
 import models.Statistics;
+import net.vz.mongodb.jackson.DBQuery;
+import net.vz.mongodb.jackson.JacksonDBCollection;
 
+import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import play.db.jpa.JPA;
+import play.modules.mongodb.jackson.MongoDB;
 import play.test.FakeApplication;
 import play.test.Helpers;
+import dao.ConsumerDAO;
+import dao.ConsumerDAOImpl;
 import dao.PersonDAO;
 import dao.PersonDAOImpl;
 import dao.StatisticsDAO;
@@ -31,47 +37,53 @@ public class StatisticsTest{
 
     private StatisticsDAO statisticsDAO = new StatisticsDAOImpl();
     private PersonDAO personDAO = new PersonDAOImpl();
+    private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
+
+	private static JacksonDBCollection<Statistics, String> statistics;
 
     private static FakeApplication app;
+    
+    private Person p;
+    private Consumer u;
 
     @BeforeClass
     public static void startApp() {
-        app = Helpers.fakeApplication(inMemoryDatabase());
+    	Map<String, String> config = new HashMap<String, String>();
+        config.put("ehcacheplugin", "disabled");
+        config.put("mongodbJacksonMapperCloseOnStop", "disabled");
+        app = Helpers.fakeApplication(config);
         Helpers.start(app);
-        JPA.bindForCurrentThread( JPA.em("default"));
+        statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
     }
-
+    
     @Before
     public void setUp() {
-        JPA.em().getTransaction().begin();
+    	p =new Person(ObjectId.get().toString(),"pName", "pFirstname",0,"phht://url");
+        u= new Consumer("email@email",100);
+        consumerDAO.add(u.getEmail());
+        personDAO.add(p,u.getEmail());
     }
-
     
     /**
      * Test AddStatistic function for a member
      */
     @Test
     public void add() {
-    	Person p =new Person("pName", "pFirstname",0,"https://url");
-        Consumer u= new Consumer("email@email",100);
-        JPA.em().persist(u);
-        personDAO.add(p,u.getEmail());
-        
         statisticsDAO.add(p.getIdPerson(), u.getEmail());
         statisticsDAO.add(p.getIdPerson(), u.getEmail());
         
-        List<Statistics> lp= JPA.em().createQuery("Select s FROM Statistics s WHERE s.person = :member",Statistics.class).setParameter("member", p).getResultList();
-        assertThat(lp.size()==2);
+        List<Statistics> lp = statistics.find(DBQuery.is( "person.$id" , p.getIdPerson())).toArray();
+        assertThat(lp.size()).isEqualTo(2);
     }
 
     @After
     public void tearDown() {
-        JPA.em().getTransaction().commit();
+        personDAO.delete(p.getIdPerson(), u.getEmail());
+        consumerDAO.delete(u.getEmail());
     }
-
+    
     @AfterClass
     public static void stopApp() {
-        JPA.bindForCurrentThread(null);
         Helpers.stop(app);
     }
 }

@@ -1,7 +1,12 @@
 package unit;
 import static org.fest.assertions.Assertions.assertThat;
-import static play.test.Helpers.inMemoryDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import models.Consumer;
+import models.Person;
+import net.vz.mongodb.jackson.JacksonDBCollection;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -9,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import play.db.jpa.JPA;
+import play.modules.mongodb.jackson.MongoDB;
 import play.test.FakeApplication;
 import play.test.Helpers;
 import dao.ConsumerDAO;
@@ -27,63 +32,73 @@ public class UserTest {
 
     private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
     private static FakeApplication app;
+    private static JacksonDBCollection<Consumer, String> consumers;
 
+    private String email;
+    
     @BeforeClass
     public static void startApp() {
-        app = Helpers.fakeApplication(inMemoryDatabase());
+    	Map<String, String> config = new HashMap<String, String>();
+        config.put("ehcacheplugin", "disabled");
+        config.put("mongodbJacksonMapperCloseOnStop", "disabled");
+        app = Helpers.fakeApplication(config);
         Helpers.start(app);
-        JPA.bindForCurrentThread( JPA.em("default"));
+        consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
     }
 
     @Before
     public void setUp() {
-        JPA.em().getTransaction().begin();
-    }
-
-    /**
-     * Test adding an user
-     */
-    @Test
-    public void updateAmountUser() {
         //Add an user from an email
-        String email = "test@gmail.com";
+        email = "testupdateuser@gmail.com";
         consumerDAO.add(email);
-
-        consumerDAO.updateAmount(email, 20);
-
-        //Seek the user in the DB
-        Consumer u = JPA.em().find(Consumer.class, email);
-
-        //Check if the amount is modified
-        assertThat(u.getAmount()==20);
-
-        JPA.em().remove(u);
     }
-
+    
     /**
-     * Test AddUser for an user
+     * Test add a user
      */
     @Test
     public void addUser() {
-        //Add an user from a email
-        String email = "test@gmail.com";
-        consumerDAO.add(email);
-
         //Seek the user in the DB
-        Consumer u = JPA.em().find(Consumer.class, email);
+        Consumer u = consumers.findOneById(email);
         assertThat(u).isNotEqualTo(null);
-
-        JPA.em().remove(u);
     }
+    
+    /**
+     * Test update amount of an user
+     */
+    @Test
+    public void updateAmountUser() {
+        consumerDAO.updateAmount(email, 20);
+        
+        //Seek the user in the DB
+        Consumer u = consumers.findOneById(email);
+        
+        //Check if the amount is modified
+        assertThat(u.getAmount()).isEqualTo(20);
+    }
+    
+    /**
+     * Test deleting a person
+     */
+    @Test
+    public void deleteUser() {
+    	Consumer u = consumers.findOneById(email);
 
+        //Delete the person for the two users
+        consumerDAO.delete(u.getEmail());
+
+        //Test if the person doesn't exist anymore
+        Consumer udel = consumers.findOneById(email);
+        assertThat(udel).isNull();
+    }
+    
     @After
     public void tearDown() {
-        JPA.em().getTransaction().commit();
+    	consumerDAO.delete(email);
     }
-
+    
     @AfterClass
     public static void stopApp() {
-        JPA.bindForCurrentThread(null);
         Helpers.stop(app);
     }
 

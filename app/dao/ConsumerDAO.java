@@ -13,6 +13,12 @@ public interface ConsumerDAO {
     public boolean add(String email);
     
     /**
+     * Delete user if he exists
+     * @param String : User email 
+     */
+    public boolean delete(String email);
+    
+    /**
      * Update the user amount
      * @param String : User email 
      * @param int : new amount 

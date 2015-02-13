@@ -37,6 +37,22 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     }
     
     /**
+     * Delete user if he exists
+     * @param String : User email 
+     */
+    public boolean delete(String email) {
+        //Get the user
+    	Consumer u = consumers.findOneById(email);
+    	
+        //If the user doesn't exist he is added
+        if (u != null) {
+            consumers.remove(u);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * Update the user amount
      * @param String : User email 
      * @param int : new amount 
