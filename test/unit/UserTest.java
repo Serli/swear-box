@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import models.Consumer;
-import models.Person;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 
 import org.junit.After;

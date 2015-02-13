@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
-import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;

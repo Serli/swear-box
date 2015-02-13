@@ -33,7 +33,7 @@ POST  /oauth2callback                             org.pac4j.play.CallbackControl
 GET   /logout                                     org.pac4j.play.CallbackController.logoutAndRedirect()
 
 # === Mobile
-PUT     /members/image/:id		    @controllers.Administration.updateImage(id: Long)
+PUT     /members/image/:id		    @controllers.Administration.updateImage(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
