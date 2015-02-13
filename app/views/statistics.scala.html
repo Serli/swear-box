@@ -4,7 +4,7 @@
   @templates.navbar(isActive, numPage)
 } {
 
-   	<div class="container" ng-controller="statsCtrl">
+	<div class="container" ng-controller="statsCtrl">
     	<div class="row">
 
     		<div class="padding-charts">
@@ -13,28 +13,28 @@
 
     		<div class="container  well well-sm" >
     			<div class="col-xs-12 col-sm-4">
-	    			<form class="col-sm-12 col-md-8 col-md-offset-2">
-	    				<h4 class="h-center">Membres</h4>
-				        <div ng-repeat="member in members" class="row">
-							<div class="input-group">
-				        		<span class="input-group-addon">
-									<input type="checkbox" name="checkbox" id="checkbox{{member.idPerson}}" class="checkbox"/>
-								</span>
-								<label class="form-control" for="checkbox{{member.idPerson}}">
-									{{member.firstname}}
-								</label>
+    				<h4 class="h-center">Membres</h4>
+	    			
+	    			<form class="col-sm-12 col-md-8 col-md-offset-2 div-scrollable">
+							<div ng-repeat="member in members" class="row">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<input type="checkbox" name="checkbox" id="checkbox{{member.idPerson}}" class="checkbox" ng-click="refreshMembersChecked(member.idPerson)"/>
+									</span>
+									<label class="form-control" for="checkbox{{member.idPerson}}">
+										{{member.firstname}}
+									</label>
+								</div>
 							</div>
+					</form>
+				</div> 
 
-				    	</div>
-				    </form>
-    			</div> 
-
-		        <div class="col-xs-12 col-sm-4">
-    				<form class="col-sm-12 col-md-8 col-md-offset-2">
-	    				<h4 class="h-center">Paramètres</h4>
-				        <div class="row">
-				        	<div class="input-group">
-				        		<span class="input-group-addon">
+				<div class="col-xs-12 col-sm-4">
+					<form class="col-sm-12 col-md-8 col-md-offset-2">
+						<h4 class="h-center">Paramètres</h4>
+						<div class="row">
+							<div class="input-group">
+								<span class="input-group-addon">
 									<input type="radio" name="radio" id="weeks" class="radio" checked/>
 								</span>
 								<label class="form-control" for="weeks"  disabled>
@@ -52,10 +52,12 @@
 							</div>
 
 							<div>
-				        		<input type="range" name="range" id="slider" class="form-control" min="1" max="12" ng-model="unit"/>
+								<label class="form-control" disabled>
+									<input type="range" name="range" id="slider" class="range" min="1" max="12" ng-model="unit"/>
+								</label>
 							</div>
 						</div>
-				    </form>
+					</form>
     			</div>
 
     			<div class="col-xs-12 col-sm-4">
@@ -65,14 +67,34 @@
 						</h4>
 					</div>
     				<div class="col-xs-4 col-xs-offset-4 col-sm-8 col-sm-offset-2 ">
-						<button class="btn btn-danger h-center" ng-click="getStats()">
+						<button class="btn btn-danger h-center" ng-click="loadStats()">
 							Valider
 						</button>
 					</div>
-		        </div>
+				</div>
 
     		</div>
 
+    		<div id="errorModal" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<label class="modal-title">{{error_title}}</label>
+						</div>
+
+						<div class="modal-body">
+							<p> {{error_message}} </p>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 }
