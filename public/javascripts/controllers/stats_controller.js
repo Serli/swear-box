@@ -26,6 +26,14 @@ app.controller('statsCtrl',
 		membersService.getMembers()
 		.success(function (membs) {
 			$scope.members = membs;
+			if($scope.members.length > 0) {
+            	getStats($scope.members[0].idPerson);
+            }
+            else {
+            	$scope.error_title = 'Chargement des membres';
+				$scope.error_message = "Impossible d'afficher les statistiques : aucun membre";
+				$('#errorModal').modal('show');
+            }
 		})
 		.error(function () {
 			$scope.error_title = 'Chargement des membres';

@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -9,12 +10,13 @@ import java.util.Map;
 import models.Person;
 
 import org.apache.commons.codec.binary.Base64;
+import org.bson.types.ObjectId;
+import org.pac4j.oauth.profile.google2.Google2Profile;
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
 import play.Logger;
 import play.Play;
-import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
@@ -52,7 +54,6 @@ public class Administration extends JavaController {
      * Add this person on the database
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result addPerson() {
         JsonNode json = request().body().asJson();
@@ -67,8 +68,9 @@ public class Administration extends JavaController {
                 String url = cloudinary.url().format("png")
                         .generate(Play.application().configuration().getString("AvatarDefault"));
                 String picture = url.replace("http", "https");
-                Person person = new Person(name,firstname,0,picture);
-                String id = getUserProfile().getEmail();
+                Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String id = googleProfile.getEmail();
                 personDAO.add(person,id);
                 return ok();
             }
@@ -80,10 +82,10 @@ public class Administration extends JavaController {
      * @param Long : person id to delete
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result deletePerson(Long id) {
-        String email = getUserProfile().getEmail();
+    public Result deletePerson(String id) {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
         personDAO.delete(id,email);
         return ok();
     }
@@ -94,10 +96,10 @@ public class Administration extends JavaController {
      * @param Long : person id to delete
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result discharge(Long idt) {
-        String email = getUserProfile().getEmail();
+    public Result discharge(String idt) {
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
         personDAO.discharge(idt,email);
         return ok();
     }
@@ -106,10 +108,10 @@ public class Administration extends JavaController {
      * List all persons for a connected user
      * @return Result(JSON) : list of membres
      */
-    @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
     public Result listPerson() {
-        String emailUser = getUserProfile().getEmail();
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String emailUser = googleProfile.getEmail();
         List<Person> persons = personDAO.listByUser(emailUser);
         return ok(Json.toJson(persons));
     }
@@ -118,10 +120,10 @@ public class Administration extends JavaController {
      * Put the current amount in a Json
      * @return Result(JSON) : amount of the id member
      */
-    @Transactional(readOnly=true)
     @RequiresAuthentication(clientName = "Google2Client")
     public Result amount() {
-        String emailUser = getUserProfile().getEmail();
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String emailUser = googleProfile.getEmail();
         Integer amount = consumerDAO.getAmount(emailUser);
         return ok(Json.toJson(amount));
     }
@@ -132,7 +134,6 @@ public class Administration extends JavaController {
      * @param int : new amount
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result updateAmount() {
         JsonNode json = request().body().asJson();
@@ -143,7 +144,8 @@ public class Administration extends JavaController {
             if(amount == null) {
                 return badRequest("Missing parameter [amount]");
             } else {
-                String email = getUserProfile().getEmail();
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
                 consumerDAO.updateAmount(email, Integer.parseInt(amount));
                 return ok();
             }
@@ -157,9 +159,8 @@ public class Administration extends JavaController {
      * @param String : new firstname
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result updateNameFirstname(Long id) {
+    public Result updateNameFirstname(String id) {
         JsonNode json = request().body().asJson();
         if(json == null) {
             return badRequest(JSON_MESSG);
@@ -169,7 +170,8 @@ public class Administration extends JavaController {
             if(name == null || firstname==null) {
                 return badRequest("Missing parameter [name] or [firstname]");
             } else {
-                String email = getUserProfile().getEmail();
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
                 personDAO.updateNameFirstname(id,email, name,firstname);
                 return ok();
             }
@@ -182,22 +184,22 @@ public class Administration extends JavaController {
      * @param Long : user id 
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
-    public Result updatePicture(Long id) {
+    public Result updatePicture(String id) {
         MultipartFormData fd = request().body().asMultipartFormData();
         FilePart fp = fd.getFile("file");
         if (fp!= null){
             try {
                 File f = fp.getFile();
-
-				Map<?,?> options = Cloudinary.asMap(
+                @SuppressWarnings("rawtypes")
+				Map options = Cloudinary.asMap(
                 		  "transformation",
                 		  new Transformation().width(200).height(200).crop("scale")
                 		);
- 
-                Map<?,?> uploadResult = cloudinary.uploader().upload(f,options);
-                String email = getUserProfile().getEmail();
+                @SuppressWarnings("rawtypes")
+                Map uploadResult = cloudinary.uploader().upload(f,options);
+                Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                String email = googleProfile.getEmail();
                 personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 return ok();
             } catch (IOException e) {
@@ -213,7 +215,6 @@ public class Administration extends JavaController {
      * @param Long : user id 
      * @return Result : fonction result, Ok|pb
      */
-    @Transactional
     @RequiresAuthentication(clientName = "Google2Client")
     public Result updateImage(Long id) {
         JsonNode json = request().body().asJson();
@@ -226,13 +227,20 @@ public class Administration extends JavaController {
             } else {
                 try {
                     byte[] data = Base64.decodeBase64(image64);
-                    Map<?,?> options = Cloudinary.asMap(
+                    File f = new File("tmp.jpg");
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(data);
+                    fos.close();
+                    @SuppressWarnings("rawtypes")
+                    Map options = Cloudinary.asMap(
                               "transformation",
                               new Transformation().width(200).height(200).crop("scale")
                             );
-                    Map<?,?> uploadResult = cloudinary.uploader().uploadLargeRaw(data,options);
-                    String email = getUserProfile().getEmail();
-                    personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
+                    @SuppressWarnings("rawtypes")
+                    Map uploadResult = cloudinary.uploader().upload(f,options);
+                    Google2Profile googleProfile = (Google2Profile) getUserProfile();
+                    String email = googleProfile.getEmail();
+                    //personDAO.updatePicture(id,email, (String)uploadResult.get("secure_url"));
                 } catch (FileNotFoundException e) {
                     Logger.info("FileNotFoundException", e);
                 } catch (IOException e) {

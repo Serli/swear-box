@@ -2,30 +2,30 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
+import net.vz.mongodb.jackson.DBRef;
+import net.vz.mongodb.jackson.MongoCollection;
+import net.vz.mongodb.jackson.ObjectId;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * Represents the pronunciation of a dirty word
  * Who uttered and when
  *
  */
-@Entity
+@MongoCollection(name = "Statistics")
 public class Statistics implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idStatistics;
-
-    @NotNull
-    @Column (name="dateSt")
+    @ObjectId
+    private String _id;
+    
+    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name="idPerson")
-    private Person person;
+    private DBRef<Person,String> person;
 
     public Statistics() {
     }
@@ -33,15 +33,7 @@ public class Statistics implements Serializable{
     public Statistics(Date vDate, Person vPerson) {
         super();
         this.date = vDate;
-        this.person = vPerson;
-    }
-
-    public Long getIdStatistics() {
-        return idStatistics;
-    }
-
-    public void setIdStatistics(Long vIdStatistics) {
-        this.idStatistics = vIdStatistics;
+        this.person = new DBRef<Person,String>(vPerson.getIdPerson(),Person.class);
     }
 
     public Date getDate() {
@@ -52,11 +44,19 @@ public class Statistics implements Serializable{
         this.date = vDate;
     }
 
-    public Person getPerson() {
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+    
+    public DBRef<Person,String> getPerson() {
         return person;
     }
 
-    public void setIdPerson(Person vPersonn) {
-        this.person = vPersonn;
+    public void setPerson(DBRef<Person,String> vPerson) {
+        this.person = vPerson;
     }
 }

@@ -1,7 +1,14 @@
 package unit;
 import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.inMemoryDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import models.Consumer;
+import models.Person;
+import models.Statistics;
+import net.vz.mongodb.jackson.JacksonDBCollection;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -10,10 +17,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import play.db.jpa.JPA;
+import play.modules.mongodb.jackson.MongoDB;
 import play.test.FakeApplication;
 import play.test.Helpers;
 import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
+import dao.PersonDAO;
+import dao.PersonDAOImpl;
 
 
 
@@ -25,19 +35,24 @@ import dao.ConsumerDAOImpl;
  */
 public class UserTest {
 
+	private PersonDAO personDAO = new PersonDAOImpl();
     private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
     private static FakeApplication app;
-
+    private static JacksonDBCollection<Consumer, String> consumers ;
+    private static JacksonDBCollection<Person, String> people;
+	private static JacksonDBCollection<Statistics, String> statistics;
+	
     @BeforeClass
     public static void startApp() {
-        app = Helpers.fakeApplication(inMemoryDatabase());
+    	Map<String, String> config = new HashMap<String, String>();
+        config.put("ehcacheplugin", "disabled");
+        config.put("mongodbJacksonMapperCloseOnStop", "disabled");
+        app = Helpers.fakeApplication(config);
         Helpers.start(app);
-        JPA.bindForCurrentThread( JPA.em("default"));
-    }
-
-    @Before
-    public void setUp() {
-        JPA.em().getTransaction().begin();
+        consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
+    	people = MongoDB.getCollection("Person", Person.class, String.class);
+    	statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
+        
     }
 
     /**
@@ -52,12 +67,12 @@ public class UserTest {
         consumerDAO.updateAmount(email, 20);
 
         //Seek the user in the DB
-        Consumer u = JPA.em().find(Consumer.class, email);
+        Consumer u = consumers.findOneById(email);
 
         //Check if the amount is modified
         assertThat(u.getAmount()==20);
 
-        JPA.em().remove(u);
+        consumers.remove(u);
     }
 
     /**
@@ -70,20 +85,14 @@ public class UserTest {
         consumerDAO.add(email);
 
         //Seek the user in the DB
-        Consumer u = JPA.em().find(Consumer.class, email);
+        Consumer u = consumers.findOneById(email);
         assertThat(u).isNotEqualTo(null);
 
-        JPA.em().remove(u);
-    }
-
-    @After
-    public void tearDown() {
-        JPA.em().getTransaction().commit();
+        consumers.remove(u);
     }
 
     @AfterClass
     public static void stopApp() {
-        JPA.bindForCurrentThread(null);
         Helpers.stop(app);
     }
 

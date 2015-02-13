@@ -10,7 +10,6 @@ public interface ConsumerDAO {
      * Add a new user if he doesn't exist
      * @param String : User email 
      */
-
     public boolean add(String email);
     
     /**
@@ -18,7 +17,6 @@ public interface ConsumerDAO {
      * @param String : User email 
      * @param int : new amount 
      */
-
     public void updateAmount(String email, int vAmount);
    
     /**
@@ -30,9 +28,9 @@ public interface ConsumerDAO {
 
     /**
      * Link a person to an user
-     * @param long : person id
+     * @param String : person id
      * @param String : user id
      */
-    public void linkUserPerson(long idPerson,String idUser);
+    public void linkUserPerson(String idPerson,String idUser);
 
 }
