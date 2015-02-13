@@ -51,6 +51,7 @@ public class UserTest {
         //Add an user from an email
         email = "testupdateuser@gmail.com";
         consumerDAO.add(email);
+        consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
     }
     
     /**
@@ -83,10 +84,10 @@ public class UserTest {
     @Test
     public void deleteUser() {
     	Consumer u = consumers.findOneById(email);
-
+    	
         //Delete the person for the two users
         consumerDAO.delete(u.getEmail());
-
+        
         //Test if the person doesn't exist anymore
         Consumer udel = consumers.findOneById(email);
         assertThat(udel).isNull();

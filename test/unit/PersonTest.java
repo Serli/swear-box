@@ -131,6 +131,9 @@ public class PersonTest{
     	List<Person> l = personDAO.listByUser(u.getEmail());
     	
     	assertThat(l.size()).isEqualTo(3);
+    	
+    	personDAO.delete(p2.getIdPerson(), u.getEmail());
+    	personDAO.delete(p3.getIdPerson(), u.getEmail());
     }
 
     /**
