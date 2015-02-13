@@ -9,12 +9,12 @@ import net.vz.mongodb.jackson.Id;
 import net.vz.mongodb.jackson.MongoCollection;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 /**
  * Represent a family member person
  * It is linked to one or more users
  *
  */
-
 @MongoCollection(name = "Person")
 public class Person implements Serializable {
 
@@ -48,8 +48,6 @@ public class Person implements Serializable {
         this.picture = vPicture;
     }
    
-    
-
     public String getName() {
         return this.name;
     }
@@ -90,14 +88,10 @@ public class Person implements Serializable {
     	this.users.add(vUser);
     }
     
-    //@ObjectId
-    //@JsonProperty("_id")
 	public String getIdPerson() {
 		return idPerson;
 	}
     
-    //@ObjectId
-    //@JsonProperty("_id")
 	public void setIdPerson(String id) {
 		this.idPerson = id;
 	}
