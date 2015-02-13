@@ -11,7 +11,7 @@ app.controller('statsCtrl',
 	$scope.series = {};
 	loadMembers();
 	$scope.unit = 12;
-	loadDefaultStats();
+
 
 	/*----------------------------------------------------------------------*/
 
@@ -27,7 +27,7 @@ app.controller('statsCtrl',
 		.success(function (membs) {
 			$scope.members = membs;
 			if($scope.members.length > 0) {
-            	getStats($scope.members[0].idPerson);
+				loadDefaultStats($scope.members[0].idPerson);
             }
             else {
             	$scope.error_title = 'Chargement des membres';
@@ -50,8 +50,8 @@ app.controller('statsCtrl',
 	 *----------------------------------------------------------------------*/
 
 	// Function which retrieves the data list to draw the stats.
-	function loadDefaultStats() {
-		statsService.getStats($scope.unit, '1', '1,2,3,4,5,6')
+	function loadDefaultStats(idMember) {
+		statsService.getStats($scope.unit, '1', idMember)
 		.success(function (data) {
 			$scope.stats = data;
 			drawStats();
