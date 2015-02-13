@@ -10,22 +10,19 @@ import models.*;
 public interface PersonDAO{
 
     /**
-     * Add a person on the Person table
+     * Add a person on the People collection
      * Link the user with it
      * @param Person : person to add
      * @param String : user id
      */
     public void add(Person p,String id);
 
-
     /**
-     * Delete a person on the Person table
+     * Delete a person on the People collection
      * @param Person : person to add
      * @param String : user id
      */
-
     public void delete(String id,String email);
-
 
     /**
      * List all persons for an user
@@ -35,17 +32,15 @@ public interface PersonDAO{
     public List<Person> listByUser(String emailUser);
 
     /**
-     * Discharge a person on the Person table
-     * @param long : person id
+     * Discharge a person on the People collection
+     * @param String : person id
      * @param String : user id
      */
     public void discharge(String id,String email);
 
-
-
     /**
-     * Update a person on the Person table
-     * @param long : person id
+     * Update a person on the People collection
+     * @param String : person id
      * @param String : user id
      * @param String : new name
      * @param String : new firstname
@@ -53,8 +48,8 @@ public interface PersonDAO{
     public void updateNameFirstname(String id,String email,String vName, String vFirstname);
 
     /**
-     * Update a person picture on the Person table
-     * @param long : person id
+     * Update a person picture on the People collection
+     * @param String : person id
      * @param String : user id
      * @param String : new picture path
      */
@@ -62,7 +57,7 @@ public interface PersonDAO{
 
     /**
      * Increase a person debt
-     * @param long : person id
+     * @param String : person id
      * @param String : user id
      */
     public void incrementDebt(String id,String email);
