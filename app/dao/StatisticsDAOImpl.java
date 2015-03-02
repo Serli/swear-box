@@ -29,7 +29,6 @@ import com.google.inject.Singleton;
 public final class StatisticsDAOImpl implements StatisticsDAO{
 
 	private static JacksonDBCollection<Consumer, String> consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
-	private static JacksonDBCollection<Person, String> people = MongoDB.getCollection("Person", Person.class, String.class);
 	private static JacksonDBCollection<Statistics, String> statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
 
 	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
@@ -40,14 +39,13 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 */
 	public void add(String idPerson, String email) {
 		//Get the person and the user
-		Person pbd = people.findOneById(idPerson);
 		Consumer user = consumers.findOneById(email);
 
 		//Add the statistic if the person is linked with the actual user
-		for(DBRef<Person,String> p : user.getPeople()) {
-			if(p.getId().equals(pbd.getIdPerson())) {
+		for(Person p : user.getPeople()) {
+			if(p.getIdPerson().equals(idPerson)) {
 				Calendar cal = Calendar.getInstance();
-				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),pbd);
+				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),p);
 				statistics.insert(stats);
 				break;
 			}
@@ -65,7 +63,8 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	public ObjectNode list(String emailUser, ArrayList<String> ids, int nb, int granularity) {
 		//Get the members (ids contains the id members)
 		Consumer user = consumers.findOneById(emailUser);
-		List<Person> l = consumers.fetch(user.getPeople());
+		List<Person> l = user.getPeople();
+		
 		ArrayList<Person> members = new ArrayList<Person>();
 		for (Person p : l) {
 			if(ids.contains(p.getIdPerson()) ) {
@@ -74,9 +73,13 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		}
 
 		//Get the members statistics
-		DBCursor<Statistics> cursor = statistics.find(DBQuery.in( "person.$id" , ids));
+		DBCursor<Statistics> cursor = statistics.find();
 		List<Statistics> statsTmp = cursor.toArray();
-		ArrayList<Statistics> stats = new ArrayList<Statistics>(statsTmp);
+		ArrayList<Statistics> stats = new ArrayList<Statistics>();
+		for(Statistics s :statsTmp){
+			if(ids.contains(s.getPerson().getIdPerson()))
+				stats.add(s);
+		}
 		
 		//Sort by date
 		Collections.sort(stats, new Comparator<Statistics>() {
@@ -135,7 +138,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 			while(!end && list.size() < nb) {
 				for(int i = 0; i<stats.size(); i++) {
 					calTmp.setTime(stats.get(i).getDate());
-					if(stats.get(i).getPerson().fetch().getIdPerson().equals(m.getIdPerson())) {
+					if(stats.get(i).getPerson().getIdPerson().equals(m.getIdPerson())) {
 						//Incrementing the counter if the statistic date == reference date
 						if(calTmp.get(calendarRef) == valRef && calTmp.get(Calendar.YEAR) == year) {
 							cpt ++;

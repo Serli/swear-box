@@ -1,5 +1,7 @@
 package dao;
 
+import models.Person;
+
 /**
  * Groups the operations on the Consumer table
  *
@@ -37,6 +39,6 @@ public interface ConsumerDAO {
      * @param String : person id
      * @param String : user id
      */
-    public void linkUserPerson(String idPerson,String idUser);
+    public void linkUserPerson(Person pe,String idUser);
 
 }

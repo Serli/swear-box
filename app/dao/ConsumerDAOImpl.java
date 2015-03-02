@@ -17,8 +17,7 @@ import com.google.inject.Singleton;
 public final class ConsumerDAOImpl implements ConsumerDAO {
 	
 	private static JacksonDBCollection<Consumer, String> consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
-	private static JacksonDBCollection<Person, String> people = MongoDB.getCollection("Person", Person.class, String.class);
-	
+
     /**
      * Add a new user if he doesn't exist
      * @param String : User email 
@@ -85,15 +84,14 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * @param String : person id
      * @param String : user id
      */
-    public void linkUserPerson(String idPerson,String idUser) {
+    public void linkUserPerson(Person pe,String idUser) {
         boolean test= true;
 
         //Get the person and the user
-        Person pbd = people.findOneById(idPerson);
         Consumer user = consumers.findOneById(idUser);
 
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(pe.getIdPerson())) {
         		test = false;
         		break;
         	}
@@ -101,12 +99,8 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
 
         //Link the person to the user
         if(test){
-        	DBRef<Person,String> pref = new DBRef<Person,String>(pbd.getIdPerson(),Person.class);
-        	DBRef<Consumer,String> uref = new DBRef<Consumer,String>(idUser,Consumer.class);
-        	user.setPerson(pref);
-        	pbd.setUser(uref);
+        	user.setPerson(pe);
         	consumers.updateById(idUser, user);      
-        	people.updateById(pbd.getIdPerson(), pbd);
         }
     }
 }

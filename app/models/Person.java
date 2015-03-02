@@ -33,10 +33,8 @@ public class Person implements Serializable {
     @JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
     private String picture;
     
-    public List <DBRef<Consumer,String>> users;
     
     public Person() {
-        this.users = new ArrayList<DBRef<Consumer,String>>();
     }
  
     public Person(String idPerson, String vName, String vFirstName, int vDebt, String vPicture) {
@@ -78,14 +76,6 @@ public class Person implements Serializable {
 
     public void setAdrImage(String vPicture) {
         this.picture = vPicture;
-    }
-
-    public List <DBRef<Consumer,String>> getUsers() {
-        return this.users;
-    }
-
-    public void setUser(DBRef<Consumer,String> vUser) {
-    	this.users.add(vUser);
     }
     
 	public String getIdPerson() {

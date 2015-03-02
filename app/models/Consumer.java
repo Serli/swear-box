@@ -26,10 +26,10 @@ public class Consumer implements Serializable{
 
     @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private int amount;
-    private List <DBRef<Person,String>> people;
+    private List <Person> people;
 
     public Consumer() {
-        this.people=new ArrayList<DBRef<Person,String>>();
+        this.people=new ArrayList<Person>();
         this.amount=AMOUNTDEFAULT;
     }
 
@@ -59,11 +59,11 @@ public class Consumer implements Serializable{
         this.amount = vAmount;
     }
 
-    public List <DBRef<Person,String>> getPeople() {
+    public List <Person> getPeople() {
         return this.people;
     }
 
-    public void setPerson(DBRef<Person,String> vPerson) {
+    public void setPerson(Person vPerson) {
     	this.people.add(vPerson);
         
     }

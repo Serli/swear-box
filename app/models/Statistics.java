@@ -25,7 +25,7 @@ public class Statistics implements Serializable{
     @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private Date date;
 
-    private DBRef<Person,String> person;
+    private Person person;
 
     public Statistics() {
     }
@@ -33,7 +33,7 @@ public class Statistics implements Serializable{
     public Statistics(Date vDate, Person vPerson) {
         super();
         this.date = vDate;
-        this.person = new DBRef<Person,String>(vPerson.getIdPerson(),Person.class);
+        this.person = vPerson;
     }
 
     public Date getDate() {
@@ -52,11 +52,11 @@ public class Statistics implements Serializable{
         this._id = _id;
     }
     
-    public DBRef<Person,String> getPerson() {
+    public Person getPerson() {
         return person;
     }
 
-    public void setPerson(DBRef<Person,String> vPerson) {
+    public void setPerson(Person vPerson) {
         this.person = vPerson;
     }
 }
