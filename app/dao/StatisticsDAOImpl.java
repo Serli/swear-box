@@ -11,8 +11,6 @@ import models.Consumer;
 import models.Person;
 import models.Statistics;
 import net.vz.mongodb.jackson.DBCursor;
-import net.vz.mongodb.jackson.DBQuery;
-import net.vz.mongodb.jackson.DBRef;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 import play.libs.Json;
 import play.modules.mongodb.jackson.MongoDB;

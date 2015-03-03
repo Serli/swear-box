@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.vz.mongodb.jackson.DBRef;
 import net.vz.mongodb.jackson.Id;
 import net.vz.mongodb.jackson.MongoCollection;
 
