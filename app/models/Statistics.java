@@ -3,7 +3,6 @@ package models;
 import java.io.Serializable;
 import java.util.Date;
 
-import net.vz.mongodb.jackson.DBRef;
 import net.vz.mongodb.jackson.MongoCollection;
 import net.vz.mongodb.jackson.ObjectId;
 

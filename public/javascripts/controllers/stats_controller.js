@@ -10,7 +10,7 @@ app.controller('statsCtrl',
 	$scope.members = {};
 	$scope.series = {};
 	loadMembers();
-	$scope.unit = 12;
+	$scope.unit = 8;
 	
 
 
@@ -252,10 +252,9 @@ app.controller('statsCtrl',
 			right : 0,
 			bottom : 30,
 			left : 0
-		}, width = document.getElementById('sub-body').offsetWidth, height = 400 - margin.top
-				- margin.bottom;
+		}, width = document.getElementById('sub-body').offsetWidth, height = 400 - margin.top - margin.bottom;
 
-		var x0 = d3.scale.ordinal().rangeRoundBands([ 0, width ], .1);
+		var x0 = d3.scale.ordinal().rangeRoundBands([ 0, width ], 0.1);
 
 		var x1 = d3.scale.ordinal();
 
@@ -293,7 +292,7 @@ app.controller('statsCtrl',
 		x1.domain(ageNames).rangeRoundBands([ 0, x0.rangeBand() ]);
 		y.domain([ 0, d3.max(data, function(d) {
 			return d3.max(d.ages, function(d) {
-				return d.value;
+				return d.value*1.5;
 			});
 		}) ]);
 
