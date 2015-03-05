@@ -19,6 +19,7 @@ import models.Statistics;
 import play.libs.Json;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Singleton;
 import com.mongodb.BasicDBObject;
@@ -65,7 +66,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 * @param nb : number of data
 	 * @param granularity : 1 = Week, 2 = Month
 	 */
-	public ObjectNode list(String emailUser, ArrayList<String> ids, int nb, int granularity) {
+	public JsonNode list(String emailUser, ArrayList<String> ids, int nb, int granularity) {
 		//Get the members (ids contains the id members)
 		Consumer user = consumers.findOne("{_id: #}", emailUser).as(Consumer.class);
 		List<Person> l = user.getPeople();
@@ -86,33 +87,72 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		}
 		
 		//**************************************************************************************//
-
+		/*** declaration ***/
 		Calendar calFin = Calendar.getInstance();
 		String granu = "";
+		ArrayList<BasicDBObject> li = new ArrayList<>();
+		ArrayList<BasicDBObject> res = new ArrayList<>();
+		
+		
+		/*** instanciation ***/
 		if(granularity == 1) {
 			calFin.add(Calendar.DATE, -nb*7);
 			granu = "week";
+			for(int i=1; i<=54; i++){
+				li.add(new BasicDBObject().append("Date", "S"+i));
+			}
 		}
 		if(granularity == 2) {
 			calFin.add(Calendar.MONTH, -nb);
 			granu = "month";
+			Calendar calRef = Calendar.getInstance();
+			li.add(new BasicDBObject().append("Date", "OSEF"));
+			for(int i=1; i<=12; i++){
+				li.add(new BasicDBObject().append("Date", MONTH[i-1]));
+			}
 		}
 		
+		
+		/*** requete ***/
 		Date d = new Date(calFin.getTimeInMillis());
 		List<ResultAgreg> a = statistics.aggregate("{ $match: { person.idPerson : {$in : #}, date : {$gt : # }}}",ids,d)	
 				.and("{ $group: { _id: { perid : '$person.firstname' , vdate : { $#: '$date' }} ,click: { $sum: 1 }}}",granu)
 				.as(ResultAgreg.class);
+		
+		
+		/*** mise en forme JSON ***/
 		for(ResultAgreg ra : a) {
-			System.out.println(ra.getPersonId());
-			System.out.println(ra.getClick());
+			li.get(ra.getPersonId().getInt("vdate")).append(ra.getPersonId().getString("perid"), ra.getClick()+"");
 		}
+		
+		if(granularity == 2) {
+			li.remove(0);
+			int debut = calFin.get(Calendar.MONTH);
+			for(int u =0 ;u<nb;u++){
+				debut++;
+				res.add(li.get(debut % 12));
+			}
+		}
+		if(granularity == 1) {
+			int debut = calFin.get(Calendar.WEEK_OF_YEAR);
+			for(int u =0 ;u<nb;u++){
+				res.add(li.get(debut % 54));
+				debut++;
+			}
+		}
+		
+		JsonNode result = Json.toJson(res);
 
+		
+		System.out.println(Json.stringify(result));
+		
+		return result;
 		
 		//**************************************************************************************//
 		
 		
 		//Sort by date
-		Collections.sort(stats, new Comparator<Statistics>() {
+		/*Collections.sort(stats, new Comparator<Statistics>() {
 			public int compare(Statistics s1, Statistics s2) {
 				return -s1.getDate().compareTo(s2.getDate());
 			}
@@ -123,7 +163,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		}		
 		else { //(granularity == 2)  Months
 			return result(members,stats,nb,Calendar.MONTH,Calendar.MONTH,1);
-		}
+		}*/
 	}
 
 	/**

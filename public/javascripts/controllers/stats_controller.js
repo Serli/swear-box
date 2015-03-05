@@ -58,7 +58,8 @@ app.controller('statsCtrl',
 		statsService.getStats($scope.unit, '1', idMember)
 		.success(function (data) {
 			$scope.stats = data;
-			drawStats();
+			//drawStats();
+			
 			drawStatsD3();
 		})
 		.error(function () {
@@ -83,7 +84,8 @@ app.controller('statsCtrl',
 			 statsService.getStats($scope.unit, $scope.type_unit, membersToShowInChart)
 			.success(function (data) {
 				$scope.stats = data;
-				drawStats();
+				//drawStats();
+				drawStatsD3();
 			})
 			.error(function () {
 				$scope.error_title = 'Paramétrage des statistiques';
@@ -172,8 +174,16 @@ app.controller('statsCtrl',
 
 	function drawStatsD3() {	
 
+		var names = [];
+		var j = 0;
+		for(var i in $scope.members) {
+			if($scope.members[i].check) {
+				names[j] = $scope.members[i].firstname;
+				j++;
+			}
+		}
 		
-		var data = [ {
+		var data = $scope.stats;/* [ {
 			"Date" : "JAN",
 			"Geoffrey" : "1809981",
 			"Simon" : "4499890",
@@ -192,11 +202,7 @@ app.controller('statsCtrl',
 			"Thomas" : "2159981",
 			"Safia" : "3853788"
 		}, {
-			"Date" : "AVR",
-			"Geoffrey" : "2704659",
-			"Simon" : "1809981",
-			"Thomas" : "2159981",
-			"Safia" : "3853788"
+			"Date" : "AVR"
 		}, {
 			"Date" : "MAI",
 			"Geoffrey" : "1809981",
@@ -245,7 +251,7 @@ app.controller('statsCtrl',
 			"Simon" : "2159981",
 			"Thomas" : "2159981",
 			"Safia" : "1809981"
-		} ];
+		} ];*/
 
 		var margin = {
 			top : 20,
@@ -273,9 +279,9 @@ app.controller('statsCtrl',
 				height + margin.top + margin.bottom).append("g").attr("transform",
 				"translate(" + margin.left + "," + margin.top + ")");
 
-		var ageNames = d3.keys(data[0]).filter(function(key) {
+		var ageNames = names;/*d3.keys(data[0]).filter(function(key) {
 			return key !== "Date";
-		});
+		});*/
 
 		data.forEach(function(d) {
 			d.ages = ageNames.map(function(name) {
@@ -299,9 +305,9 @@ app.controller('statsCtrl',
 		svg.append("g").attr("class", "x axis").attr("transform",
 				"translate(0," + height + ")").call(xAxis);
 
-		/*svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr(
-				"transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style(
-				"text-anchor", "end").text("Population");*/
+		svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr(
+				"transform", "rotate(-90)").attr("y", 1).attr("dy", ".71em").style(
+				"text-anchor", "end").text("Gros mots prononcés");
 
 		var date = svg.selectAll(".date").data(data).enter().append("g").attr(
 				"class", "g").attr("transform", function(d) {
@@ -347,7 +353,7 @@ app.controller('statsCtrl',
 	// Function which clear (even destroy) the chart show at the resize to
 	// redraw it cleanly.
 	window.onresize = function (e) {
-		drawStats();
+		//drawStats();
 	};
 
 	// Scope's function which refresh the array where is saved the state
