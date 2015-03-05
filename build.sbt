@@ -20,7 +20,13 @@ libraryDependencies ++= Seq(
   "com.cloudinary" % "cloudinary" % "1.0.14",
   "com.cloudinary" % "cloudinary-taglib" % "1.0.14",
   "net.vz.mongodb.jackson" % "play-mongo-jackson-mapper_2.10" % "1.1.0",
-  "org.mongodb" % "mongo-java-driver" % "2.8.0"
+  "de.undercouch" % "bson4jackson" % "2.1.0" force(),
+  "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.0" force(),
+  "com.fasterxml.jackson.core" % "jackson-annotations" % "2.1.0" force(),
+  "com.fasterxml.jackson.core" % "jackson-core" % "2.1.0" force(),
+  "org.mongodb" % "mongo-java-driver" % "2.11.3",
+  "org.jongo" % "jongo" % "1.0",
+  "uk.co.panaxiom" % "play-jongo_2.11" % "0.7.1-jongo1.0"
 )
 
 resolvers ++= Seq(

@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.jongo.MongoCollection;
+
 import models.Consumer;
 import models.Person;
 import models.Statistics;
@@ -14,6 +16,7 @@ import net.vz.mongodb.jackson.DBCursor;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 import play.libs.Json;
 import play.modules.mongodb.jackson.MongoDB;
+import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Singleton;
@@ -26,9 +29,9 @@ import com.google.inject.Singleton;
 @Singleton
 public final class StatisticsDAOImpl implements StatisticsDAO{
 
-	private static JacksonDBCollection<Consumer, String> consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
-	private static JacksonDBCollection<Statistics, String> statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
-
+	private static MongoCollection consumers = PlayJongo.getCollection("Consumer");
+	private static MongoCollection statistics = PlayJongo.getCollection("Statistics");
+	
 	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
 
 	/**
@@ -37,7 +40,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 */
 	public void add(String idPerson, String email) {
 		//Get the person and the user
-		Consumer user = consumers.findOneById(email);
+		Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
 
 		//Add the statistic if the person is linked with the actual user
 		for(Person p : user.getPeople()) {
@@ -60,7 +63,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 */
 	public ObjectNode list(String emailUser, ArrayList<String> ids, int nb, int granularity) {
 		//Get the members (ids contains the id members)
-		Consumer user = consumers.findOneById(emailUser);
+		Consumer user = consumers.findOne("{_id: #}", emailUser).as(Consumer.class);
 		List<Person> l = user.getPeople();
 		
 		ArrayList<Person> members = new ArrayList<Person>();
@@ -71,8 +74,8 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		}
 
 		//Get the members statistics
-		DBCursor<Statistics> cursor = statistics.find();
-		List<Statistics> statsTmp = cursor.toArray();
+		Iterable<Statistics> statsTmp = statistics.find().as(Statistics.class);
+		//List<Statistics> statsTmp = cursor.toArray();
 		ArrayList<Statistics> stats = new ArrayList<Statistics>();
 		for(Statistics s :statsTmp){
 			if(ids.contains(s.getPerson().getIdPerson()))

@@ -3,22 +3,22 @@ package models;
 import java.io.Serializable;
 import java.util.Date;
 
-import net.vz.mongodb.jackson.MongoCollection;
-import net.vz.mongodb.jackson.ObjectId;
+
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.jongo.marshall.jackson.oid.Id;
+
 
 /**
  * Represents the pronunciation of a dirty word
  * Who uttered and when
  *
  */
-@MongoCollection(name = "Statistics")
 public class Statistics implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @ObjectId
+    @Id 
     private String _id;
     
     @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
