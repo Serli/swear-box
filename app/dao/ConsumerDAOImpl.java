@@ -5,8 +5,6 @@ import org.jongo.MongoCollection;
 
 import models.Consumer;
 import models.Person;
-import net.vz.mongodb.jackson.JacksonDBCollection;
-import play.modules.mongodb.jackson.MongoDB;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.google.inject.Singleton;

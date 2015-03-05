@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.jongo.marshall.jackson.oid.Id;
 
 /**
@@ -20,7 +19,6 @@ public class Consumer implements Serializable{
     @Id
     private String email;
 
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private int amount;
     
     private List <Person> people;

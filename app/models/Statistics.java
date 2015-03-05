@@ -3,9 +3,6 @@ package models;
 import java.io.Serializable;
 import java.util.Date;
 
-
-
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.jongo.marshall.jackson.oid.Id;
 
 
@@ -20,8 +17,7 @@ public class Statistics implements Serializable{
 
     @Id 
     private String _id;
-    
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+
     private Date date;
 
     private Person person;

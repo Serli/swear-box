@@ -12,10 +12,7 @@ import org.jongo.MongoCollection;
 import models.Consumer;
 import models.Person;
 import models.Statistics;
-import net.vz.mongodb.jackson.DBCursor;
-import net.vz.mongodb.jackson.JacksonDBCollection;
 import play.libs.Json;
-import play.modules.mongodb.jackson.MongoDB;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -75,7 +72,6 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 
 		//Get the members statistics
 		Iterable<Statistics> statsTmp = statistics.find().as(Statistics.class);
-		//List<Statistics> statsTmp = cursor.toArray();
 		ArrayList<Statistics> stats = new ArrayList<Statistics>();
 		for(Statistics s :statsTmp){
 			if(ids.contains(s.getPerson().getIdPerson()))

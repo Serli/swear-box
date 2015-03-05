@@ -2,7 +2,6 @@ package models;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 
 /**
@@ -19,10 +18,8 @@ public class Person implements Serializable {
     
     private String firstname;
 
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private int debt;
 
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
     private String picture;
     
     

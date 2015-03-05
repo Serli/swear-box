@@ -12,7 +12,6 @@ import models.Person;
 import models.Statistics;
 import play.Logger;
 import play.Play;
-import play.modules.mongodb.jackson.MongoDB;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.cloudinary.Cloudinary;
@@ -76,9 +75,6 @@ public final class PersonDAOImpl implements PersonDAO {
                 //Update Statistics collection
                 statistics.find("");
                 Iterable<Statistics> cursor = statistics.find("{name: #}}",p.getIdPerson()).as(Statistics.class);
-                //Statistics cursor = statistics.find(query);.findOne("{email: #}", email).as(Consumer.class);
-                //DBCursor<Statistics> cursor = statistics.find(DBQuery.in( "person.$id" , p.getIdPerson()));
-                //List<Statistics> stats = cursor.toArray();
         		for(Statistics s : cursor) {
         			statistics.remove("{_id: #}", s.get_id());
         		}
