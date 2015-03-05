@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -7,7 +8,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.jongo.Aggregate;
 import org.jongo.MongoCollection;
+import org.jongo.marshall.jackson.oid.Id;
 
 import models.Consumer;
 import models.Person;
@@ -17,6 +20,8 @@ import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Singleton;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 /**
  * Groups the operations on the Statistics table
@@ -43,6 +48,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		for(Person p : user.getPeople()) {
 			if(p.getIdPerson().equals(idPerson)) {
 				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DATE,-30);
 				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),p);
 				statistics.insert(stats);
 				break;
@@ -77,6 +83,82 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 			if(ids.contains(s.getPerson().getIdPerson()))
 				stats.add(s);
 		}
+		
+		//**************************************************************************************//
+		/*
+		Calendar cal = Calendar.getInstance();
+		
+		Date d = new Date(cal.getTimeInMillis());
+		cal.add(Calendar.DATE,-7);
+		Date d2 = new Date(cal.getTimeInMillis());
+		
+		DBObject key = new BasicDBObject("person._id",1);
+		DBObject initial = new BasicDBObject("total",0);//.append("date", "");
+		DBObject cond = new BasicDBObject("vdate",new BasicDBObject("$lt",d).append("$gt", d2));
+		String reduce = "function( curr, result ) {result.total += 1; }";
+		//String reduce = "function( doc, result ) {result.total += 1; var date = new Date(doc.vdate); result.vdate = date.getMonth(); }";
+		DBObject result = statistics.group(key, cond, initial,reduce);
+
+		
+		System.out.println(cond);
+		System.out.println(result);
+		*/
+		
+		/*class ResultObject{
+			  @Id
+			  String date;
+			  int click;
+			  public ResultObject() {}
+			  public ResultObject(String date) {
+				  this.date = date;
+			  }
+			  public ResultObject(String date, int clk) {
+				  this.date = date;
+				  this.click = clk;
+			  }
+			  public String getDate() {
+				  return this.date;
+			  }
+			  public void setDate(String date) {
+				  this.date = date;
+			  }
+			  public int getClick() {
+				  return this.click;
+			  }
+			  public void setClick(int clk) {
+				  this.click = clk;
+			  }
+			}*/
+		
+		/*List<models.ResultAgreg> a = statistics.aggregate("{ $project: { _id: '$person.idPerson' ,vdate :  { $dayOfMonth: '$date' } ,click: 1 } }")
+				.and("{ $group: { _id: '$person.idPerson' , vdate : { $dayOfMonth: '$date' }  } }")
+				.as(models.ResultAgreg.class);
+		*/
+		
+		 class ResultAgreg {
+
+		    BasicDBObject personId;
+		    
+		    int click;
+
+		}
+		
+		
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE,-7);
+		Date d = new Date(cal.getTimeInMillis());
+		
+		List<ResultAgreg> a = statistics.aggregate("{ $match: { person.idPerson : {$in : #}, date : {$gt : # }}}",ids,d)	
+				.and("{ $group: { _id: { perid : '$person.firstname' , vdate : { $#: '$date' }} ,click: { $sum: 1 }}}","month")
+				.as(ResultAgreg.class);
+		for(ResultAgreg ra : a) {
+			System.out.println(ra.personId);
+			System.out.println(ra.click);
+		}
+
+		
+		//**************************************************************************************//
+		
 		
 		//Sort by date
 		Collections.sort(stats, new Comparator<Statistics>() {
@@ -201,4 +283,8 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		result.put("ticks", Json.toJson(ticks));
 		return result;
 	}
+	
+	
 }
+
+
