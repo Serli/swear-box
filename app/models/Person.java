@@ -1,42 +1,29 @@
 package models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.vz.mongodb.jackson.DBRef;
-import net.vz.mongodb.jackson.Id;
-import net.vz.mongodb.jackson.MongoCollection;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * Represent a family member person
  * It is linked to one or more users
  *
  */
-@MongoCollection(name = "Person")
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
-    @Id
     private String idPerson;
 
     private String name;
     
     private String firstname;
 
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private int debt;
 
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_EMPTY)
     private String picture;
     
-    public List <DBRef<Consumer,String>> users;
     
     public Person() {
-        this.users = new ArrayList<DBRef<Consumer,String>>();
     }
  
     public Person(String idPerson, String vName, String vFirstName, int vDebt, String vPicture) {
@@ -78,14 +65,6 @@ public class Person implements Serializable {
 
     public void setAdrImage(String vPicture) {
         this.picture = vPicture;
-    }
-
-    public List <DBRef<Consumer,String>> getUsers() {
-        return this.users;
-    }
-
-    public void setUser(DBRef<Consumer,String> vUser) {
-    	this.users.add(vUser);
     }
     
 	public String getIdPerson() {

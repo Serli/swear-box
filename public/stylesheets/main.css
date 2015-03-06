@@ -11,3 +11,7 @@ body {
 	height: 100%;
     width: 100%;
 }
+
+.table-hover>tbody>tr:hover{
+	background-color:#E1E1E1
+}

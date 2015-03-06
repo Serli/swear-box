@@ -1,11 +1,11 @@
 package dao;
 
 
-import net.vz.mongodb.jackson.DBRef;
-import net.vz.mongodb.jackson.JacksonDBCollection;
+import org.jongo.MongoCollection;
+
 import models.Consumer;
 import models.Person;
-import play.modules.mongodb.jackson.MongoDB;
+import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.google.inject.Singleton;
 
@@ -16,16 +16,14 @@ import com.google.inject.Singleton;
 @Singleton
 public final class ConsumerDAOImpl implements ConsumerDAO {
 	
-	private static JacksonDBCollection<Consumer, String> consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
-	private static JacksonDBCollection<Person, String> people = MongoDB.getCollection("Person", Person.class, String.class);
-	
+	private static MongoCollection consumers = PlayJongo.getCollection("Consumer");
     /**
      * Add a new user if he doesn't exist
      * @param String : User email 
      */
     public boolean add(String email) {
         //Get the user
-    	Consumer u = consumers.findOneById(email);
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
     	
         //If the user doesn't exist he is added
         if (u == null) {
@@ -42,11 +40,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public boolean delete(String email) {
         //Get the user
-    	Consumer u = consumers.findOneById(email);
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
     	
         //If the user doesn't exist he is added
         if (u != null) {
-            consumers.remove(u);
+        	consumers.remove("{_id: #}", u.getEmail());
             return true;
         }
         return false;
@@ -59,18 +57,18 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public void updateAmount(String email, int vAmount) {
         //Get the user
-        Consumer u = consumers.findOneById(email);
+        Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
         
         //If the user exists the amount is modified
         if (u != null) {
             u.setAmount(vAmount);
         }
-        consumers.updateById(email, u);
+        consumers.update("{_id: #}", email).with(u);
     }
    
     public int getAmount(String email) {
         //Get the user
-    	 Consumer u = consumers.findOneById(email);
+    	 Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
         
         //If the user exists the amount is returned
         if (u != null) {
@@ -85,15 +83,14 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * @param String : person id
      * @param String : user id
      */
-    public void linkUserPerson(String idPerson,String idUser) {
+    public void linkUserPerson(Person pe,String idUser) {
         boolean test= true;
 
         //Get the person and the user
-        Person pbd = people.findOneById(idPerson);
-        Consumer user = consumers.findOneById(idUser);
+        Consumer user = consumers.findOne("{_id: #}", idUser).as(Consumer.class);
 
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(pe.getIdPerson())) {
         		test = false;
         		break;
         	}
@@ -101,12 +98,8 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
 
         //Link the person to the user
         if(test){
-        	DBRef<Person,String> pref = new DBRef<Person,String>(pbd.getIdPerson(),Person.class);
-        	DBRef<Consumer,String> uref = new DBRef<Consumer,String>(idUser,Consumer.class);
-        	user.setPerson(pref);
-        	pbd.setUser(uref);
-        	consumers.updateById(idUser, user);      
-        	people.updateById(pbd.getIdPerson(), pbd);
+        	user.setPerson(pe);
+        	consumers.update("{_id: #}", idUser).with(user);
         }
     }
 }

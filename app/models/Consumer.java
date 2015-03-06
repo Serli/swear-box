@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.vz.mongodb.jackson.DBRef;
-import net.vz.mongodb.jackson.Id;
-import net.vz.mongodb.jackson.MongoCollection;
-
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.jongo.marshall.jackson.oid.Id;
 
 /**
  * Represents a service user
@@ -16,7 +12,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
  *
  */
 
-@MongoCollection(name = "Consumer")
 public class Consumer implements Serializable{
     private static final long serialVersionUID = 1L;
     private static final int AMOUNTDEFAULT = 50;
@@ -24,12 +19,12 @@ public class Consumer implements Serializable{
     @Id
     private String email;
 
-    @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
     private int amount;
-    private List <DBRef<Person,String>> people;
+    
+    private List <Person> people;
 
     public Consumer() {
-        this.people=new ArrayList<DBRef<Person,String>>();
+        this.people=new ArrayList<Person>();
         this.amount=AMOUNTDEFAULT;
     }
 
@@ -59,11 +54,11 @@ public class Consumer implements Serializable{
         this.amount = vAmount;
     }
 
-    public List <DBRef<Person,String>> getPeople() {
+    public List <Person> getPeople() {
         return this.people;
     }
 
-    public void setPerson(DBRef<Person,String> vPerson) {
+    public void setPerson(Person vPerson) {
     	this.people.add(vPerson);
         
     }

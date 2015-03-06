@@ -5,19 +5,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jongo.MongoCollection;
+
 import models.Consumer;
 import models.Person;
 import models.Statistics;
-import net.vz.mongodb.jackson.DBCursor;
-import net.vz.mongodb.jackson.DBQuery;
-import net.vz.mongodb.jackson.DBRef;
-import net.vz.mongodb.jackson.JacksonDBCollection;
 import play.Logger;
 import play.Play;
-import play.modules.mongodb.jackson.MongoDB;
+import uk.co.panaxiom.playjongo.PlayJongo;
 
 import com.cloudinary.Cloudinary;
 import com.google.inject.Singleton;
+
 
 /**
  * Groups the operations on the People collection
@@ -26,10 +25,9 @@ import com.google.inject.Singleton;
 @Singleton
 public final class PersonDAOImpl implements PersonDAO {
 	
-    private static JacksonDBCollection<Consumer, String> consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
-	private static JacksonDBCollection<Person, String> people = MongoDB.getCollection("Person", Person.class, String.class);
-	private static JacksonDBCollection<Statistics, String> statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
-
+	private static MongoCollection consumers = PlayJongo.getCollection("Consumer");
+	private static MongoCollection statistics = PlayJongo.getCollection("Statistics");
+	
     private Cloudinary cloudinary = com.cloudinary.Singleton.getCloudinary();
 
     /**
@@ -40,18 +38,13 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void add(Person p,String id){
         //Recording the person
-    	people.insert(p);
 
         //Get the user
-        Consumer user = consumers.findOneById(id); 
-        DBRef<Person,String> pref = new DBRef<Person,String>(p.getIdPerson(),Person.class);
-        DBRef<Consumer,String> uref = new DBRef<Consumer,String>(id,Consumer.class);
+        Consumer user = consumers.findOne("{_id: #}", id).as(Consumer.class);
 
         //Link the user with the person
-        user.setPerson(pref);
-        p.setUser(uref);
-        consumers.updateById(id, user);      
-        people.updateById(p.getIdPerson(), p);
+        user.setPerson(p);
+        consumers.update("{_id: #}", id).with(user);
     }
 
     /**
@@ -61,16 +54,15 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void delete(String id,String email){
         //Get the person and the user
-        Person pbd = people.findOneById(id);
-        Consumer user = consumers.findOneById(email);
+        Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
         
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(id)) {
         		
         		//Delete picture
-                if(pbd.getPicture().startsWith("https")) {
+                if(p.getPicture().startsWith("https")) {
                     try { 
-                        String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
+                        String url = p.getPicture().substring(p.getPicture().lastIndexOf("/"));
                         url = url.substring(1,url.lastIndexOf("."));
                         if(!url.equals(Play.application().configuration().getString("AvatarDefault"))) {
                             cloudinary.api().deleteResources(Arrays.asList(url),null);
@@ -81,18 +73,16 @@ public final class PersonDAOImpl implements PersonDAO {
                 }
                 
                 //Update Statistics collection
-                DBCursor<Statistics> cursor = statistics.find(DBQuery.in( "person.$id" , pbd.getIdPerson()));
-                List<Statistics> stats = cursor.toArray();
-        		for(Statistics s : stats) {
-        			statistics.remove(s);
+                statistics.find("");
+                Iterable<Statistics> cursor = statistics.find("{name: #}}",p.getIdPerson()).as(Statistics.class);
+        		for(Statistics s : cursor) {
+        			statistics.remove("{_id: #}", s.get_id());
         		}
         		
         		//Update consumers collection
         		user.getPeople().remove(p);
-                consumers.updateById(email, user);
+                consumers.update("{_id: #}", email).with(user);
                 
-                //Delete the person
-                people.remove(pbd);
         		break;
         	}
         }        
@@ -105,8 +95,8 @@ public final class PersonDAOImpl implements PersonDAO {
      */
    public List<Person> listByUser(String emailUser){
 	   //Get the person and the user
-    	Consumer u = consumers.findOneById(emailUser);
-    	List<Person> l = consumers.fetch(u.getPeople());
+    	Consumer u = consumers.findOne("{_id: #}", emailUser).as(Consumer.class);
+    	List<Person> l = u.getPeople();
     	
         //Sort of the members list by Firstname
         Collections.sort(l, new Comparator<Person>() {
@@ -124,18 +114,17 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void discharge(String id,String email){
         //Get the person
-    	Person pbd = people.findOneById(id);
-    	Consumer user = consumers.findOneById(email);
+    	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
 
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
-        		pbd.setDebt(0);
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(id)) {
+        		p.setDebt(0);
         		break;
         	}
         }
         
         //Refresh DB
-        people.updateById(id,pbd);
+        consumers.update("{_id: #}", email).with(user);
     }
 
 
@@ -148,20 +137,19 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void updateNameFirstname(String id,String email,String vName, String vFirstname){
  	   //Get the person and the user
-    	Person pbd = people.findOneById(id);
-    	Consumer user = consumers.findOneById(email);
+    	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
 
     	//If the user has rights
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
-                pbd.setName(vName);
-                pbd.setFirstname(vFirstname);
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(id)) {
+                p.setName(vName);
+                p.setFirstname(vFirstname);
         		break;
         	}
         }
         
         //Refresh DB
-        people.updateById(id,pbd);
+        consumers.update("{_id: #}", email).with(user);
     }
 
     /**
@@ -172,15 +160,14 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void updatePicture(String id,String email,String vPicture){
   	   //Get the person and the user
-     	Person pbd = people.findOneById(id);
-     	Consumer user = consumers.findOneById(email);
+     	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
      	
     	//If the user has rights
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
-        		if(pbd.getPicture().startsWith("https")) {
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(id)) {
+        		if(p.getPicture().startsWith("https")) {
                     try { 
-                        String url = pbd.getPicture().substring(pbd.getPicture().lastIndexOf("/"));
+                        String url = p.getPicture().substring(p.getPicture().lastIndexOf("/"));
                         url = url.substring(1,url.lastIndexOf("."));
                         if(!url.equals(Play.application().configuration().getString("AvatarDefault"))) {
                             cloudinary.api().deleteResources(Arrays.asList(url),null);
@@ -189,13 +176,13 @@ public final class PersonDAOImpl implements PersonDAO {
                         Logger.info("Delete image on Cloudinary", e);
                     }
                 }
-                pbd.setAdrImage(vPicture);
+                p.setAdrImage(vPicture);
         		break;
         	}
         }
      	
         //Refresh DB
-        people.updateById(id,pbd);	
+        consumers.update("{_id: #}", email).with(user);
     }
     /**
      * Increase a person debt
@@ -204,23 +191,22 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void incrementDebt(String id,String email){
         //Get the person
-       	Person pbd = people.findOneById(id);
-    	Consumer user = consumers.findOneById(email);
+    	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
 
-        for(DBRef<Person,String> p : user.getPeople()) {
-        	if(p.getId().equals(pbd.getIdPerson())) {
-                if(Integer.MAX_VALUE-pbd.getDebt()>user.getAmount()) {
-                    pbd.setDebt(pbd.getDebt()+user.getAmount());
+        for(Person p : user.getPeople()) {
+        	if(p.getIdPerson().equals(id)) {
+                if(Integer.MAX_VALUE-p.getDebt()>user.getAmount()) {
+                    p.setDebt(p.getDebt()+user.getAmount());
                 }
                 else {
-                    pbd.setDebt(Integer.MAX_VALUE);
+                    p.setDebt(Integer.MAX_VALUE);
                 }
         		break;
         	}
         }
 
         //Refresh DB
-        people.updateById(id,pbd);	
+        consumers.update("{_id: #}", email).with(user);
     }
 
 
