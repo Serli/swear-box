@@ -199,7 +199,7 @@ app.controller('statsCtrl',
 				var data = $scope.stats;
 				
 				var margin = {
-						top : 0,
+						top : 20,
 						right : 0,
 						bottom : 30,
 						left : 0
@@ -216,8 +216,7 @@ app.controller('statsCtrl',
 
 				var xAxis = d3.svg.axis().scale(x0).orient("bottom");
 
-				var yAxis = d3.svg.axis().scale(y).orient("left").tickFormat(
-						d3.format(".0"));
+				var yAxis = d3.svg.axis().scale(y).orient("right").tickFormat(d3.format("d")).tickSize(width).tickSubdivide(0);
 
 				var tip = d3.tip()
 				  .attr('class', 'd3-tip')
@@ -263,8 +262,8 @@ app.controller('statsCtrl',
 					svg.append("g").attr("class", "x axis").attr("transform",
 							"translate(0," + height + ")").call(xAxis);
 
-					svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr(
-							"transform", "rotate(-90)").attr("y", 1).attr("dy", ".71em").style(
+					svg.append("g").attr("class", "y axis").call(yAxis).call(customAxis).append("text").attr(
+							"transform", "rotate(-90)").attr("y", -15).attr("dy", ".71em").style(
 									"text-anchor", "end").text("Gros mots prononcés");
 
 					date = svg.selectAll(".date").data(data).enter().append("g").attr(
@@ -299,6 +298,7 @@ app.controller('statsCtrl',
 					.attr("dy", ".35em").style("text-anchor", "end").text(function(d) {
 						return d;
 					});
+					
 
 				}
 				else if(mod == 2 ) {
@@ -320,11 +320,11 @@ app.controller('statsCtrl',
 					date.selectAll("rect").data(function(d) {
 						return d.ages;
 					}).enter().append("rect").on('mouseover', tip.show)
-				      .on('mouseout', tip.hide).transition().duration(750).attr("width", x1.rangeBand()).attr("x",
+				      .on('mouseout', tip.hide).style("fill","white").style("opacity",0).transition().duration(750).style("opacity",1).attr("width", x1.rangeBand()).attr("x",
 							function(d) {
 						return x1(d.name);
 					}).attr("y", function(d) {
-						return y(d.value);
+						return y(d.value)+20;
 					}).attr("height", function(d) {
 						return height - y(d.value);
 					}).style("fill", function(d) {
@@ -339,7 +339,7 @@ app.controller('statsCtrl',
 						return "translate(0," + i * 20 + ")";
 					});
 
-					legend.append("rect").transition().duration(750).attr("x", width - 18).attr("width", 18).attr(
+					legend.append("rect").style("fill","white").style("opacity",0).transition().duration(750).style("opacity",1).attr("x", width - 18).attr("width", 18).attr(
 							"height", 18).style("fill", color);
 
 					legend.append("text").transition().duration(750).attr("x", width - 24).attr("y", 9)
@@ -354,10 +354,18 @@ app.controller('statsCtrl',
 
 					transition.select(".y.axis")
 					.call(yAxis)
+					.call(customAxis)
 					.selectAll("g")
 					.delay(delay);
 				}
 			}
+			
+			function customAxis(g) {
+				  g.selectAll("text")
+				      .attr("x", 4)
+				      .attr("dy", -4);
+				}
+
 
 			/*----------------------------------------------------------------------*/
 
@@ -370,6 +378,7 @@ app.controller('statsCtrl',
 			// redraw it cleanly.
 			window.onresize = function (e) {
 				//drawStats();
+				drawStatsD3(2);
 			};
 
 			// Scope's function which refresh the array where is saved the state
