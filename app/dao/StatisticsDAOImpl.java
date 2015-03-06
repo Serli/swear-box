@@ -98,7 +98,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		if(granularity == 1) {
 			calFin.add(Calendar.DATE, -nb*7);
 			granu = "week";
-			for(int i=1; i<=54; i++){
+			for(int i=1; i<=52; i++){
 				li.add(new BasicDBObject().append("Date", "S"+i));
 			}
 		}
@@ -135,8 +135,9 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		}
 		if(granularity == 1) {
 			int debut = calFin.get(Calendar.WEEK_OF_YEAR);
+			System.out.println(debut);
 			for(int u =0 ;u<nb;u++){
-				res.add(li.get(debut % 54));
+				res.add(li.get(debut % 52));
 				debut++;
 			}
 		}
