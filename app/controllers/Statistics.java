@@ -8,7 +8,6 @@ import org.pac4j.play.java.RequiresAuthentication;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

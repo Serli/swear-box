@@ -53,8 +53,6 @@ app.controller('statsCtrl',
 				statsService.getStats($scope.unit, '1', idMember)
 				.success(function (data) {
 					$scope.stats = data;
-					//drawStats();
-
 					drawStatsD3(1);
 				})
 				.error(function () {
@@ -64,14 +62,14 @@ app.controller('statsCtrl',
 				});
 			}
 
-			
+
 			/*----------------------------------------------------------------------*/
 
 
 			/*----------------------------------------------------------------------*
 			 *----- Function which retrieves the data list to redraw the stats -----*
 			 *----------------------------------------------------------------------*/
-			
+
 			$scope.loadStats = function () {
 
 				var membersToShowInChart = getMembersToShowInChart();
@@ -85,7 +83,6 @@ app.controller('statsCtrl',
 					statsService.getStats($scope.unit, $scope.type_unit, membersToShowInChart)
 					.success(function (data) {
 						$scope.stats = data;
-						//drawStats();
 						drawStatsD3(2);
 					})
 					.error(function () {
@@ -100,91 +97,14 @@ app.controller('statsCtrl',
 				}
 			};
 
-			
-			/*----------------------------------------------------------------------*/
 
-
-			/*----------------------------------------------------------------------*
-			 *----------- Function which draws the stats in the canvas -------------*
-			 *----------------------------------------------------------------------*/
-			
-			function drawStats() {
-				if(plot1 !== null) {
-					plot1.destroy();
-				}
-
-				var series = [];
-				var legend = [];
-				var j = 0;
-				for(var i in $scope.stats) {
-					if(i !== 'ticks') {
-						series[j] = $scope.stats[i];
-						for(var m in $scope.members) {
-							if(i == ('p'+$scope.members[m].idPerson))
-								legend[j] = $scope.members[m].firstname;
-						}
-					}
-					j++;
-				}
-
-				var ticks = $scope.stats.ticks;	
-
-				plot1 = $.jqplot('chart1', series, {
-
-					//Bootstrap colors : Primary, Success, Info, Warning, Danger, Base, Navbar 
-					seriesColors: [ "#428bca", "#5cb85c", "#5bc0de", "#f0ad4e", "#d9534f", "#8A6DE9", "#444444" ],
-
-					seriesDefaults: {
-						pointLabels: {
-							show: true,
-							ypadding : 0,
-							location : 's',
-							hideZeros : true
-						},
-						shadow: false,
-						shadowOffset: 0,
-						renderer:$.jqplot.BarRenderer,
-						rendererOptions: {
-							fillToZero: true,
-							highlightMouseOver: false,
-							barPadding: 1,
-							barMargin: 5
-						}
-					},
-
-					legend: {
-						textColor : '#0A0A0A',
-						border : 'none',
-						labels : legend,
-						renderer: $.jqplot.EnhancedLegendRenderer,
-						show: true,
-						placement: 'outside',
-						location: 'n',
-						rendererOptions: {
-							numberRows: 1
-						}
-					},
-
-					axes: {
-						xaxis: {
-							renderer: $.jqplot.CategoryAxisRenderer,
-							ticks: ticks
-						},
-						yaxis: {
-							showTicks: false 
-						}
-					}
-				});
-			}
-
-			
 			/*----------------------------------------------------------------------*/
 
 
 			/*----------------------------------------------------------------------*
 			 *---------------Function which draws the stats with svg ---------------*
 			 *----------------------------------------------------------------------*/
-			
+
 			function drawStatsD3(mod) {	
 
 				var names = [];
@@ -197,7 +117,7 @@ app.controller('statsCtrl',
 				}
 
 				var data = $scope.stats;
-				
+
 				var margin = {
 						top : 20,
 						right : 0,
@@ -219,12 +139,12 @@ app.controller('statsCtrl',
 				var yAxis = d3.svg.axis().scale(y).orient("right").tickFormat(d3.format("d")).tickSize(width).tickSubdivide(0);
 
 				var tip = d3.tip()
-				  .attr('class', 'd3-tip')
-				  .offset([-10, 0])
-				  .html(function(d) {
-				    return "<strong>" + d.value + "</strong>";
-				  });
-				
+				.attr('class', 'd3-tip')
+				.offset([-10, 0])
+				.html(function(d) {
+					return "<strong>" + d.value + "</strong>";
+				});
+
 				var ageNames = names;
 
 				data.forEach(function(d) {
@@ -239,18 +159,18 @@ app.controller('statsCtrl',
 				x0.domain(data.map(function(d) {
 					return d.Date;
 				}));
-				
+
 				x1.domain(ageNames).rangeRoundBands([ 0, x0.rangeBand() ]);
-				
+
 				y.domain([ 0, d3.max(data, function(d) {
 					return d3.max(d.ages, function(d) {
 						return d.value*1.5;
 					});
 				}) ]);
-				
+
 				var date;
 				var legend;
-				
+
 				if(mod == 1) {
 					var svg = d3.select(document.getElementById('sub-body')).append("svg").attr("id", "svg_id").attr("width",
 							width + margin.left + margin.right).attr("height",
@@ -258,7 +178,7 @@ app.controller('statsCtrl',
 											"translate(" + margin.left + "," + margin.top + ")");
 
 					svg.call(tip);
-					
+
 					svg.append("g").attr("class", "x axis").attr("transform",
 							"translate(0," + height + ")").call(xAxis);
 
@@ -283,7 +203,7 @@ app.controller('statsCtrl',
 					}).style("fill", function(d) {
 						return color(d.name);
 					}).on('mouseover', tip.show)
-				      .on('mouseout', tip.hide);
+					.on('mouseout', tip.hide);
 
 					legend = svg.selectAll(".legend").data(ageNames.slice().reverse())
 					.enter().append("g").attr("class", "legend").attr("transform",
@@ -298,20 +218,20 @@ app.controller('statsCtrl',
 					.attr("dy", ".35em").style("text-anchor", "end").text(function(d) {
 						return d;
 					});
-					
+
 
 				}
 				else if(mod == 2 ) {
 
 					var transition = d3.select(document.getElementById('svg_id')).call(tip).transition().duration(750),
 					delay = function(d, i) { return 0; };
-					
+
 					var state2 = transition.selectAll(".date")
 					.delay(delay)
 					.attr("x", function(d) { return x0(d.Date); });
 
 					d3.select(document.getElementById('svg_id')).selectAll("rect").remove();
-					
+
 					date = d3.select(document.getElementById('svg_id')).selectAll(".date").data(data).enter().append("g").attr(
 							"class", "g").attr("transform", function(d) {
 								return "translate(" + x0(d.Date) + ",0)";
@@ -320,7 +240,7 @@ app.controller('statsCtrl',
 					date.selectAll("rect").data(function(d) {
 						return d.ages;
 					}).enter().append("rect").on('mouseover', tip.show)
-				      .on('mouseout', tip.hide).style("fill","white").style("opacity",0).transition().duration(750).style("opacity",1).attr("width", x1.rangeBand()).attr("x",
+					.on('mouseout', tip.hide).style("fill","white").style("opacity",0).transition().duration(750).style("opacity",1).attr("width", x1.rangeBand()).attr("x",
 							function(d) {
 						return x1(d.name);
 					}).attr("y", function(d) {
@@ -330,9 +250,9 @@ app.controller('statsCtrl',
 					}).style("fill", function(d) {
 						return color(d.name);
 					});
-					
+
 					d3.select(document.getElementById('svg_id')).selectAll(".legend").remove();
-					
+
 					legend = d3.select(document.getElementById('svg_id')).selectAll(".legend").data(ageNames.slice().reverse())
 					.enter().append("g").attr("class", "legend").attr("transform",
 							function(d, i) {
@@ -359,12 +279,12 @@ app.controller('statsCtrl',
 					.delay(delay);
 				}
 			}
-			
+
 			function customAxis(g) {
-				  g.selectAll("text")
-				      .attr("x", 4)
-				      .attr("dy", -4);
-				}
+				g.selectAll("text")
+				.attr("x", 4)
+				.attr("dy", -4);
+			}
 
 
 			/*----------------------------------------------------------------------*/
@@ -377,7 +297,6 @@ app.controller('statsCtrl',
 			// Function which clear (even destroy) the chart show at the resize to
 			// redraw it cleanly.
 			window.onresize = function (e) {
-				//drawStats();
 				drawStatsD3(2);
 			};
 
