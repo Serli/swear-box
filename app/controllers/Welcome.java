@@ -31,8 +31,8 @@ public class Welcome extends JavaController {
     private static final Integer USER_PAGE = 0;
     private static final Integer STATISTICS_PAGE = 1;
     private static final Integer ADMIN_PAGE = 2;
-    private static final Integer HELP_PAGE = 3;
-    private static final Integer BACKOFFICE_PAGE = 4;
+    private static final Integer BACKOFFICE_PAGE = 3;
+    private static final Integer HELP_PAGE = 4;
 
     @Inject
     private ConsumerDAO consumerDAO;

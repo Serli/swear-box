@@ -3,11 +3,177 @@
 @main("ISwear-Box") {
   @templates.navbar(isActive, numPage)
 } {
-	<div class="container">
+	<div class="container" ng-controller="userCtrl">
 		<div class="row separation-actions">
 			<h3 class="form-signin-heading h-center">Back-Office</h3>
 			
+			<form ng-submit="search()" >
+	          <div class="row separation-actions" >
+	            <div class="col-xs-10 col-sm-5">
+	              <div class="h-center v-adjust-table-icon">
+	                <span >Pénalité actuelle : {{amountTag}} centimes</span>
+	              </div>
+	            </div>
 
+	            <div class="col-xs-10 col-sm-5">
+	              <div class="input-group">
+	                <input ng-keypress="isNumeric($event)" ng-model="amount" type="text" class="form-control" id="amount" maxlength="9" placeholder="Montant de la nouvelle pénalité" required>
+	                <span class="input-group-addon">cts</span>
+	              </div>
+	            </div>
+	            
+	            <div class="col-xs-2 col-sm-2">
+	              <button title="Changer la pénalité" type="submit" class="btn btn-danger">
+	                <span class="glyphicon glyphicon-ok"/>
+	              </button>
+	            </div>
+	          </div>
+		    </form>
+
+			<div class="row">
+				<form class="navbar-form inline-form">
+		            <div class="form-group">
+		            	<input type="search" class="input-sm form-control" placeholder="Recherche">
+		            	<button type="submit" class="btn btn-primary btn-sm">
+		            		<span class="glyphicon glyphicon-search"></span>
+		            		Rechercher
+		            	</button>
+		            </div>
+				</form>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-hover table-centered well well-sm">
+
+		  			<thead>
+		  				<tr>
+		  					<th class="table-centered">Adresse email</th>
+		  					<th class="table-centered">Autorisation</th>
+		  				</tr>
+		  			</thead>
+		  			<tbody>
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(true)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(true)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+						<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(true)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(false)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(false)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(true)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(false)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(false)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(true)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(true)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+						<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(true)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(false)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(false)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(true)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(false)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(false)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(false)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(true)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+
+		  				<tr class="image-click">
+		  					<td>prenom.nomemail.com{{consumer.email}}</td>
+		                    <td>
+		                    	<span ng-if="(false)" class="label label-danger">
+		                    		Administrator
+		                    	</span>
+		                    	<span ng-if="(false)" class="label label-default">
+		                    		Blacklisted
+		                    	</span>
+		                    </td>
+		  				</tr>
+		  			</tbody>
+		  		</table>
+			</div>
 		</div>
 	</div>
 }

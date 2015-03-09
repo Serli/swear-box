@@ -34,7 +34,10 @@
           } else {
             <li><a href="/admin">Configuration</a></li>  
           }
-          @if(numPage == 4) {
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          @if(numPage == 3) {
             <li class="active">
               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 Administration
@@ -55,11 +58,8 @@
               </ul>
             </li>  
           }
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
           <li><a href="/logout">Déconnexion</a></li>
-          @if(numPage == 3) {
+          @if(numPage == 4) {
             <li class="active"><a href="/help">Aide</a></li>  
           } else {
             <li><a href="/help">Aide</a></li> 
@@ -97,7 +97,7 @@
        
         
         <ul class="nav navbar-nav navbar-right">
-          @if(numPage == 3) {
+          @if(numPage == 4) {
             <li class="active"><a href="/help">Aide</a></li>  
           } else {
             <li><a href="/help">Aide</a></li> 

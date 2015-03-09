@@ -8,45 +8,45 @@
   <div class="container" ng-controller="adminCtrl">
     <div class="row">
     
-      <table class="table table-hover well well-sm">
+      <div class="table-responsive">
+        <table class="table table-hover well well-sm">
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>Prénom</th>
+              <th>Dette</th>
+            </tr>
+          </thead>
+        
+          <tbody ng-repeat="member in members">
+                <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage) " >
+                  <td>
+                    <img id="img{{member.idPerson}}"ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
 
-        <thead>
-          <tr>
-            <th>Photo</th>
-            <th>Prénom</th>
-            <th>Dette</th>
-          </tr>
-        </thead>
-      
-        <tbody ng-repeat="member in members">
+                    <div>
+                      <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"/>
 
-              <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage) " >
-                <td>
-                  <img id="img{{member.idPerson}}"ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
+                      <span id="span-load{{member.idPerson}}" style="display: none">
+                        <img class="dimension-img" src=@routes.Assets.at("images/loading.gif") resize-max-width="64"/>
+                      </span>
+                    </div>
+                  </td>
 
-                  <div>
-                    <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"/>
+                  <td><p class="v-adjust-table-label image-click" ng-click="openModifyModal(member.idPerson, member.firstname, member.name)">{{member.firstname}}</p></td>
 
-                    <span id="span-load{{member.idPerson}}" style="display: none">
-                      <img class="dimension-img" src=@routes.Assets.at("images/loading.gif") resize-max-width="64"/>
-                    </span>
-                  </div>
-                </td>
-                <td><p class="v-adjust-table-label image-click" ng-click="openModifyModal(member.idPerson, member.firstname, member.name)">{{member.firstname}}</p></td>
-                <td><p class="v-adjust-table-label image-click" ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)">{{(member.debt)/100}} €</p></td>
-                <td>
-
-                  <a class="settings-span" ng-click="openDeleteModal($index, member.idPerson, member.firstname, member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
-
-                </td>
-              </tr>
-
-        </tbody>
-      </table>
+                  <td><p class="v-adjust-table-label image-click" ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)">{{(member.debt)/100}} €</p></td>
+                  <td>
+                    <a class="settings-span" ng-click="openDeleteModal($index, member.idPerson, member.firstname, member.name)" title ="Supprimer" href="#">
+                      <span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span>
+                    </a>
+                  </td>
+                </tr>
+          </tbody>
+        </table>
+      </div>
       
 	  	<div ng-if="members.length > itemsPerPage" class="h-center" >
 			  <ul ng-repeat="i in range"  class="pagination">
-
           <li ng-if="($index != numPage)">
             <a ng-click="pagination($index)" href="#">{{i}}</a>
           </li>
@@ -54,7 +54,6 @@
           <li ng-if="($index == numPage)" class="active">
             <a ng-click="pagination($index)" href="#">{{i}}</a>
           </li>
- 			
     		</ul>
 	  	</div>
 	  
@@ -62,7 +61,6 @@
       <div class="container  well well-sm " >
         <form ng-submit="addMember()">
           <div class="row separation-actions">
-
             <div class="col-xs-10 col-sm-5">
               <input type="text" class="form-control" ng-model="newMember.firstname" maxlength="30"  placeholder="Prénom" required>
             </div>
@@ -76,13 +74,11 @@
                 <span class="glyphicon glyphicon-plus"/>
               </button>
             </div>
-
           </div>
         </form>
         
         <form ng-submit="updateAmount()" >
           <div class="row separation-actions" >
-          
             <div class="col-xs-10 col-sm-5">
               <div class="h-center v-adjust-table-icon">
                 <span >Pénalité actuelle : {{amountTag}} centimes</span>
@@ -101,16 +97,14 @@
                 <span class="glyphicon glyphicon-ok"/>
               </button>
             </div>
-            
           </div>
-		</form>
+		    </form>
       </div>
 
       <div id="modifyMember" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
           <form ng-submit="modifyMember()">
             <div class="modal-content">
-
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">X</button>
                 <label class="modal-title">Modification d'un membre</label>
@@ -131,7 +125,6 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ne pas modifier</button>
                 <button type="submit" title="Modifier un membre" class="btn btn-danger">Modifier</button>
               </div>
-
             </div>
           </form>
         </div>
@@ -141,7 +134,6 @@
         <div class="modal-dialog">
           <form ng-submit="deleteMember()">
             <div class="modal-content">
-
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">X</button>
                 <label class="modal-title">Suppression d'un membre</label>
@@ -157,7 +149,6 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ne pas supprimer</button>
                 <button type="submit" title="Supprimer un membre" class="btn btn-danger">Supprimer</button>
               </div>
-
             </div>
           </form>
         </div>
@@ -167,7 +158,6 @@
         <div class="modal-dialog">
           <form ng-submit="dischargeMember()">
             <div class="modal-content">
-
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">X</button>
                 <label class="modal-title">Acquitter un membre</label>
@@ -183,7 +173,6 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ne pas acquitter</button>
                 <button type="submit" title="Acquitter un membre" class="btn btn-danger">Acquitter</button>
               </div>
-
             </div>
           </form>
         </div>
