@@ -25,8 +25,17 @@ app.controller('statsCtrl',
 				.success(function (membs) {
 					$scope.members = membs;
 					if($scope.members.length > 0) {
-						$scope.members[0].check = true;
-						loadDefaultStats($scope.members[0].idPerson);
+						var membersToShowInChart = '';
+						var counter = 0;
+						for(var i in $scope.members) {
+							if(counter > 0) {
+								membersToShowInChart = membersToShowInChart +',';
+							}
+							membersToShowInChart = membersToShowInChart + $scope.members[i].idPerson;
+							$scope.members[i].check = true;
+							counter++;
+						}
+						loadDefaultStats(membersToShowInChart);
 					}
 					else {
 						$scope.error_title = 'Chargement des membres';

@@ -1,5 +1,8 @@
 package dao;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import models.Consumer;
 import models.Person;
 
@@ -51,5 +54,10 @@ public interface ConsumerDAO {
     
     public Consumer detailsUser(String email);
     
+    /*
+     * Get users
+     * @return List<Consumer> : list of consumer
+     */
+    public List<Consumer> findAll();
 
 }
