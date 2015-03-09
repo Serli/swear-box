@@ -18,9 +18,9 @@
 
   			<tbody ng-repeat="member in members">
 
-  				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
+  				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" ng-click="increase(member.idPerson)">
   					<!-- Dynamic HTML part to add for every member -->
-  					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img image-click" ng-click="increase(member.idPerson)"></td>
+  					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img image-click"></td>
                       <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
                       <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
 

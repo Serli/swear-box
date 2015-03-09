@@ -15,7 +15,6 @@
             <th>Photo</th>
             <th>Prénom</th>
             <th>Dette</th>
-            <th>Options</th>
           </tr>
         </thead>
       
@@ -33,13 +32,9 @@
                     </span>
                   </div>
                 </td>
-                <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
-                <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
+                <td><p class="v-adjust-table-label image-click" ng-click="openModifyModal(member.idPerson, member.firstname, member.name)">{{member.firstname}}</p></td>
+                <td><p class="v-adjust-table-label image-click" ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)">{{(member.debt)/100}} €</p></td>
                 <td>
-
-                  <a class="settings-span" ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)" title ="Acquitter" href="#"><span class="glyphicon glyphicon-credit-card font-glyph v-adjust-table-icon"></span></a>
-
-                  <a class="settings-span" ng-click="openModifyModal(member.idPerson, member.firstname, member.name)" title ="Modifier" href="#"><span class="glyphicon glyphicon-cog font-glyph v-adjust-table-icon"></span></a>
 
                   <a class="settings-span" ng-click="openDeleteModal($index, member.idPerson, member.firstname, member.name)" title ="Supprimer" href="#"><span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span></a>
 
