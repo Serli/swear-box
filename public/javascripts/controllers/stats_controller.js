@@ -111,7 +111,7 @@ app.controller('statsCtrl',
 
 
 			/*----------------------------------------------------------------------*
-			 *---------------Function which draws the stats with svg ---------------*
+			 *---------------Function which draws the stats with D3 ----------------*
 			 *----------------------------------------------------------------------*/
 
 			function drawStatsD3(mod) {	

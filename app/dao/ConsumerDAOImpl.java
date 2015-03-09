@@ -7,11 +7,14 @@ import java.util.List;
 import org.jongo.MongoCollection;
 
 import play.Play;
+import play.libs.Json;
 import models.Consumer;
 import models.Person;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Singleton;
+import com.mongodb.BasicDBObject;
 
 /**
  * Groups the operations on the Consumer table
@@ -140,13 +143,16 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * Get users
      * @return List<Consumer> : list of consumer
      */
-    public List<Consumer> findAll(){
-    	Iterable<Consumer> it = consumers.find().as(Consumer.class);
-    	List<Consumer> li = new ArrayList<Consumer>();
-    	for(Consumer c : it){
-    		li.add(c);
-    	}
-    	return li;
+    public JsonNode findAll(){
+		List<BasicDBObject> a = consumers.aggregate("{ $group: { _id: { email : '$email', blck: '$blackListed', admin : '$admin' }}}")
+				.as(BasicDBObject.class);
+		ArrayList<BasicDBObject> res = new ArrayList<>();
+		for(BasicDBObject bo : a) {	
+			JsonNode j = Json.toJson(bo);
+			res.add(new BasicDBObject().append("email", j.findValue("email")).append("blacklisted", j.findValue("blck")).append("admin", j.findValue("admin")));
+		}
+		return Json.toJson(res);
+    	
     }
     
     /**

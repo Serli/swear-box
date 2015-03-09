@@ -3,6 +3,9 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
 import models.Consumer;
 import models.Person;
 
@@ -58,6 +61,6 @@ public interface ConsumerDAO {
      * Get users
      * @return List<Consumer> : list of consumer
      */
-    public List<Consumer> findAll();
+    public JsonNode findAll();
 
 }

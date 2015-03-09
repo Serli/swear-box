@@ -31,6 +31,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	private static MongoCollection statistics = PlayJongo.getCollection("Statistics");
 	
 	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
+	private static final String MONTH2[] = {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"};
 
 	/**
 	 * Add a statistic on the Statistics table
@@ -126,7 +127,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		ArrayList<BasicDBObject> res = new ArrayList<>();
 		for(BasicDBObject bo : a) {	
 			JsonNode j = Json.toJson(bo);
-			res.add(new BasicDBObject().append("date", MONTH[j.findValue("month").asInt()-1]+" "
+			res.add(new BasicDBObject().append("date", MONTH2[j.findValue("month").asInt()-1]+" "
 					+j.findValue("year").toString()).append("nb", bo.getString("nb")));
 		}
 		return Json.toJson(res);

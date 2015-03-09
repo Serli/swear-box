@@ -1,13 +1,61 @@
-@(isActive: Boolean, numPage: Integer)
+@(isActive: Boolean, numPage: Integer) @main("ISwear-Box") {
+@templates.navbar(isActive, numPage) } {
 
-@main("ISwear-Box") {
-  @templates.navbar(isActive, numPage)
-} {
-	<div class="container">
-		<div class="row separation-actions">
-			<h3 class="form-signin-heading h-center">Back-Office : Statistiques</h3>
-			
+<style>
 
+svg {
+  font: 10px sans-serif;
+}
+
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+</style>
+
+<div class="container" ng-controller="boStatsCtrl">
+	<div class="row separation-actions">
+		<h3 class="form-signin-heading h-center">Back-Office : Statistiques</h3>
+
+		<div id="sub-body" class="padding-charts"></div>
+
+
+		<div id="errorModal" class="modal fade vcenter" tabindex="-1"
+			role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">X</button>
+						<label class="modal-title">{{error_title}}</label>
+					</div>
+
+					<div class="modal-body">
+						<p>{{error_message}}</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+					</div>
+
+				</div>
+			</div>
 		</div>
+
 	</div>
+</div>
 }
