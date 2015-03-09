@@ -190,23 +190,8 @@ public final class PersonDAOImpl implements PersonDAO {
      * @param String : user id
      */
     public void incrementDebt(String id,String email){
-        //Get the person
     	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
-
-        for(Person p : user.getPeople()) {
-        	if(p.getIdPerson().equals(id)) {
-                if(Integer.MAX_VALUE-p.getDebt()>user.getAmount()) {
-                    p.setDebt(p.getDebt()+user.getAmount());
-                }
-                else {
-                    p.setDebt(Integer.MAX_VALUE);
-                }
-        		break;
-        	}
-        }
-
-        //Refresh DB
-        consumers.update("{_id: #}", email).with(user);
+        consumers.update("{people.idPerson: #}", id).with("{$inc: {people.$.debt: #}}", user.getAmount());
     }
 
 
