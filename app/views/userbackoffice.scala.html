@@ -1,0 +1,13 @@
+@(isActive: Boolean, numPage: Integer, email: String)
+
+@main("ISwear-Box") {
+  @templates.navbar(isActive, numPage)
+} {
+	<div class="container">
+		<div class="row separation-actions">
+			<h3 class="form-signin-heading h-center">Back-Office : @email</h3>
+			
+
+		</div>
+	</div>
+}
