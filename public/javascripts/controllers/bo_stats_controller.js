@@ -33,17 +33,26 @@ app.controller('boStatsCtrl',
 
 			/*----------------------------------------------------------------------*/
 
-
+			window.onresize = function (e) {
+				drawStatsD3(2);
+			};
+			
+			/*----------------------------------------------------------------------*/
+			
 			/*----------------------------------------------------------------------*
 			 *---------------Function which draws the stats with D3 ----------------*
 			 *----------------------------------------------------------------------*/
-			function drawStatsD3() {
+			function drawStatsD3(mod) {
 				
 				data = $scope.stats;
 
+				if(mod == 2) {
+					d3.select(document.getElementById('svg_id')).remove();
+				}
+				
 				var margin = {top: 10, right: 10, bottom: 100, left: 40},
 				margin2 = {top: 430, right: 10, bottom: 20, left: 40},
-				width = 960 - margin.left - margin.right,
+				width = document.getElementById('sub-body').offsetWidth - margin.left - margin.right,
 				height = 500 - margin.top - margin.bottom,
 				height2 = 500 - margin2.top - margin2.bottom;
 
@@ -74,7 +83,8 @@ app.controller('boStatsCtrl',
 				.y0(height2)
 				.y1(function(d) { return y2(+d.nb); });
 
-				var svg = d3.select("body").append("svg")
+				var svg = d3.select(document.getElementById('sub-body')).append("svg")
+				.attr("id", "svg_id")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom);
 

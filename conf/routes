@@ -24,6 +24,7 @@ GET 	/help						controllers.Welcome.help()
 # === Statistics page
 GET 	/statistics					        @controllers.Welcome.statistics()
 GET     /stats/:nb/$granularity<[1-2]+>     @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
+GET     /stats                              @controllers.Statistics.list()
 
 # === Back office page
 GET 	/backoffice					        @controllers.Welcome.backoffice()
