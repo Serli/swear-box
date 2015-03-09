@@ -1,5 +1,9 @@
 package dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import models.Consumer;
 import models.Person;
 
 /**
@@ -40,5 +44,11 @@ public interface ConsumerDAO {
      * @param String : user id
      */
     public void linkUserPerson(Person pe,String idUser);
+    
+    /**
+     * Get users
+     * @return List<Consumer> : list of consumer
+     */
+    public List<Consumer> findAll();
 
 }

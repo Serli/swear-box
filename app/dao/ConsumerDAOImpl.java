@@ -1,6 +1,9 @@
 package dao;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jongo.MongoCollection;
 
 import models.Consumer;
@@ -101,5 +104,18 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         	user.setPerson(pe);
         	consumers.update("{_id: #}", idUser).with(user);
         }
+    }
+    
+    /**
+     * Get users
+     * @return List<Consumer> : list of consumer
+     */
+    public List<Consumer> findAll(){
+    	Iterable<Consumer> it = consumers.find().as(Consumer.class);
+    	List<Consumer> li = new ArrayList<Consumer>();
+    	for(Consumer c : it){
+    		li.add(c);
+    	}
+    	return li;
     }
 }
