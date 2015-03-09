@@ -26,6 +26,12 @@ GET 	/statistics					             controllers.Welcome.statistics()
 GET     /stats/:nb/$granularity<[1-2]+>          @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
 GET     /stats                                   @controllers.Statistics.list()
 
+
+# === Back office page
+GET 	/backoffice					        controllers.Welcome.backoffice()
+GET 	/statsbackoffice					controllers.Welcome.statisticsBackoffice()
+GET 	/userbackoffice					    controllers.Welcome.userBackoffice()
+
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
 POST  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()

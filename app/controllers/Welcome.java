@@ -32,6 +32,7 @@ public class Welcome extends JavaController {
     private static final Integer STATISTICS_PAGE = 1;
     private static final Integer ADMIN_PAGE = 2;
     private static final Integer HELP_PAGE = 3;
+    private static final Integer BACKOFFICE_PAGE = 4;
 
     @Inject
     private ConsumerDAO consumerDAO;
@@ -68,16 +69,22 @@ public class Welcome extends JavaController {
         //Add the user to the data if it is needed
         String firstname = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
-        if(consumerDAO.add(email)){
-            //Add a member with the name and the firstname of the user
-            String url = cloudinary.url().format("png")
-                    .generate(Play.application().configuration().getString("AvatarDefault"));
-            String picture = url.replace("http", "https");
-            String name = googleProfile.getFamilyName();
-            Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
-            personDAO.add(person,email);
-        }
-        return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
+        
+	        if(consumerDAO.add(email)){
+	            //Add a member with the name and the firstname of the user
+	        	
+	            String url = cloudinary.url().format("png")
+	                    .generate(Play.application().configuration().getString("AvatarDefault"));
+	            String picture = url.replace("http", "https");
+	            String name = googleProfile.getFamilyName();
+	            Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
+	            personDAO.add(person,email);
+	        }
+	        if(!consumerDAO.inBlackLister(email)){
+	        	return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
+	        }
+	        return org.pac4j.play.CallbackController.logoutAndRedirect();
+	       //return ok(views.html.error.render());
     }
 
 
@@ -118,6 +125,33 @@ public class Welcome extends JavaController {
     @RequiresAuthentication(clientName = "Google2Client")
     public static Result statistics() {
         return ok(views.html.statistics.render(new Boolean(true), STATISTICS_PAGE));
+    }
+
+    /**
+     * Method's using in conf\routes and to display the backoffice page
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
+     */
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result backoffice() {
+        return ok(views.html.backoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+    }
+
+    /**
+     * Method's using in conf\routes and to display the statisticsbackoffice page
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
+     */
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result statisticsBackoffice() {
+        return ok(views.html.statisticsbackoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+    }
+
+    /**
+     * Method's using in conf\routes and to display the userbackoffice page
+     * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
+     */
+    @RequiresAuthentication(clientName = "Google2Client")
+    public static Result userBackoffice() {
+        return ok(views.html.userbackoffice.render(new Boolean(true), BACKOFFICE_PAGE, "Temporary"));
     }
 
     /**

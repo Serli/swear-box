@@ -1,8 +1,12 @@
 package dao;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jongo.MongoCollection;
 
+import play.Play;
 import models.Consumer;
 import models.Person;
 import uk.co.panaxiom.playjongo.PlayJongo;
@@ -28,6 +32,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         //If the user doesn't exist he is added
         if (u == null) {
             u = new Consumer(email);
+            
+            List<String> admin = Play.application().configuration().getStringList("Admin");
+            if (admin.contains(email))
+            	u.setAdmin(true);
+            
             consumers.insert(u);
             return true;
         }
@@ -44,7 +53,8 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     	
         //If the user doesn't exist he is added
         if (u != null) {
-        	consumers.remove("{_id: #}", u.getEmail());
+        	u.setBlackLister(true);
+        	consumers.update("{_id: #}", email).with(u);
             return true;
         }
         return false;
@@ -101,5 +111,62 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         	user.setPerson(pe);
         	consumers.update("{_id: #}", idUser).with(user);
         }
+    }
+
+	@Override
+	public boolean inBlackLister(String email) {
+		//Get the user
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+		if(u != null)
+			return u.isBlackListed();
+		
+		return true;
+	}
+
+	@Override
+	public Consumer detailsUser(String email) {
+		
+		//Get the person and the user
+        Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+        
+        if (!user.isBlackListed())
+        	return user;
+        
+        return null;
+	}
+    
+    /**
+     * Get users
+     * @return List<Consumer> : list of consumer
+     */
+    public List<Consumer> findAll(){
+    	Iterable<Consumer> it = consumers.find().as(Consumer.class);
+    	List<Consumer> li = new ArrayList<Consumer>();
+    	for(Consumer c : it){
+    		li.add(c);
+    	}
+    	return li;
+    }
+    
+    /**
+     * add user(email) to administrator
+     * @param String id : admin who add another admin
+     * @param String email : user to set admin
+     * @return boolean : success
+     */
+    public boolean setAdmin(String id,String email) {
+        //Get the user
+    	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
+    	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+        //If the user doesn't exist he is added
+        if (u != null && u2 !=null) {
+        	if(u.isAdmin())
+        		u2.setAdmin(true);
+        	consumers.update("{_id: #}", email).with(u2);
+            return true;
+        }
+        return false;
     }
 }
