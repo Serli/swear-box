@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.jongo.MongoCollection;
 
+import play.Play;
 import models.Consumer;
 import models.Person;
 import uk.co.panaxiom.playjongo.PlayJongo;
@@ -31,6 +32,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         //If the user doesn't exist he is added
         if (u == null) {
             u = new Consumer(email);
+            
+            List<String> admin = Play.application().configuration().getStringList("Admin");
+            if (admin.contains(email))
+            	u.setAdmin(true);
+            
             consumers.insert(u);
             return true;
         }
@@ -141,5 +147,26 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     		li.add(c);
     	}
     	return li;
+    }
+    
+    /**
+     * add user(email) to administrator
+     * @param String id : admin who add another admin
+     * @param String email : user to set admin
+     * @return boolean : success
+     */
+    public boolean setAdmin(String id,String email) {
+        //Get the user
+    	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
+    	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+        //If the user doesn't exist he is added
+        if (u != null && u2 !=null) {
+        	if(u.isAdmin())
+        		u2.setAdmin(true);
+        	consumers.update("{_id: #}", email).with(u2);
+            return true;
+        }
+        return false;
     }
 }
