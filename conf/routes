@@ -30,6 +30,7 @@ GET     /stats                              @controllers.Statistics.list()
 GET 	/backoffice					        @controllers.Welcome.backoffice()
 GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
 GET 	/userbackoffice					    @controllers.Welcome.userBackoffice()
+GET 	/consumer/findAll					@controllers.Backoffice.findAll()
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()

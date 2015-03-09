@@ -116,7 +116,6 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         }
     }
 
-	@Override
 	public boolean inBlackLister(String email) {
 		//Get the user
     	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
@@ -127,16 +126,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
 		return true;
 	}
 
-	@Override
-	public Consumer detailsUser(String email) {
+	public JsonNode findOne(String email) {
 		
 		//Get the person and the user
-        Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
-        
-        if (!user.isBlackListed())
-        	return user;
-        
-        return null;
+        BasicDBObject user = consumers.findOne("{_id: #}", email).as(BasicDBObject.class);
+        return Json.toJson(user);
 	}
     
     /**
@@ -144,7 +138,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * @return List<Consumer> : list of consumer
      */
     public JsonNode findAll(){
-		List<BasicDBObject> a = consumers.aggregate("{ $group: { _id: { email : '$email', blck: '$blackListed', admin : '$admin' }}}")
+		List<BasicDBObject> a = consumers.aggregate("{ $group: { _id: { email : '$_id', blck: '$blackListed', admin : '$admin' }}}")
 				.as(BasicDBObject.class);
 		ArrayList<BasicDBObject> res = new ArrayList<>();
 		for(BasicDBObject bo : a) {	

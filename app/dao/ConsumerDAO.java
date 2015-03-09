@@ -55,7 +55,7 @@ public interface ConsumerDAO {
      */
     public boolean inBlackLister(String email);
     
-    public Consumer detailsUser(String email);
+    public JsonNode findOne(String email);
     
     /*
      * Get users
