@@ -25,4 +25,9 @@ public interface StatisticsDAO {
 	 * @param granularity : 1 = Week, 2 = Month
 	 */
     public JsonNode list(String emailUser,ArrayList<String> ids, int nb, int granularity);
+    
+	/**
+	 * List all the statistics
+	 */
+    public JsonNode list();
 }

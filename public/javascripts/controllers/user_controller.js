@@ -1,6 +1,6 @@
 app.controller('userCtrl',
-	['$scope', 'membersService',
-		function ($scope, membersService) {
+	['$scope', 'membersService', 'userService',
+		function ($scope, membersService, userService) {
 
 	/*----------------------------------------------------------------------*
 	 *-- Initialisation of the objects used in this controller (userCtrl) --*
@@ -8,8 +8,29 @@ app.controller('userCtrl',
 	
 	$scope.numPage = 0;
 	$scope.itemsPerPage = 5;
+	$scope.amountTag = '';
+	getAmount();
 	getMembers();
 
+	
+	/*----------------------------------------------------------------------*/
+
+
+	/*----------------------------------------------------------------------*
+	 *------ Functions which use userService from ../services/user.js ------*
+	 *----------------------------------------------------------------------*/
+	
+	// Function which retrieves the amount of the database calling 
+	// corresponding function through the server.
+    function getAmount() {
+		userService.getAmount()
+		.success(function (amount) {
+			$scope.amountTag = amount;
+		})
+		.error(function (error) {
+			 alert('Unable to load amount data: ' + error.message);
+		});
+	}	
 	/*----------------------------------------------------------------------*/
 
 
@@ -34,11 +55,15 @@ app.controller('userCtrl',
 	// corresponding function through the server and refresh the list of 
 	// members and the range.
 	$scope.increase = function (id) {
+		for(var i in $scope.members) {
+			if($scope.members[i].idPerson == id)
+				$scope.members[i].debt += $scope.amountTag;
+		}
 		membersService.increaseDebt(id)
 		.success(function () {
-			getMembers();
 		})
 		.error(function (error) {
+			getMembers();
 			alert('Unable to increase member debt: ' + error.message);
 		});
 	};

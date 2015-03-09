@@ -44,7 +44,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		for(Person p : user.getPeople()) {
 			if(p.getIdPerson().equals(idPerson)) {
 				Calendar cal = Calendar.getInstance();
-				//cal.add(Calendar.DATE,-30);
+				cal.add(Calendar.DATE,-30);
 				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),p);
 				statistics.insert(stats);
 				break;
@@ -111,6 +111,23 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 				res.add(li.get(debut % 52));
 				debut++;
 			}
+		}
+		return Json.toJson(res);
+	}
+
+
+	/**
+	 * List all the statistics
+	 */
+	@Override
+	public JsonNode list() {
+		List<BasicDBObject> a = statistics.aggregate("{ $group: { _id: { month : { $month: '$date' }, year : { $year: '$date' } }, nb: { $sum: 1 } }}")
+				.as(BasicDBObject.class);
+		ArrayList<BasicDBObject> res = new ArrayList<>();
+		for(BasicDBObject bo : a) {	
+			JsonNode j = Json.toJson(bo);
+			res.add(new BasicDBObject().append("date", MONTH[j.findValue("month").asInt()-1]+" "
+					+j.findValue("year").toString()).append("nb", bo.getString("nb")));
 		}
 		return Json.toJson(res);
 	}
