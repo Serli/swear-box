@@ -44,7 +44,8 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     	
         //If the user doesn't exist he is added
         if (u != null) {
-        	consumers.remove("{_id: #}", u.getEmail());
+        	u.setBlackLister(true);
+        	consumers.update("{_id: #}", email).with(u);
             return true;
         }
         return false;
@@ -102,4 +103,27 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         	consumers.update("{_id: #}", idUser).with(user);
         }
     }
+
+	@Override
+	public boolean inBlackLister(String email) {
+		//Get the user
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+		if(u != null)
+			return u.isBlackListed();
+		
+		return true;
+	}
+
+	@Override
+	public Consumer detailsUser(String email) {
+		
+		//Get the person and the user
+        Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+        
+        if (!user.isBlackListed())
+        	return user;
+        
+        return null;
+	}
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import models.Consumer;
 import models.Person;
 
 /**
@@ -40,5 +41,15 @@ public interface ConsumerDAO {
      * @param String : user id
      */
     public void linkUserPerson(Person pe,String idUser);
+    
+    /**
+     * Test if the user is in blacklister
+     * @param String : user id
+     * @return boolean : isBlackLister
+     */
+    public boolean inBlackLister(String email);
+    
+    public Consumer detailsUser(String email);
+    
 
 }

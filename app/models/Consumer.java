@@ -21,11 +21,14 @@ public class Consumer implements Serializable{
 
     private int amount;
     
+    private boolean blackListed;
+    
     private List <Person> people;
 
     public Consumer() {
         this.people=new ArrayList<Person>();
         this.amount=AMOUNTDEFAULT;
+        this.blackListed = false;
     }
 
     public Consumer(String vEmail) {
@@ -62,5 +65,14 @@ public class Consumer implements Serializable{
     	this.people.add(vPerson);
         
     }
+
+	public boolean isBlackListed() {
+		return blackListed;
+	}
+
+	public void setBlackLister(boolean blackListed) {
+		this.blackListed = blackListed;
+	}
+    
 
 }

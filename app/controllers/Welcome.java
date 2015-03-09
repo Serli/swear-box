@@ -68,16 +68,22 @@ public class Welcome extends JavaController {
         //Add the user to the data if it is needed
         String firstname = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
-        if(consumerDAO.add(email)){
-            //Add a member with the name and the firstname of the user
-            String url = cloudinary.url().format("png")
-                    .generate(Play.application().configuration().getString("AvatarDefault"));
-            String picture = url.replace("http", "https");
-            String name = googleProfile.getFamilyName();
-            Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
-            personDAO.add(person,email);
-        }
-        return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
+        
+	        if(consumerDAO.add(email)){
+	            //Add a member with the name and the firstname of the user
+	        	
+	            String url = cloudinary.url().format("png")
+	                    .generate(Play.application().configuration().getString("AvatarDefault"));
+	            String picture = url.replace("http", "https");
+	            String name = googleProfile.getFamilyName();
+	            Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
+	            personDAO.add(person,email);
+	        }
+	        if(!consumerDAO.inBlackLister(email)){
+	        	return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
+	        }
+	        return org.pac4j.play.CallbackController.logoutAndRedirect();
+	       //return ok(views.html.error.render());
     }
 
 
