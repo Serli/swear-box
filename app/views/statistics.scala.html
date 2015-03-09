@@ -14,20 +14,11 @@
 				<form class="col-sm-12 col-md-8 col-md-offset-2 div-scrollable">
 					<div ng-repeat="member in members" class="row">
 					
-						<div ng-if="($index == 0)" class="input-group">
+						<div  class="input-group">
 							<span class="input-group-addon"> <input type="checkbox"
 								name="checkbox" id="checkbox{{member.idPerson}}"
 								class="checkbox"
 								ng-click="refreshMembersChecked(member.idPerson)"  checked/>
-							</span> <label class="form-control"  for="checkbox{{member.idPerson}}">
-								{{member.firstname}} </label>
-						</div>
-						
-						<div ng-if="($index !== 0)" class="input-group">
-							<span class="input-group-addon"> <input type="checkbox"
-								name="checkbox" id="checkbox{{member.idPerson}}"
-								class="checkbox"
-								ng-click="refreshMembersChecked(member.idPerson)" />
 							</span> <label class="form-control"  for="checkbox{{member.idPerson}}">
 								{{member.firstname}} </label>
 						</div>
