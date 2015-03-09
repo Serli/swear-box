@@ -70,6 +70,7 @@ public class Welcome extends JavaController {
         String firstname = googleProfile.getFirstName();
         String email = googleProfile.getEmail();
         
+        if(!consumerDAO.inBlackLister(email)){
 	        if(consumerDAO.add(email)){
 	            //Add a member with the name and the firstname of the user
 	        	
@@ -80,11 +81,10 @@ public class Welcome extends JavaController {
 	            Person person = new Person(ObjectId.get().toString(),name,firstname,0,picture);
 	            personDAO.add(person,email);
 	        }
-	        if(!consumerDAO.inBlackLister(email)){
+	     
 	        	return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
-	        }
-	        return org.pac4j.play.CallbackController.logoutAndRedirect();
-	       //return ok(views.html.error.render());
+	       }
+	       return ok(views.html.error.render());
     }
 
 
@@ -106,8 +106,17 @@ public class Welcome extends JavaController {
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result admin() {
-        return ok(views.html.admin.render(new Boolean(true), ADMIN_PAGE));
+    public Result admin() {
+    	//Get the name in the user google profile
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        
+        if(!consumerDAO.inBlackLister(email)){
+        	return ok(views.html.admin.render(new Boolean(true), ADMIN_PAGE));
+       }
+        
+        return ok(views.html.error.render());
+        
     }
 
     /**
@@ -123,8 +132,16 @@ public class Welcome extends JavaController {
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result statistics() {
-        return ok(views.html.statistics.render(new Boolean(true), STATISTICS_PAGE));
+    public Result statistics() {
+    	//Get the name in the user google profile
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        
+        if(!consumerDAO.inBlackLister(email)){
+        	return ok(views.html.statistics.render(new Boolean(true), STATISTICS_PAGE));
+        }
+        
+        return ok(views.html.error.render());
     }
 
     /**
@@ -132,8 +149,17 @@ public class Welcome extends JavaController {
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result backoffice() {
-        return ok(views.html.backoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+    public Result backoffice() {
+
+    	//Get the name in the user google profile
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        
+        if(!consumerDAO.inBlackLister(email)){
+        	return ok(views.html.backoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+        }
+        return ok(views.html.error.render());
+    	
     }
 
     /**
@@ -141,8 +167,17 @@ public class Welcome extends JavaController {
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result statisticsBackoffice() {
-        return ok(views.html.statisticsbackoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+    public Result statisticsBackoffice() {
+    	
+    	//Get the name in the user google profile
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        
+        if(!consumerDAO.inBlackLister(email)){
+        	return ok(views.html.statisticsbackoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+        }
+        return ok(views.html.error.render());
+        
     }
 
     /**
@@ -150,8 +185,18 @@ public class Welcome extends JavaController {
      * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
      */
     @RequiresAuthentication(clientName = "Google2Client")
-    public static Result userBackoffice() {
-        return ok(views.html.userbackoffice.render(new Boolean(true), BACKOFFICE_PAGE, "Temporary"));
+    public Result userBackoffice() {
+    	
+    	//Get the name in the user google profile
+        Google2Profile googleProfile = (Google2Profile) getUserProfile();
+        String email = googleProfile.getEmail();
+        
+        if(!consumerDAO.inBlackLister(email)){
+        	return ok(views.html.userbackoffice.render(new Boolean(true), BACKOFFICE_PAGE, "Temporary"));
+        }
+        
+        return ok(views.html.error.render());
+    	
     }
 
     /**

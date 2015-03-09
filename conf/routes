@@ -8,7 +8,7 @@ GET     /user                       @controllers.Welcome.user()
 PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: String)
 
 # === Admin page
-GET     /admin                      controllers.Welcome.admin()
+GET     /admin                      @controllers.Welcome.admin()
 GET     /amount                 	@controllers.Administration.amount()
 GET     /members                 	@controllers.Administration.listPerson()
 POST    /members            		@controllers.Administration.addPerson()
@@ -22,15 +22,13 @@ PUT     /members/picture/:id		@controllers.Administration.updatePicture(id: Stri
 GET 	/help						controllers.Welcome.help()
 
 # === Statistics page
-GET 	/statistics					             controllers.Welcome.statistics()
-GET     /stats/:nb/$granularity<[1-2]+>          @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
-GET     /stats                                   @controllers.Statistics.list()
-
+GET 	/statistics					        @controllers.Welcome.statistics()
+GET     /stats/:nb/$granularity<[1-2]+>     @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
 
 # === Back office page
-GET 	/backoffice					        controllers.Welcome.backoffice()
-GET 	/statsbackoffice					controllers.Welcome.statisticsBackoffice()
-GET 	/userbackoffice					    controllers.Welcome.userBackoffice()
+GET 	/backoffice					        @controllers.Welcome.backoffice()
+GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
+GET 	/userbackoffice					    @controllers.Welcome.userBackoffice()
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
