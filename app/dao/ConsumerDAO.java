@@ -80,8 +80,9 @@ public interface ConsumerDAO {
      * add user(email) to the blacklist
      * @param String id : admin who add a user to blacklist
      * @param String email : user to blacklist
+     * @param boolean cond : value of blacklist
      * @return boolean : success
      */
-    public boolean setBlacklisted(String id,String email);
+    public boolean setBlacklisted(String id,String email, boolean cond);
 
 }

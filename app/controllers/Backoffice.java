@@ -44,7 +44,15 @@ public class Backoffice extends JavaController {
     @RequiresAuthentication(clientName = "Google2Client")
     public Result setBlacklisted(String email) {
     	String admin = getUserProfile().getEmail();
-        if(consumerDAO.setBlacklisted(admin, email))
+        if(consumerDAO.setBlacklisted(admin, email,true))
+        	return ok();
+        return badRequest();
+    }
+    
+    @RequiresAuthentication(clientName = "Google2Client")
+    public Result unsetBlacklisted(String email) {
+    	String admin = getUserProfile().getEmail();
+        if(consumerDAO.setBlacklisted(admin, email,false))
         	return ok();
         return badRequest();
     }

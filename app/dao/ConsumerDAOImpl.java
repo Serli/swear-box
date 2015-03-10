@@ -174,9 +174,10 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      * add user(email) to the blacklist
      * @param String id : admin who add a user to blacklist
      * @param String email : user to blacklist
+     * @param boolean cond : value of blacklist
      * @return boolean : success
      */
-    public boolean setBlacklisted(String id,String email) {
+    public boolean setBlacklisted(String id,String email, boolean cond) {
         //Get the user
     	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
     	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
@@ -184,7 +185,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         //If the user doesn't exist he is added
         if (u != null && u2 !=null) {
         	if(u.isAdmin())
-        		u2.setBlackLister(true);
+        		u2.setBlackLister(cond);
         	consumers.update("{_id: #}", email).with(u2);
             return true;
         }
