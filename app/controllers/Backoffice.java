@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import dao.ConsumerDAO;
+import dao.StatisticsDAO;
 
 /**
  * Managed actions for administration view
@@ -22,6 +23,9 @@ public class Backoffice extends JavaController {
 
     @Inject
     private ConsumerDAO consumerDAO;
+    
+    @Inject
+    private StatisticsDAO statisticsDAO;
 
     @RequiresAuthentication(clientName = "Google2Client")
     public Result findAll() {
@@ -55,6 +59,11 @@ public class Backoffice extends JavaController {
         if(consumerDAO.setBlacklisted(admin, email,false))
         	return ok();
         return badRequest();
+    }
+    
+    @RequiresAuthentication(clientName = "Google2Client")
+    public Result list() {
+        return ok(statisticsDAO.list());
     }
 
 }

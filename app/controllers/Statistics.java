@@ -38,10 +38,5 @@ public class Statistics extends JavaController {
         JsonNode statistics = statisticsDAO.list(emailUser,idsLong,nb,granularity);
         return ok(statistics);
     }
-    
-    @RequiresAuthentication(clientName = "Google2Client")
-    public Result list() {
-        return ok(statisticsDAO.list());
-    }
 
 }
