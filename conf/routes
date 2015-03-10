@@ -25,17 +25,20 @@ GET 	/help						controllers.Welcome.help()
 GET 	/statistics					        @controllers.Welcome.statistics()
 GET     /stats/:nb/$granularity<[1-2]+>     @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
 
-
 # === Back office page
 GET 	/backoffice					        @controllers.Welcome.backoffice()
-GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
-GET 	/userbackoffice					    @controllers.Welcome.userBackoffice()
 GET 	/consumers					        @controllers.Backoffice.findAll()
+
+# === Back office stats page
+GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
+GET     /stats                              @controllers.Backoffice.list()
+
+# === Back office user page
+GET 	/userbackoffice/:id 				@controllers.Welcome.userBackoffice(id: String)
 GET     /consumers/:id                      @controllers.Backoffice.findOne(id: String)
 PUT     /consumers/admin/:id                @controllers.Backoffice.setAdmin(id: String)
 PUT     /consumers/blacklist/:id            @controllers.Backoffice.setBlacklisted(id: String)
 PUT     /consumers/unblacklist/:id          @controllers.Backoffice.unsetBlacklisted(id: String)
-GET     /stats                              @controllers.Backoffice.list()
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()

@@ -14,19 +14,19 @@ app.service('userService', ['$http', function ($http) {
     };
 
     this.getConsumer = function (id) {
-		return $http.get(urlBase + id);
+		return $http.get(urlBase + "/" + id);
     };
 
     this.setAdmin = function (id) {
-		return $http.put(urlBase + "/admin" + id);
+		return $http.put(urlBase + "/admin" +"/" + id);
     };
 
     this.setBlacklisted = function (id) {
-		return $http.put(urlBase + "/blacklist" + id);
+		return $http.put(urlBase + "/blacklist" + "/" + id);
     };
 
     this.unsetBlacklisted = function (id) {
-		return $http.put(urlBase + "/unblacklist" + id);
+		return $http.put(urlBase + "/unblacklist" + "/" + id);
     };
 
 }]);

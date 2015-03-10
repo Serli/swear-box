@@ -21,7 +21,7 @@
           <tbody ng-repeat="member in members">
                 <tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage) " >
                   <td>
-                    <img id="img{{member.idPerson}}"ng-src={{member.picture}} alt="photo01" class="dimension-img  image-click" ng-click="browseImage(member.idPerson)">
+                    <img id="img{{member.idPerson}}"ng-src={{member.picture}} alt="photo01" class="dimension-img  item-clickable" ng-click="browseImage(member.idPerson)">
 
                     <div>
                       <input type="file" id="hiddenfile" style="display:none" accept="image/*" onChange="angular.element(this).scope().onChange()"/>
@@ -32,9 +32,9 @@
                     </div>
                   </td>
 
-                  <td><p class="v-adjust-table-label image-click" ng-click="openModifyModal(member.idPerson, member.firstname, member.name)">{{member.firstname}}</p></td>
+                  <td><p class="v-adjust-table-label item-clickable" ng-click="openModifyModal(member.idPerson, member.firstname, member.name)">{{member.firstname}}</p></td>
 
-                  <td><p class="v-adjust-table-label image-click" ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)">{{(member.debt)/100}} €</p></td>
+                  <td><p class="v-adjust-table-label item-clickable" ng-click="openDischargeModal(member.idPerson, member.firstname, member.name)">{{(member.debt)/100}} €</p></td>
                   <td>
                     <a class="settings-span" ng-click="openDeleteModal($index, member.idPerson, member.firstname, member.name)" title ="Supprimer" href="#">
                       <span class="glyphicon glyphicon-remove font-glyph v-adjust-table-icon"></span>

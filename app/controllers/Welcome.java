@@ -172,10 +172,10 @@ public class Welcome extends JavaController {
 	 * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
 	 */
 	@RequiresAuthentication(clientName = "Google2Client")
-	public Result userBackoffice() {
+	public Result userBackoffice(String consumer) {
 
 		if(!blackLister()){
-			return ok(views.html.userbackoffice.render(new Boolean(true), BACKOFFICE_PAGE, "Temporary"));
+			return ok(views.html.userbackoffice.render(new Boolean(true), BACKOFFICE_PAGE));
 		}
 
 		return ok(views.html.error.render());
