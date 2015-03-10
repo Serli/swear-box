@@ -81,7 +81,7 @@ public class Welcome extends JavaController {
 			personDAO.add(person,email);
 		}
 
-		if(!blackLister()){
+		if(blackLister()){
 			return ok(views.html.error.render());
 		}
 		return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
