@@ -55,12 +55,33 @@ public interface ConsumerDAO {
      */
     public boolean inBlackLister(String email);
     
+    /**
+     * Get user
+     * @param String email : id of the consumer
+     * @return JsonNode : a single consumer
+     */
     public JsonNode findOne(String email);
     
-    /*
+    /**
      * Get users
-     * @return List<Consumer> : list of consumer
+     * @return JsonNode : list of consumer
      */
     public JsonNode findAll();
+    
+    /**
+     * add user(email) to administrator
+     * @param String id : admin who add another admin
+     * @param String email : user to set admin
+     * @return boolean : success
+     */
+    public boolean setAdmin(String id,String email);
+    
+    /**
+     * add user(email) to the blacklist
+     * @param String id : admin who add a user to blacklist
+     * @param String email : user to blacklist
+     * @return boolean : success
+     */
+    public boolean setBlacklisted(String id,String email);
 
 }
