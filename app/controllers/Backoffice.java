@@ -34,13 +34,19 @@ public class Backoffice extends JavaController {
     }
     
     @RequiresAuthentication(clientName = "Google2Client")
-    public boolean setAdmin(String admin, String email) {
-        return consumerDAO.setAdmin(admin, email);
+    public Result setAdmin(String email) {
+    	String admin = getUserProfile().getEmail();
+        if(consumerDAO.setAdmin(admin, email))
+        	return ok();
+        return badRequest();
     }
 
     @RequiresAuthentication(clientName = "Google2Client")
-    public boolean setBalcklisted(String admin, String email) {
-        return consumerDAO.setBlacklisted(admin, email);
+    public Result setBlacklisted(String email) {
+    	String admin = getUserProfile().getEmail();
+        if(consumerDAO.setBlacklisted(admin, email))
+        	return ok();
+        return badRequest();
     }
 
 }

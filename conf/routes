@@ -30,7 +30,10 @@ GET     /stats                              @controllers.Statistics.list()
 GET 	/backoffice					        @controllers.Welcome.backoffice()
 GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
 GET 	/userbackoffice					    @controllers.Welcome.userBackoffice()
-GET 	/consumer/findAll					@controllers.Backoffice.findAll()
+GET 	/consumers					        @controllers.Backoffice.findAll()
+GET     /consumers/:id                      @controllers.Backoffice.findOne(id: String)
+PUT     /consumers/admin/:id                @controllers.Backoffice.setAdmin(id: String)
+PUT     /consumers/blacklist/:id            @controllers.Backoffice.setBlacklisted(id: String)
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
