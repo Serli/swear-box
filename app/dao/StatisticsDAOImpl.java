@@ -2,6 +2,8 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		for(Person p : user.getPeople()) {
 			if(p.getIdPerson().equals(idPerson)) {
 				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.DATE,-60);
+				cal.add(Calendar.DATE,-59);
 				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),p);
 				statistics.insert(stats);
 				break;
@@ -122,23 +124,46 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 */
 	@Override
 	public JsonNode list() {
-		List<BasicDBObject> a = statistics.aggregate("{ $group: { _id: { month : { $month: '$date' }, year : { $year: '$date' } }, nb: { $sum: 1 } }}")
+		List<BasicDBObject> a = statistics.aggregate("{ $group: { _id: { day : { $dayOfMonth: '$date' }, month : { $month: '$date' }, year : { $year: '$date' } }, nb: { $sum: 1 } }}")
 				.as(BasicDBObject.class);
 		ArrayList<BasicDBObject> res = new ArrayList<>();
+
+        Collections.sort(a, new Comparator<BasicDBObject>() {
+            public int compare(BasicDBObject o1, BasicDBObject o2) {
+            	JsonNode j = Json.toJson(o1);
+            	JsonNode j2 = Json.toJson(o2);
+            	Calendar cal = Calendar.getInstance();
+            	cal.set(j.findValue("year").asInt(), j.findValue("month").asInt(), j.findValue("day").asInt());
+           
+            	Calendar cal2 = Calendar.getInstance();
+            	cal2.set(j2.findValue("year").asInt(), j2.findValue("month").asInt(), j2.findValue("day").asInt());
+                return cal.compareTo(cal2);
+            }
+        });
 		for(BasicDBObject bo : a) {	
 			JsonNode j = Json.toJson(bo);
-			res.add(new BasicDBObject().append("date", MONTH2[j.findValue("month").asInt()-1]+" "
+			res.add(new BasicDBObject().append("date",j.findValue("day").toString()+" "+ MONTH2[j.findValue("month").asInt()-1]+" "
 					+j.findValue("year").toString()).append("nb", bo.getString("nb")));
 		}
 		return Json.toJson(res);
 	}
 	
+	
+	@Override
 	public JsonNode someStats() {
 		ArrayList<BasicDBObject> res = new ArrayList<>();
 		Long nbConsumers = consumers.count();
-		res.add(new BasicDBObject().append("nbConsumers", nbConsumers));
+		res.add(new BasicDBObject("nbConsumers", nbConsumers));
 		Long nbBlacklisted = consumers.count("{blackListed: true}");
-		res.add(new BasicDBObject().append("nbBlacklisted", nbBlacklisted));
+		res.add(new BasicDBObject("nbBlacklisted", nbBlacklisted));
+		Iterable<Consumer> a = consumers.find().as(Consumer.class);
+		int size = 0;
+		for(Consumer c : a) {
+			size+= c.getPeople().size();
+		}
+		res.add(new BasicDBObject("nbMembers", size));
+		Long nbStats = statistics.count();
+		res.add(new BasicDBObject("nbStats", nbStats));
 		return Json.toJson(res);
 	}
 }

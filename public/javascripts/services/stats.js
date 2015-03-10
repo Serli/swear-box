@@ -9,4 +9,8 @@ app.service('statsService', ['$http', function ($http) {
     	return $http.get(urlBase);
     };
     
+    this.getSpecificStats = function () {
+    	return $http.get('/specific-stats');
+    };
+    
 }]);

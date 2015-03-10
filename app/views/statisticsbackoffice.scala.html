@@ -1,36 +1,39 @@
 @(isActive: Boolean, numPage: Integer) @main("ISwear-Box") {
 @templates.navbar(isActive, numPage) } {
 
-<style>
-
-svg {
-  font: 10px sans-serif;
-}
-
-.area {
-  fill: steelblue;
-  clip-path: url(#clip);
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.brush .extent {
-  stroke: #fff;
-  fill-opacity: .125;
-  shape-rendering: crispEdges;
-}
-
-</style>
-
 <div class="container" ng-controller="boStatsCtrl">
 	<div class="row separation-actions">
 
-		<div id="sub-body"></div>
+		<div id="sub-body" class="padding-charts"></div>
+
+
+			<div class="row separation-actions">
+			
+				<div class="col-xs-10 col-sm-offset-2 col-sm-4">
+					<h3> <span class="label label-default">Nombre d'utilisateurs total : {{nbConsumers}}</span></h3>
+				</div>
+				
+				<div class="col-xs-10 col-sm-6">
+					<h3> <span class="label label-default ">Nombre d'utilisateurs blacklistés : {{nbBlacklisted}}</span></h3>
+				</div>
+				
+				<div class="col-xs-10 col-sm-offset-2 col-sm-4">
+					<h3> <span class="label label-default">Nombre de membres total : {{nbMembers}}</span></h3>
+				</div>
+				
+				<div class="col-xs-10 col-sm-6">
+					<h3> <span class="label label-default ">Nombre moyen de membre par famille : {{moyMembres}}</span></h3>
+				</div>
+
+				<div class="col-xs-10 col-sm-offset-2 col-sm-4">
+					<h3> <span class="label label-default">Nombre de gros mots prononcés : {{nbStats}}</span></h3>
+				</div>
+
+
+				
+
+
+			</div>
 
 		<div id="errorModal" class="modal fade vcenter" tabindex="-1"
 			role="dialog" aria-hidden="true">

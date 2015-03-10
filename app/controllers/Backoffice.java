@@ -65,5 +65,10 @@ public class Backoffice extends JavaController {
     public Result list() {
         return ok(statisticsDAO.list());
     }
+    
+    @RequiresAuthentication(clientName = "Google2Client")
+    public Result someStats() {
+        return ok(statisticsDAO.someStats());
+    }
 
 }

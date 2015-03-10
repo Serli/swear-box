@@ -36,6 +36,7 @@ PUT     /consumers/admin/:id                @controllers.Backoffice.setAdmin(id:
 PUT     /consumers/blacklist/:id            @controllers.Backoffice.setBlacklisted(id: String)
 PUT     /consumers/unblacklist/:id          @controllers.Backoffice.unsetBlacklisted(id: String)
 GET     /stats                              @controllers.Backoffice.list()
+GET     /specific-stats                     @controllers.Backoffice.someStats()
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()

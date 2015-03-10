@@ -7,10 +7,19 @@ app.controller('boStatsCtrl',
 			 *----------------------------------------------------------------------*/
 
 			$scope.stats = {};
+			$scope.nbConsumers = '';
+			$scope.nbBlacklisted = '';
+			$scope.nbMembers = '';
 			loadStats();
+			loadSpecificStats();
 
 			/*----------------------------------------------------------------------*/
 
+			window.onresize = function (e) {
+				drawStats(1);
+			};
+			
+			/*----------------------------------------------------------------------*/
 
 			/*----------------------------------------------------------------------*
 			 *----- Functions which use statsService from ../services/stats.js -----*
@@ -21,7 +30,7 @@ app.controller('boStatsCtrl',
 				statsService.getAllStats()
 				.success(function (data) {
 					$scope.stats = data;
-					drawStatsD3();
+					drawStats();
 				})
 				.error(function () {
 					$scope.error_title = 'Chargement des statistiques';
@@ -30,33 +39,51 @@ app.controller('boStatsCtrl',
 				});
 			}
 
-
 			/*----------------------------------------------------------------------*/
-
-			window.onresize = function (e) {
-				drawStatsD3(1);
-			};
 			
+			// Function which retrieves the data list to draw the stats.
+			function loadSpecificStats() {
+				statsService.getSpecificStats()
+				.success(function (data) {
+					$scope.nbConsumers = data[0].nbConsumers;
+					$scope.nbBlacklisted = data[1].nbBlacklisted;
+					$scope.nbMembers = data[2].nbMembers;
+					$scope.nbStats = data[3].nbStats;
+					$scope.moyMembres = ($scope.nbMembers/$scope.nbConsumers).toFixed(2);
+				})
+				.error(function () {
+					$scope.error_title = 'Chargement des statistiques';
+					$scope.error_message = 'Impossible de charger les données';
+					$('#errorModal').modal('show');
+				});
+			}
+
 			/*----------------------------------------------------------------------*/
 			
 			/*----------------------------------------------------------------------*
 			 *---------------Function which draws the stats with D3 ----------------*
 			 *----------------------------------------------------------------------*/
-			function drawStatsD3(mod) {
+			function drawStats(mod) {
 				
-				data = $scope.stats;
-
+				var parseDate = d3.time.format("%e %b %Y").parse;
+				
+				var data = $scope.stats;
+				
 				if(mod == 1) {
 					d3.select(document.getElementById('svg_id')).remove();
 				}
 				
-				var margin = {top: 10, right: 15, bottom: 100, left: 40},
-				margin2 = {top: 430, right: 15, bottom: 20, left: 40},
+				var margin = {top: 10, right: 10, bottom: 100, left: 40},
+				margin2 = {top: 430, right: 10, bottom: 20, left: 40},
 				width = document.getElementById('sub-body').offsetWidth - margin.left - margin.right,
 				height = 500 - margin.top - margin.bottom,
 				height2 = 500 - margin2.top - margin2.bottom;
 
-				var parseDate = d3.time.format("%b %Y").parse;
+				if(mod !== 1) {
+					for(var i in data) {
+						data[i].date = parseDate(data[i].date);
+					}
+				}
 
 				var x = d3.time.scale().range([0, width]),
 				x2 = d3.time.scale().range([0, width]),
@@ -73,13 +100,13 @@ app.controller('boStatsCtrl',
 
 				var area = d3.svg.area()
 				.interpolate("monotone")
-				.x(function(d) { return x(parseDate(d.date)); })
+				.x(function(d) { return x(d.date); })
 				.y0(height)
 				.y1(function(d) { return y(d.nb); });
 
 				var area2 = d3.svg.area()
 				.interpolate("monotone")
-				.x(function(d) { return x2(parseDate(d.date)); })
+				.x(function(d) { return x2(d.date); })
 				.y0(height2)
 				.y1(function(d) { return y2(d.nb); });
 
@@ -102,7 +129,7 @@ app.controller('boStatsCtrl',
 				.attr("class", "context")
 				.attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 				
-				x.domain(d3.extent(data.map(function(d) { return parseDate(d.date); })));
+				x.domain(d3.extent(data.map(function(d) { return d.date; })));
 				y.domain([0, d3.max(data.map(function(d) { return d.nb; }))]);
 				x2.domain(x.domain());
 				y2.domain(y.domain());
@@ -120,7 +147,7 @@ app.controller('boStatsCtrl',
 				focus.append("g")
 				.attr("class", "y axis")
 				.call(yAxis);
-
+				
 				context.append("path")
 				.datum(data)
 				.attr("class", "area")
@@ -144,11 +171,6 @@ app.controller('boStatsCtrl',
 					focus.select(".x.axis").call(xAxis);
 				}
 
-				function type(d) {
-					d.date = parseDate(d.date);
-					d.nb = +d.nb;
-					return d;
-				}
 			}
 
 			/*----------------------------------------------------------------------*/
