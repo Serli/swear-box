@@ -74,7 +74,7 @@ public final class PersonDAOImpl implements PersonDAO {
                 
                 //Update Statistics collection
                 //statistics.find("");
-                Iterable<Statistics> cursor = statistics.find("{person.name: #}}",p.getIdPerson()).as(Statistics.class);
+                Iterable<Statistics> cursor = statistics.find("{person.idPerson: #}}",p.getIdPerson()).as(Statistics.class);
         		for(Statistics s : cursor) {
         			statistics.remove("{_id: #}", s.get_id());
         		}
