@@ -30,4 +30,9 @@ public interface StatisticsDAO {
 	 * List all the statistics
 	 */
     public JsonNode list();
+    
+    /**
+     * List different stats used in the back-office
+     */
+    public JsonNode someStats();
 }

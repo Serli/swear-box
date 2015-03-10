@@ -34,7 +34,7 @@ app.controller('boStatsCtrl',
 			/*----------------------------------------------------------------------*/
 
 			window.onresize = function (e) {
-				drawStatsD3(2);
+				drawStatsD3(1);
 			};
 			
 			/*----------------------------------------------------------------------*/
@@ -46,12 +46,12 @@ app.controller('boStatsCtrl',
 				
 				data = $scope.stats;
 
-				if(mod == 2) {
+				if(mod == 1) {
 					d3.select(document.getElementById('svg_id')).remove();
 				}
 				
-				var margin = {top: 10, right: 10, bottom: 100, left: 40},
-				margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+				var margin = {top: 10, right: 15, bottom: 100, left: 40},
+				margin2 = {top: 430, right: 15, bottom: 20, left: 40},
 				width = document.getElementById('sub-body').offsetWidth - margin.left - margin.right,
 				height = 500 - margin.top - margin.bottom,
 				height2 = 500 - margin2.top - margin2.bottom;
@@ -75,13 +75,13 @@ app.controller('boStatsCtrl',
 				.interpolate("monotone")
 				.x(function(d) { return x(parseDate(d.date)); })
 				.y0(height)
-				.y1(function(d) { return y(+d.nb); });
+				.y1(function(d) { return y(d.nb); });
 
 				var area2 = d3.svg.area()
 				.interpolate("monotone")
 				.x(function(d) { return x2(parseDate(d.date)); })
 				.y0(height2)
-				.y1(function(d) { return y2(+d.nb); });
+				.y1(function(d) { return y2(d.nb); });
 
 				var svg = d3.select(document.getElementById('sub-body')).append("svg")
 				.attr("id", "svg_id")
@@ -103,7 +103,7 @@ app.controller('boStatsCtrl',
 				.attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 				
 				x.domain(d3.extent(data.map(function(d) { return parseDate(d.date); })));
-				y.domain([0, d3.max(data.map(function(d) { return +d.nb; }))]);
+				y.domain([0, d3.max(data.map(function(d) { return d.nb; }))]);
 				x2.domain(x.domain());
 				y2.domain(y.domain());
 
@@ -137,7 +137,6 @@ app.controller('boStatsCtrl',
 				.selectAll("rect")
 				.attr("y", -6)
 				.attr("height", height2 + 7);
-				//});
 
 				function brushed() {
 					x.domain(brush.empty() ? x2.domain() : brush.extent());

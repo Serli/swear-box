@@ -2,6 +2,7 @@ package unit;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,19 +10,20 @@ import java.util.Map;
 import models.Consumer;
 import models.Person;
 import models.Statistics;
-import net.vz.mongodb.jackson.DBQuery;
-import net.vz.mongodb.jackson.JacksonDBCollection;
 
 import org.bson.types.ObjectId;
+import org.jongo.MongoCollection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import play.modules.mongodb.jackson.MongoDB;
+import com.mongodb.BasicDBObject;
+
 import play.test.FakeApplication;
 import play.test.Helpers;
+import uk.co.panaxiom.playjongo.PlayJongo;
 import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
 import dao.PersonDAO;
@@ -39,7 +41,7 @@ public class StatisticsTest{
     private PersonDAO personDAO = new PersonDAOImpl();
     private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
 
-	private static JacksonDBCollection<Statistics, String> statistics;
+	private static MongoCollection statistics;// = PlayJongo.getCollection("Statistics");
 
     private static FakeApplication app;
     
@@ -49,11 +51,9 @@ public class StatisticsTest{
     @BeforeClass
     public static void startApp() {
     	Map<String, String> config = new HashMap<String, String>();
-        config.put("ehcacheplugin", "disabled");
-        config.put("mongodbJacksonMapperCloseOnStop", "disabled");
         app = Helpers.fakeApplication(config);
         Helpers.start(app);
-        statistics = MongoDB.getCollection("Statistics", Statistics.class, String.class);
+        statistics = PlayJongo.getCollection("Statistics");
     }
     
     @Before
@@ -72,7 +72,11 @@ public class StatisticsTest{
         statisticsDAO.add(p.getIdPerson(), u.getEmail());
         statisticsDAO.add(p.getIdPerson(), u.getEmail());
         
-        List<Statistics> lp = statistics.find(DBQuery.is( "person.$id" , p.getIdPerson())).toArray();
+        Iterable<Statistics> ip = statistics.find("{person.idPerson: {$in:#}}", p.getIdPerson()).as(Statistics.class);
+        List<Statistics> lp = new ArrayList<Statistics>();
+        for(Statistics s : ip){
+        	lp.add(s);
+        }
         assertThat(lp.size()).isEqualTo(2);
     }
 
