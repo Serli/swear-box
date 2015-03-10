@@ -5,17 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import models.Consumer;
-import net.vz.mongodb.jackson.JacksonDBCollection;
 
+import org.jongo.MongoCollection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import play.modules.mongodb.jackson.MongoDB;
+import com.mongodb.BasicDBObject;
+
 import play.test.FakeApplication;
 import play.test.Helpers;
+import uk.co.panaxiom.playjongo.PlayJongo;
 import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
 
@@ -31,18 +33,16 @@ public class UserTest {
 
     private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
     private static FakeApplication app;
-    private static JacksonDBCollection<Consumer, String> consumers;
-
+	private static MongoCollection consumers;//= PlayJongo.getCollection("Consumer");
+	
     private String email;
     
     @BeforeClass
     public static void startApp() {
     	Map<String, String> config = new HashMap<String, String>();
-        config.put("ehcacheplugin", "disabled");
-        config.put("mongodbJacksonMapperCloseOnStop", "disabled");
         app = Helpers.fakeApplication(config);
         Helpers.start(app);
-        consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
+        consumers= PlayJongo.getCollection("Consumer");
     }
 
     @Before
@@ -50,7 +50,6 @@ public class UserTest {
         //Add an user from an email
         email = "testupdateuser@gmail.com";
         consumerDAO.add(email);
-        consumers = MongoDB.getCollection("Consumer", Consumer.class, String.class);
     }
     
     /**
@@ -59,7 +58,7 @@ public class UserTest {
     @Test
     public void addUser() {
         //Seek the user in the DB
-        Consumer u = consumers.findOneById(email);
+        Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
         assertThat(u).isNotEqualTo(null);
     }
     
@@ -71,7 +70,7 @@ public class UserTest {
         consumerDAO.updateAmount(email, 20);
         
         //Seek the user in the DB
-        Consumer u = consumers.findOneById(email);
+        Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
         
         //Check if the amount is modified
         assertThat(u.getAmount()).isEqualTo(20);
@@ -82,13 +81,13 @@ public class UserTest {
      */
     @Test
     public void deleteUser() {
-    	Consumer u = consumers.findOneById(email);
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
     	
         //Delete the person for the two users
         consumerDAO.delete(u.getEmail());
         
         //Test if the person doesn't exist anymore
-        Consumer udel = consumers.findOneById(email);
+        Consumer udel = consumers.findOne("{_id: #}", email).as(Consumer.class);
         assertThat(udel).isNull();
     }
     

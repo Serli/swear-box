@@ -47,7 +47,6 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		for(Person p : user.getPeople()) {
 			if(p.getIdPerson().equals(idPerson)) {
 				Calendar cal = Calendar.getInstance();
-				cal.add(Calendar.DATE,-59);
 				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),p);
 				statistics.insert(stats);
 				break;

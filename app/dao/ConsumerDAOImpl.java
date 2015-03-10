@@ -56,8 +56,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     	
         //If the user doesn't exist he is added
         if (u != null) {
-        	u.setBlackLister(true);
-        	consumers.update("{_id: #}", email).with(u);
+        	consumers.remove("{_id: #}", email);
             return true;
         }
         return false;
