@@ -232,6 +232,8 @@ app.controller('statsCtrl',
 				}
 				else if(mod == 2 ) {
 
+					$('.d3-tip').remove();
+					
 					var transition = d3.select(document.getElementById('svg_id')).call(tip).transition().duration(750),
 					delay = function(d, i) { return 0; };
 
@@ -239,6 +241,10 @@ app.controller('statsCtrl',
 					.delay(delay)
 					.attr("x", function(d) { return x0(d.Date); });
 
+					d3.select(document.getElementById('svg_id')).attr("width",
+							width + margin.left + margin.right).attr("height",
+									height + margin.top + margin.bottom);
+					
 					d3.select(document.getElementById('svg_id')).selectAll("rect").remove();
 
 					date = d3.select(document.getElementById('svg_id')).selectAll(".date").data(data).enter().append("g").attr(

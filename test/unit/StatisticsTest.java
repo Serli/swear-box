@@ -19,8 +19,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.mongodb.BasicDBObject;
-
 import play.test.FakeApplication;
 import play.test.Helpers;
 import uk.co.panaxiom.playjongo.PlayJongo;
@@ -72,7 +70,7 @@ public class StatisticsTest{
         statisticsDAO.add(p.getIdPerson(), u.getEmail());
         statisticsDAO.add(p.getIdPerson(), u.getEmail());
         
-        Iterable<Statistics> ip = statistics.find("{person.idPerson: {$in:#}}", p.getIdPerson()).as(Statistics.class);
+        Iterable<Statistics> ip = statistics.find("{person.idPerson: #}", p.getIdPerson()).as(Statistics.class);
         List<Statistics> lp = new ArrayList<Statistics>();
         for(Statistics s : ip){
         	lp.add(s);

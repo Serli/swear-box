@@ -32,6 +32,7 @@ GET 	/consumers					        @controllers.Backoffice.findAll()
 # === Back office stats page
 GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
 GET     /stats                              @controllers.Backoffice.list()
+GET     /specific-stats                     @controllers.Backoffice.someStats()
 
 # === Back office user page
 GET 	/userbackoffice/:id 				@controllers.Welcome.userBackoffice(id: String)

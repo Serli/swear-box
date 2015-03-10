@@ -1,13 +1,9 @@
 package dao;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import models.Person;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
-import models.Consumer;
-import models.Person;
 
 /**
  * Groups the operations on the Consumer table
