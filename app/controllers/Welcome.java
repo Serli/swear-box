@@ -195,10 +195,8 @@ public class Welcome extends JavaController {
 		Google2Profile googleProfile = (Google2Profile) getUserProfile();
 		String email = googleProfile.getEmail();
 		
-		if(consumerDAO.inBlackLister(email))
-			return true;
-		
-		return false;
+		return consumerDAO.inBlackLister(email);
+
 	}
 
 }
