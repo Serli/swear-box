@@ -1,13 +1,10 @@
 package controllers;
 
-import java.util.ArrayList;
-
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
 
 import play.mvc.Result;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

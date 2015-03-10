@@ -17,8 +17,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.mongodb.BasicDBObject;
-
 import play.test.FakeApplication;
 import play.test.Helpers;
 import uk.co.panaxiom.playjongo.PlayJongo;
