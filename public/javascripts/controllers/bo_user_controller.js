@@ -24,7 +24,7 @@ app.controller('boUserCtrl',
         })
         .error(function (error) {
             $scope.error_title = "Récupération d'un utilisateur";
-			$scope.error_message = "Impossible récupérer les données de consumer_id : " + error.message;
+			$scope.error_message = "Impossible récupérer les données de " + email + " : " + error.message;
 			$('#errorModal').modal('show');
         });
     }
@@ -35,11 +35,14 @@ app.controller('boUserCtrl',
 			$scope.consumer.blackListed=true;
 			userService.setBlacklisted(email)
 	        .success(function (consr) {
+	        	$scope.error_title = "Mettre en liste noire";
+				$scope.error_message = email + " a été ajouté dans la liste noire";
+				$('#errorModal').modal('show');
 	        })
 	        .error(function (error) {
 	        	$scope.consumer.blackListed=false;
 	        	$scope.error_title = 'Mettre en liste noire';
-				$scope.error_message = "Impossible de mettre consumer._id en liste noire : " + error.message;
+				$scope.error_message = "Impossible de mettre " + email + " en liste noire : " + error.message;
 				$('#errorModal').modal('show');
 	        });
 	    } else {
@@ -55,32 +58,45 @@ app.controller('boUserCtrl',
 		$scope.consumer.blackListed=false;
 		userService.unsetBlacklisted(email)
         .success(function (consr) {
+        	$scope.error_title = "Suppression de l'utilisateur de la liste noire";
+			$scope.error_message = email + " a été retiré de la liste noire";
+			$('#errorModal').modal('show');
         })
         .error(function (error) {
         	$scope.consumer.blackListed=true;
-	        	$scope.error_title = 'Suppression de la liste noire';
-				$scope.error_message = "Impossible de supprimer consumer._id de la liste noire : " + error.message;
-				$('#errorModal').modal('show');
+	        $scope.error_title = "Suppression de l'utilisateur de la liste noire";
+			$scope.error_message = "Impossible de supprimer " + email + " de la liste noire : " + error.message;
+			$('#errorModal').modal('show');
+		});
 	};
 
 	// Scope's function 
 	$scope.setAdmin = function (email) {
-		if(!$scope.consumer.admin) {
+		if(!$scope.consumer.blackListed) {
 			$scope.consumer.admin=true;
 			userService.setAdmin(email)
 	        .success(function (consr) {
+	        	$scope.error_title = "Passer en administrateur";
+				$scope.error_message = email + " est devenu un administrateur de ISwearBox";
+				$('#errorModal').modal('show');
 	        })
 	        .error(function (error) {
 	        	$scope.consumer.admin=false;
-		        	$scope.error_title = 'Passer administrateur';
-					$scope.error_message = "Impossible de passer consumer._id administrateur : " + error.message;
+		        	$scope.error_title = 'Passer en administrateur';
+					$scope.error_message = "Impossible de passer " + email + " administrateur : " + error.message;
 					$('#errorModal').modal('show');
 	        });
 	    } else {
-	    	$scope.error_title = 'Passer administrateur';
+	    	$scope.error_title = 'Passer en administrateur';
 			$scope.error_message = "Impossible de passer un membre en liste noire en tant qu'administrateur.";
 			$('#errorModal').modal('show');
 	    }
+	};
+
+	$scope.openSetAdminModal = function () {
+		$scope.confirm_title = 'Passer en administrateur';
+		$scope.confirm_message = "Voulez vous vraiment passer " + email + " en administrateur ?";
+		$('#confirmModal').modal('show');
 	};
 
 	/*----------------------------------------------------------------------*/

@@ -47,7 +47,7 @@
 					  </li>
 
 					  <li ng-if="!consumer.admin">
-						<button ng-click="setAdmin(consumer._id)" class="btn btn-primary btn-sm">
+						<button ng-click="openSetAdminModal(consumer._id)" class="btn btn-primary btn-sm">
 							Passer l'utilisateur en administrateur
 						</button>
 					  </li>
@@ -111,6 +111,28 @@
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="confirmModal" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">X</button>
+						<label class="modal-title">{{confirm_title}}</label>
+					</div>
+
+					<div class="modal-body">
+						<p>{{confirm_message}}</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="setAdmin(consumer._id)">Oui</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
 					</div>
 
 				</div>

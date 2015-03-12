@@ -29,7 +29,12 @@ app.controller('boCtrl',
         });
     }
 
+	/*----------------------------------------------------------------------*/
 
+
+	/*----------------------------------------------------------------------*
+	 *-------------------------- Others functions --------------------------*
+	 *----------------------------------------------------------------------*/
 	// Scope's function which redirect to the userbackoffice page. 
 	$scope.goConsumer = function (id) {
 		document.location.href = "/userbackoffice/"+id;

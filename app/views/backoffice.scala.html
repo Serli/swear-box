@@ -13,18 +13,9 @@
 	            		</label>
 	            	</div>
 
-	            	<form class="col-sm-12 h-center" ng-submit="search()" >
-			            <div class="input-group">
-			              	<input ng-model="tosearch" id="tosearch" type="text" class="input-sm form-control" placeholder="Entrez email">
-			            
-				            <span class="input-group-btn">
-					        	<button title="Rechercher l'utilisateur" type="submit" class="btn btn-primary btn-sm">
-					        		<span class="glyphicon glyphicon-search"></span>
-			            			Chercher
-			            		</button>
-					      	</span>
-			            </div>
-				    </form>
+	            	<div class="col-sm-12 h-center">
+			              	<input ng-model="search.email" type="text" class="input-sm form-control" placeholder="Entrez email">
+				    </div>
 				</div>
 
 	            <div class="col-xs-12 col-sm-4 col-sm-offset-2">
@@ -37,25 +28,25 @@
 	            	<div class="col-sm-12 h-center">
 		            	<div class="btn-group btn-group-justified" role="group" aria-label="...">
 		            		<div class="btn-group" role="group">
-								<button title="Filtrer par Administrateur" class="btn btn-success btn-sm">
+								<button id="filtreAll" title="Annuler le filtre" class="btn btn-success btn-sm" ng-click="search.admin='';search.blacklisted='';">
 	            					All
 	            	  			</button>
 							</div>
 
 							<div class="btn-group" role="group">
-								<button title="Filtrer par Administrateur" class="btn btn-primary btn-sm">
+								<button id="filtreAdmin" title="Filtrer par Administrateur" class="btn btn-primary btn-sm" ng-click="search.admin='true';search.blacklisted='';">
 	            					Administrator
 	            	  			</button>
 							</div>
 
 							<div class="btn-group" role="group">
-						    	<button title="Filtrer par Utilisateur banni" class="btn btn-danger btn-sm">
+						    	<button id="filtreBlacklist" title="Filtrer par Utilisateur banni" class="btn btn-danger btn-sm" ng-click="search.admin='';search.blacklisted='true';">
 	            					Blacklisted
 	            				</button>
 							</div>
 
 							<div class="btn-group" role="group">
-						    	<button title="Filtrer par Utilisateur simple" class="btn btn-default btn-sm">
+						    	<button id="filtreRegular" title="Filtrer par Utilisateur simple" class="btn btn-default btn-sm" ng-click="search.admin='false';search.blacklisted='false';">
 	            					Regular
 	            				</button>
 							</div>
@@ -63,7 +54,6 @@
 					</div>
 	            </div>
 	        </div>
-
 			<div class="table-responsive">
 				<table class="table table-hover table-centered well well-sm">
 		  			<thead>
@@ -73,7 +63,7 @@
 		  				</tr>
 		  			</thead>
 
-					<tbody ng-repeat="consumer in consumers">
+					<tbody ng-repeat="consumer in consumers | filter:search">
 	    				<tr class="item-clickable" ng-click="goConsumer(consumer.email)">
 	    					<td>{{consumer.email}}</td>
 				            <td>
