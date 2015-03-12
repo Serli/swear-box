@@ -23,7 +23,9 @@ app.controller('boCtrl',
             $scope.consumers = consrs;
         })
         .error(function (error) {
-            alert('Unable to load members data: ' + error.message);
+	    	$scope.error_title = 'Chargement des utilisateurs';
+			$scope.error_message = "Impossible de récupérer les données des utilisateurs : " + error.message;
+			$('#errorModal').modal('show');
         });
     }
 

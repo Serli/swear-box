@@ -23,7 +23,9 @@ app.controller('boUserCtrl',
             $scope.consumer = consr;
         })
         .error(function (error) {
-            alert('Unable to load consumer data: ' + error.message);
+            $scope.error_title = "Récupération d'un utilisateur";
+			$scope.error_message = "Impossible récupérer les données de consumer_id : " + error.message;
+			$('#errorModal').modal('show');
         });
     }
 
@@ -36,11 +38,15 @@ app.controller('boUserCtrl',
 	        })
 	        .error(function (error) {
 	        	$scope.consumer.blackListed=false;
-	            alert('Unable to modify consumer data: ' + error.message);
+	        	$scope.error_title = 'Mettre en liste noire';
+				$scope.error_message = "Impossible de mettre consumer._id en liste noire : " + error.message;
+				$('#errorModal').modal('show');
 	        });
 	    } else {
 	    	document.getElementById("radio").checked = false;
-	    	alert('Unable to put an administrator to the blacklist');
+	    	$scope.error_title = 'Mettre en liste noire';
+			$scope.error_message = "Impossible de mettre un administrateur en liste noire.";
+			$('#errorModal').modal('show');
 	    }
 	};
 
@@ -52,20 +58,29 @@ app.controller('boUserCtrl',
         })
         .error(function (error) {
         	$scope.consumer.blackListed=true;
-            alert('Unable to modify consumer data: ' + error.message);
-        });
+	        	$scope.error_title = 'Suppression de la liste noire';
+				$scope.error_message = "Impossible de supprimer consumer._id de la liste noire : " + error.message;
+				$('#errorModal').modal('show');
 	};
 
 	// Scope's function 
 	$scope.setAdmin = function (email) {
-		$scope.consumer.admin=true;
-		userService.setAdmin(email)
-        .success(function (consr) {
-        })
-        .error(function (error) {
-        	$scope.consumer.admin=false;
-            alert('Unable to modify consumer data: ' + error.message);
-        });
+		if(!$scope.consumer.admin) {
+			$scope.consumer.admin=true;
+			userService.setAdmin(email)
+	        .success(function (consr) {
+	        })
+	        .error(function (error) {
+	        	$scope.consumer.admin=false;
+		        	$scope.error_title = 'Passer administrateur';
+					$scope.error_message = "Impossible de passer consumer._id administrateur : " + error.message;
+					$('#errorModal').modal('show');
+	        });
+	    } else {
+	    	$scope.error_title = 'Passer administrateur';
+			$scope.error_message = "Impossible de passer un membre en liste noire en tant qu'administrateur.";
+			$('#errorModal').modal('show');
+	    }
 	};
 
 	/*----------------------------------------------------------------------*/

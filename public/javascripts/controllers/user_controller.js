@@ -28,7 +28,9 @@ app.controller('userCtrl',
 			$scope.amountTag = amount;
 		})
 		.error(function (error) {
-			 alert('Unable to load amount data: ' + error.message);
+	    	$scope.error_title = 'Chargement de la dette';
+			$scope.error_message = "Impossible de récupérer le montant de la dette : " + error.message;
+			$('#errorModal').modal('show');
 		});
 	}	
 	/*----------------------------------------------------------------------*/
@@ -47,7 +49,9 @@ app.controller('userCtrl',
             getRange();
         })
         .error(function (error) {
-            alert('Unable to load members data: ' + error.message);
+	    	$scope.error_title = 'Chargement des membres';
+			$scope.error_message = "Impossible de récupérer les données des membres : " + error.message;
+			$('#errorModal').modal('show');
         });
     }
 
@@ -64,7 +68,9 @@ app.controller('userCtrl',
 		})
 		.error(function (error) {
 			getMembers();
-			alert('Unable to increase member debt: ' + error.message);
+	    	$scope.error_title = 'Incrémenter la dette';
+			$scope.error_message = "Impossible d'incrémenter la dette : " + error.message;
+			$('#errorModal').modal('show');
 		});
 	};
 
