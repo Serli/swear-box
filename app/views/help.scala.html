@@ -1,14 +1,14 @@
-@(isActive: Boolean, numPage: Integer)
+@(state: Integer, numPage: Integer)
 
 @main("ISwear-Box") {
-  @templates.navbar(isActive, numPage)
+  @templates.navbar(state, numPage)
 } {
 	<div class="container">
 		<div class="row separation-actions">
 			<h3 class="form-signin-heading h-center">Aide</h3>
 			
 			<div class="col-md-10 col-md-offset-1">
-				<ul class="nav nav-tabs" role="tablist">
+				<ul class="nav nav-tabs nav-justified " role="tablist">
 					<li role="presentation" class="active">
 						<a title ="Information sur la page d'informations" href="#help" role="tab" data-toggle="tab">
 							Aide
@@ -28,8 +28,14 @@
 					</li>
 
 					<li role="presentation">
-						<a title ="Information sur la page administrateur" href="#admin" role="tab" data-toggle="tab">
-							Administration
+						<a title ="Information sur la page de statistiques" href="#stats" role="tab" data-toggle="tab">
+							Statistiques
+						</a>
+					</li>
+
+					<li role="presentation">
+						<a title ="Information sur la page de configuration" href="#config" role="tab" data-toggle="tab">
+							Configuration
 						</a>
 					</li>
 				</ul>
@@ -40,7 +46,7 @@
 							<div class="list-group-item">
 								<label class="padding-label">Page d'aide</label>
 								<p> Sur cette page sont répertoriés des conseils pour aider à l'utilisation de l'application ISwearBox. </p>
-								<p> Déplacez vous dans l'aide en utilisant les onglets : "Aide", "Connexion", "Utilisation" et "Administration". </p>
+								<p> Déplacez vous dans l'aide en utilisant les onglets : "Aide", "Connexion", "Utilisation", "Statistiques" et "Configuration". </p>
 							</div>
 						</div>
 					</div>
@@ -121,17 +127,22 @@
 									<ul>
 										<li>
 											<label><a href="#item-user-list">Liste des membres</a></label>
+											<ul>
+												<li>
+													<label><a href="#item-user-picture">Photo du membre</a></label>
+												</li>
+												<li>
+													<label><a href="#item-user-firstname">Prénom du membre</a></label>
+												</li>
+												<li>
+													<label><a href="#item-user-debt">Dette du membre</a></label>
+												</li>
+												<li>
+													<label><a href="#item-user-increment">Incrémenter la dette</a></label>
+												</li>
+											</ul>
 										</li>
 										
-										<li>
-											<label><a href="#item-user-picture">Photo du membre</a></label>
-										</li>
-										<li>
-											<label><a href="#item-user-firstname">Prénom du membre</a></label>
-										</li>
-										<li>
-											<label><a href="#item-user-debt">Dette du membre</a></label>
-										</li>
 										<li>
 											<label><a href="#item-user-pagination">Pagination</a></label>
 										</li>
@@ -148,21 +159,28 @@
 									<li>
 										<p class="legend-title" id="item-user-list"> <span class="legend-number">1</span> - Liste des membres : </p>
 										<p class="padding-p"> La liste des membres de la famille est affichée sur cette page de l'application. Pour un affichage propre, ils sont listés dans l'ordre alphabétique de leur prénom et seulement 5 membres sont visibles sur la même page. Au lancement de l'application, l'utilisateur fait déjà parti de cette liste.</p>
-									</li>
-									
-									<li>
-										<p class="legend-title" id="item-user-picture"> <span class="legend-number">2</span> - Photo du membre : </p>
-										<p class="padding-p"> Chaque membre possède une photo. Lors de la création d'un membre il possède une image par défaut. Celle-ci peut être modifiée dans la page d'administration. Quand on clique sur la photo, on incrémente la dette du membre. </p>
-									</li>
-									
-									<li>
-										<p class="legend-title" id="item-user-firstname"> <span class="legend-number">3</span> - Prénom du membre : </p>
-										<p class="padding-p"> Chaque membre a son prénom affiché. Celui-ci pourra être modifié dans la page d'administration. </p>
-									</li>
-									
-									<li>
-										<p class="legend-title" id="item-user-debt"> <span class="legend-number">4</span> - Dette du membre : </p>
-										<p class="padding-p"> Chaque membre possède une dette, le montant qu'il doit à la famille. Après chaque clic sur la photo d'un membre, sa dette est incrémentée du montant de la pénalité, personnalisable dans la page d'administration. </p>
+
+										<ul>
+											<li>
+												<p class="legend-title" id="item-user-picture"> <span class="legend-number">2</span> - Photo du membre : </p>
+												<p class="padding-p"> Chaque membre possède une photo. Lors de la création d'un membre il possède une image par défaut. Celle-ci peut être modifiée dans la page de configuration. </p>
+											</li>
+											
+											<li>
+												<p class="legend-title" id="item-user-firstname"> <span class="legend-number">3</span> - Prénom du membre : </p>
+												<p class="padding-p"> Chaque membre a son prénom affiché. Celui-ci pourra être modifié dans la page de configuration. </p>
+											</li>
+											
+											<li>
+												<p class="legend-title" id="item-user-debt"> <span class="legend-number">4</span> - Dette du membre : </p>
+												<p class="padding-p"> Chaque membre possède une dette, le montant qu'il doit à la famille. Après chaque clic sur la photo d'un membre, sa dette est incrémentée du montant de la pénalité, personnalisable dans la page de configuration. </p>
+											</li>
+
+											<li>
+												<p class="legend-title" id="item-user-increment"> <span class="legend-number-orange">6</span> - Incrémenter la dette : </p>
+												<p class="padding-p"> Lorsque l'on clique sur une ligne représentant un membre, la dette de ce dernier est incrémenté. </p>
+											</li>
+										</ul>
 									</li>
 									
 									<li>
@@ -174,73 +192,155 @@
 						</div>
 					</div>
 
-					<div role="tabpanel" class="tab-pane fade" id="admin">
+					<div role="tabpanel" class="tab-pane fade" id="stats">
 						<div class="list-group">
 							<div class="list-group-item">
 								<label id="summary"><a href="#summary">Sommaire</a></label>
 								
 								<ul>
 									<li>
-										<label><a href="#item-admin">Page administrateur</a></label>
+										<label><a href="#item-stats">Page statistiques</a></label>
 									</li>
 									
 									<ul>
 										<li>
-											<label><a href="#item-admin-picture">Modification de la photo d'un membre</a></label>
+											<label><a href="#item-stats-graph">Graphique représentant les statistiques des membres</a></label>
 										</li>
 										<li>
-											<label><a href="#item-admin-discharge">Acquittement de la dette d'un membre</a></label>
+											<label><a href="#item-stats-member">Choix des membres à afficher sur les statistiques</a></label>
+											<ul>
+												<li>
+													<label><a href="#item-stats-checkbox">Sélection des membres</a></label>
+												</li>
+											</ul>
 										</li>
 										<li>
-											<label><a href="#item-admin-firstname">Modification d'un prénom et/ou d'un nom</a></label>
-										</li>
-										<li>
-											<label><a href="#item-admin-delete">Suppression d'un membre</a></label>
-										</li>
-										<li>
-											<label><a href="#item-admin-add">Ajout d'un membre</a></label>
-										</li>
-										<li>
-											<label><a href="#item-admin-amount">Modification du montant de la pénalité</a></label>
+											<label><a href="#item-stats-scale">Choix de l'échelle</a></label>
+											<ul>
+												<li>
+													<label><a href="#item-stats-granularity">Sélection du type de l'échelle</a></label>
+												</li>
+												<li>
+													<label><a href="#item-stats-slider">Sélection de l'échelle de temps</a></label>
+												</li>
+											</ul>
 										</li>
 									</ul>
 								</ul>
 							</div>
 							
-							<div class="list-group-item" id="item-admin">
-								<label class="padding-label">Page administrateur</label>
+							<div class="list-group-item" id="item-stats">
+								<label class="padding-label">Page configuration</label>
 								
-								<img src=@routes.Assets.at("images/help/admin.png") class="img-size"/>
+								<img src=@routes.Assets.at("images/help/stats.png") class="img-size"/>
 								
 								<ul>
 									<li>
-										<p class="legend-title" id="item-admin-picture"> <span class="legend-number">1</span> - Modification de la photo d'un membre : </p>
-										<p class="padding-p"> La photo d'un membre est modifiable. Cliquer sur la photo d'un membre dans la page d'administration ouvre une fenêtre qui permet de choisir une image présente sur l'ordinateur. Celle-ci sera hébergée sur internet, mais sera effacée lors d'un changement d'image ou de la suppression du membre. </p>
+										<p class="legend-title" id="item-stats-graph"> <span class="legend-number">1</span> - Graphique représentant les statistiques des membres : </p>
+										<p class="padding-p"> La page statistique affiche un histogramme représentant le nombre de gros mots (en ordonnée) prononcés par une liste de membres en fonction d'une durée (en abscisse). Une légende est affichée en haut à droite du graphique. Elle représente les membres sélectionnés dans la liste.</p>
 									</li>
 									
 									<li>
-										<p class="legend-title" id="item-admin-discharge"> <span class="legend-number">2</span> - Acquittement de la dette d'un membre : </p>
-										<p class="padding-p"> Pour acquitter la dette d'un membre, il suffit d'appuyer sur ce bouton puis de confirmer son choix. </p>
+										<p class="legend-title" id="item-stats-member"> <span class="legend-number">2</span> - Choix des membres à afficher sur les statistiques : </p>
+										<p class="padding-p"> La liste complète des membres de la famille est affichée ici ainsi que le moyen de les sélectionner pour choisir ceux à afficher sur le graphique. </p>
+
+										<ul>
+											<li>
+												<p class="legend-title" id="item-stats-checkbox"> <span class="legend-number-orange">6</span> - Sélection des membres : </p>
+												<p class="padding-p"> Tout les membres côchés dans cette liste des membres sont dynamiquement ajoutés ou supprimés de l'histogramme. Par défaut tout les membres de la liste sont sélectionnés. </p>
+											</li>
+										</ul>
+									</li>
+
+									<li>
+										<p class="legend-title" id="item-stats-scale"> <span class="legend-number">3</span> - Choix de l'échelle : </p>
+										<p class="padding-p"> L'échelle de l'histogramme est sélectionnable dans cette partie. L'utilisateur peut choisir l'échelle en mois ou en semaine, et quelque soit l'unité choisie, il peut choisir d'en afficher de 1 à 12. </p>
+										
+										<ul>
+											<li>
+												<p class="legend-title" id="item-stats-granularity"> <span class="legend-number-orange">4</span> - Sélection du type de l'échelle : </p>
+												<p class="padding-p"> Le type de l'échelle est modifiable par une sélection de l'utilisateur.  Par défaut, le type de l'échelle est en semaine. </p>
+											</li>
+										
+											<li>
+												<p class="legend-title" id="item-stats-slider"> <span class="legend-number-orange">5</span> - Sélection de l'échelle de temps : </p>
+												<p class="padding-p"> L'échelle de temps est modifiée dynamiquement selon la position du curseur de sélection. Par défaut, l'échelle de temps est de 8. </p>
+											</li>
+										</ul>
+									</li>
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane fade" id="config">
+						<div class="list-group">
+							<div class="list-group-item">
+								<label id="summary"><a href="#summary">Sommaire</a></label>
+								
+								<ul>
+									<li>
+										<label><a href="#item-config">Page configuration</a></label>
+									</li>
+									
+									<ul>
+										<li>
+											<label><a href="#item-config-picture">Modification de la photo d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-config-discharge">Acquittement de la dette d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-config-firstname">Modification d'un prénom et/ou d'un nom</a></label>
+										</li>
+										<li>
+											<label><a href="#item-config-delete">Suppression d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-config-add">Ajout d'un membre</a></label>
+										</li>
+										<li>
+											<label><a href="#item-config-amount">Modification du montant de la pénalité</a></label>
+										</li>
+									</ul>
+								</ul>
+							</div>
+							
+							<div class="list-group-item" id="item-config">
+								<label class="padding-label">Page configuration</label>
+								
+								<img src=@routes.Assets.at("images/help/config.png") class="img-size"/>
+								
+								<ul>
+									<li>
+										<p class="legend-title" id="item-stats-picture"> <span class="legend-number-orange">1</span> - Modification de la photo d'un membre : </p>
+										<p class="padding-p"> La photo d'un membre est modifiable. Cliquer sur la photo d'un membre dans la page de configuration ouvre une fenêtre qui permet de choisir une image présente sur l'ordinateur. Celle-ci sera hébergée sur internet, mais sera effacée lors d'un changement d'image ou de la suppression du membre. </p>
 									</li>
 									
 									<li>
-										<p class="legend-title" id="item-admin-firstname"> <span class="legend-number">3</span> - Modification d'un prénom et/ou d'un nom : </p>
-										<p class="padding-p"> Pour modifier le prénom et le nom d'un membre il suffit de presser ce bouton. Il ouvre une fenêtre qui permet de modifier ces valeurs. Contairement au prénom, la saisie du nom est optionnelle.</p>
+										<p class="legend-title" id="item-stats-firstname"> <span class="legend-number-orange">2</span> - Modification d'un prénom et/ou d'un nom : </p>
+										<p class="padding-p"> Pour modifier le prénom et le nom d'un membre il suffit de cliquer dessus. Cela ouvre une fenêtre qui permet de modifier ses valeurs. Contairement au prénom, la saisie du nom est optionnelle.</p>
+									</li>
+
+									<li>
+										<p class="legend-title" id="item-stats-discharge"> <span class="legend-number-orange">3</span> - Acquittement de la dette d'un membre : </p>
+										<p class="padding-p"> Pour acquitter la dette d'un membre, il suffit de cliquer dessus puis de confirmer le choix de l'acquitter ou non. </p>
 									</li>
 									
 									<li>
-										<p class="legend-title" id="item-admin-delete"> <span class="legend-number">4</span> - Suppression d'un membre : </p>
-										<p class="padding-p"> Pour supprimer un membre il suffit de presser ce bouton puis de confirmer son choix. </p>
+										<p class="legend-title" id="item-stats-delete"> <span class="legend-number-orange">4</span> - Suppression d'un membre : </p>
+										<p class="padding-p"> Pour supprimer un membre il suffit de presser ce bouton puis de confirmer le choix de le supprimer ou non. </p>
 									</li>
 									
 									<li>
-										<p class="legend-title" id="item-admin-add"> <span class="legend-number">5</span> - Ajout d'un membre : </p>
+										<p class="legend-title" id="item-stats-add"> <span class="legend-number-orange">5</span> - Ajout d'un membre : </p>
 										<p class="padding-p"> Pour ajouter un nouveau membre il faut saisir le prénom du membre, la saisie du nom est optionnelle, et valider son choix en pressant le bouton. </p>
 									</li>
 
 									<li>
-										<p class="legend-title" id="item-admin-amount"> <span class="legend-number">6</span> - Modification du montant de la pénalité : </p>
-										<p class="padding-p"> Par défaut, le montant de la pénalité est de 50 centimes. Ce montant est modifiable en bas de la page d'administration, il suffit d'entrer le nouveau montant et de valider son choix.</p>
+										<p class="legend-title" id="item-stats-amount"> <span class="legend-number-orange">6</span> - Modification du montant de la pénalité : </p>
+										<p class="padding-p"> Par défaut, le montant de la pénalité est de 50 centimes. Ce montant est modifiable en bas de la page de configuration, il suffit d'entrer le nouveau montant et de valider son choix.</p>
 									</li>
 								</ul>
 							</div>

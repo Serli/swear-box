@@ -1,7 +1,7 @@
-@(name: String, isActive: Boolean, numPage: Integer)
+@(name: String, state: Integer, numPage: Integer)
 
 @main("ISwear-Box")  {
-  @templates.navbar(isActive, numPage)
+  @templates.navbar(state, numPage)
 } {
 
   <div class="container" ng-controller="userCtrl">

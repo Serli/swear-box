@@ -1,7 +1,7 @@
-@(isActive: Boolean, numPage: Integer)
+@(state: Integer, numPage: Integer)
 
 @main("ISwear-Box") {
-  @templates.navbar(isActive, numPage)
+  @templates.navbar(state, numPage)
 } {
 	<div class="container" ng-controller="boCtrl">
 		<div class="row">
@@ -63,7 +63,7 @@
 		  				</tr>
 		  			</thead>
 
-					<tbody ng-repeat="consumer in consumers | filter:search">
+					<tbody ng-repeat="consumer in consumers | filter:search | orderBy:['email']">
 	    				<tr class="item-clickable" ng-click="goConsumer(consumer.email)">
 	    					<td>{{consumer.email}}</td>
 				            <td>

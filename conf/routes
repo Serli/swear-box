@@ -3,7 +3,7 @@
 # ~~~~
 
 # === Home page 
-GET     /                           controllers.Welcome.index()
+GET     /                           @controllers.Welcome.index()
 GET     /user                       @controllers.Welcome.user()
 PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: String)
 
@@ -19,7 +19,7 @@ PUT     /members/name/:id           @controllers.Administration.updateNameFirstn
 PUT     /members/picture/:id		@controllers.Administration.updatePicture(id: String)
 
 # === Help page
-GET 	/help						controllers.Welcome.help()
+GET 	/help						@controllers.Welcome.help()
 
 # === Statistics page
 GET 	/statistics					        @controllers.Welcome.statistics()

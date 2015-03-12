@@ -16,6 +16,7 @@ import views.html.index;
 import com.cloudinary.Cloudinary;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import dao.ConsumerDAO;
 import dao.PersonDAO;
@@ -35,6 +36,10 @@ public class Welcome extends JavaController {
 	private static final Integer BACKOFFICE_PAGE = 3;
 	private static final Integer HELP_PAGE = 4;
 
+	private static final Integer NOT_CONNECTED = 0;
+	private static final Integer REGULAR = 1;
+	private static final Integer ADMINISTRATOR = 2;
+
 	@Inject
 	private ConsumerDAO consumerDAO;
 
@@ -50,12 +55,13 @@ public class Welcome extends JavaController {
 	 * Action called when launching the app
 	 * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
 	 */
-	public static Result index() {
+	public Result index() {
 		if(!isConnected()) {
 			final String urlGoogle = getRedirectAction("Google2Client").getLocation();
-			return ok(index.render(urlGoogle, new Boolean(false), USER_PAGE));
+			return ok(index.render(urlGoogle, getStatus(), USER_PAGE));
+		} else {
+			return redirect(routes.Welcome.user());
 		}
-		return redirect(routes.Welcome.user());
 	}
 
 	/**
@@ -83,9 +89,10 @@ public class Welcome extends JavaController {
 		}
 
 		if(blackLister()){
+			org.pac4j.play.CallbackController.logoutAndRedirect();
 			return ok(views.html.error.render());
 		}
-		return ok(views.html.user.render(firstname, new Boolean(true), USER_PAGE));
+		return ok(views.html.user.render(firstname, getStatus(), USER_PAGE));
 	}
 
 
@@ -110,9 +117,9 @@ public class Welcome extends JavaController {
 	public Result admin() {
 		
 		if(!blackLister()){
-			return ok(views.html.admin.render(new Boolean(true), ADMIN_PAGE));
+			return ok(views.html.admin.render(getStatus(), ADMIN_PAGE));
 		}
-
+		org.pac4j.play.CallbackController.logoutAndRedirect();
 		return ok(views.html.error.render());
 
 	}
@@ -121,8 +128,8 @@ public class Welcome extends JavaController {
 	 * Method's using in conf\routes and to display the help page
 	 * @return Result : fonction result, help html view with 2 arguments (Boolean : the connection of not of a google user, Integer : the id of the html view)
 	 */
-	public static Result help() {
-		return ok(views.html.help.render(isConnected(), HELP_PAGE));
+	public Result help() {
+		return ok(views.html.help.render(getStatus(), HELP_PAGE));
 	}
 
 	/**
@@ -133,9 +140,9 @@ public class Welcome extends JavaController {
 	public Result statistics() {
 
 		if(!blackLister()){
-			return ok(views.html.statistics.render(new Boolean(true), STATISTICS_PAGE));
+			return ok(views.html.statistics.render(getStatus(), STATISTICS_PAGE));
 		}
-
+		org.pac4j.play.CallbackController.logoutAndRedirect();
 		return ok(views.html.error.render());
 	}
 
@@ -147,8 +154,9 @@ public class Welcome extends JavaController {
 	public Result backoffice() {
 
 		if(!blackLister()){
-			return ok(views.html.backoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+			return ok(views.html.backoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
+		org.pac4j.play.CallbackController.logoutAndRedirect();
 		return ok(views.html.error.render());
 
 	}
@@ -161,8 +169,9 @@ public class Welcome extends JavaController {
 	public Result statisticsBackoffice() {
 
 		if(!blackLister()){
-			return ok(views.html.statisticsbackoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+			return ok(views.html.statisticsbackoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
+		org.pac4j.play.CallbackController.logoutAndRedirect();
 		return ok(views.html.error.render());
 
 	}
@@ -175,29 +184,37 @@ public class Welcome extends JavaController {
 	public Result userBackoffice(String consumer) {
 
 		if(!blackLister()){
-			return ok(views.html.userbackoffice.render(new Boolean(true), BACKOFFICE_PAGE));
+			return ok(views.html.userbackoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-
+		org.pac4j.play.CallbackController.logoutAndRedirect();
 		return ok(views.html.error.render());
 
 	}
 
-	/**
-	 * Method which get the user google profile and return if the user is connected
-	 * @return Boolean : true = User connected
-	 */
+	private Integer getStatus() {
+		Integer result;
+		if(!isConnected()) {
+			result = NOT_CONNECTED;
+		} else {
+			String email = getUserProfile().getEmail();
+			JsonNode j = consumerDAO.findOne(email);
+			Boolean admin = j.findValue("admin").asBoolean();
+			if(admin) {
+				result = ADMINISTRATOR;
+			} else {
+				result = REGULAR;
+			}
+		}
+		return (result);
+	}
+
 	private static Boolean isConnected() {
-		Google2Profile googleProfile = (Google2Profile) getUserProfile();
-		return !(googleProfile == null);
+		return !(getUserProfile() == null);
 	}
 	
-	private boolean blackLister(){
-		
-		Google2Profile googleProfile = (Google2Profile) getUserProfile();
-		String email = googleProfile.getEmail();
-		
+	private Boolean blackLister(){
+		String email = getUserProfile().getEmail();
 		return consumerDAO.inBlackLister(email);
-
 	}
 
 }
