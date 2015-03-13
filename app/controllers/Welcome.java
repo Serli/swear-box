@@ -60,7 +60,11 @@ public class Welcome extends JavaController {
 			final String urlGoogle = getRedirectAction("Google2Client").getLocation();
 			return ok(index.render(urlGoogle, getStatus(), USER_PAGE));
 		} else {
-			return redirect(routes.Welcome.user());
+			if(blackLister()) {
+			return redirect(routes.Welcome.error());
+			} else {
+				return redirect(routes.Welcome.user());
+			}
 		}
 	}
 
@@ -89,12 +93,15 @@ public class Welcome extends JavaController {
 		}
 
 		if(blackLister()){
-			org.pac4j.play.CallbackController.logoutAndRedirect();
-			return ok(views.html.error.render());
+			return redirect(routes.Welcome.error());
 		}
 		return ok(views.html.user.render(firstname, getStatus(), USER_PAGE));
 	}
 
+	public Result error() {
+		org.pac4j.play.CallbackController.logoutAndRedirect();
+		return ok(views.html.error.render());
+	}
 
 	/**
 	 * Action called for increase a person debt
@@ -122,8 +129,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.admin.render(getStatus(), ADMIN_PAGE));
 		}
-		org.pac4j.play.CallbackController.logoutAndRedirect();
-		return ok(views.html.error.render());
+		return redirect(routes.Welcome.error());
 
 	}
 
@@ -145,8 +151,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.statistics.render(getStatus(), STATISTICS_PAGE));
 		}
-		org.pac4j.play.CallbackController.logoutAndRedirect();
-		return ok(views.html.error.render());
+		return redirect(routes.Welcome.error());
 	}
 
 	/**
@@ -159,9 +164,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.backoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-		org.pac4j.play.CallbackController.logoutAndRedirect();
-		return ok(views.html.error.render());
-
+		return redirect(routes.Welcome.error());
 	}
 
 	/**
@@ -174,9 +177,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.statisticsbackoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-		org.pac4j.play.CallbackController.logoutAndRedirect();
-		return ok(views.html.error.render());
-
+		return redirect(routes.Welcome.error());
 	}
 
 	/**
@@ -189,9 +190,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.userbackoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-		org.pac4j.play.CallbackController.logoutAndRedirect();
-		return ok(views.html.error.render());
-
+		return redirect(routes.Welcome.error());
 	}
 
 	private Integer getStatus() {

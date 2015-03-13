@@ -7,6 +7,9 @@ GET     /                           @controllers.Welcome.index()
 GET     /user                       @controllers.Welcome.user()
 PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: String)
 
+# === Error page 
+GET     /error                      @controllers.Welcome.error()
+
 # === Configuration page
 GET     /admin                      @controllers.Welcome.admin()
 GET     /amount                 	@controllers.Configuration.amount()
