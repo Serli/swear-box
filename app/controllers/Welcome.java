@@ -61,7 +61,7 @@ public class Welcome extends JavaController {
 			return ok(index.render(urlGoogle, getStatus(), USER_PAGE));
 		} else {
 			if(blackLister()) {
-			return redirect(routes.Welcome.error());
+				return redirect(routes.Welcome.error());
 			} else {
 				return redirect(routes.Welcome.user());
 			}
