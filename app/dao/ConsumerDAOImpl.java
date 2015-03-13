@@ -1,13 +1,20 @@
 package dao;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jongo.MongoCollection;
 
+import play.Play;
+import play.libs.Json;
 import models.Consumer;
 import models.Person;
 import uk.co.panaxiom.playjongo.PlayJongo;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Singleton;
+import com.mongodb.BasicDBObject;
 
 /**
  * Groups the operations on the Consumer table
@@ -28,6 +35,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         //If the user doesn't exist he is added
         if (u == null) {
             u = new Consumer(email);
+            
+            List<String> admin = Play.application().configuration().getStringList("Admin");
+            if (admin.contains(email))
+            	u.setAdmin(true);
+            
             consumers.insert(u);
             return true;
         }
@@ -44,7 +56,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     	
         //If the user doesn't exist he is added
         if (u != null) {
-        	consumers.remove("{_id: #}", u.getEmail());
+        	consumers.remove("{_id: #}", email);
             return true;
         }
         return false;
@@ -102,4 +114,90 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         	consumers.update("{_id: #}", idUser).with(user);
         }
     }
+
+	public boolean inBlackLister(String email) {
+		//Get the user
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+		if(u != null)
+			return u.isBlackListed();
+		
+		return true;
+	}
+
+	public JsonNode findOne(String email) {
+		
+		//Get the person and the user
+        BasicDBObject user = consumers.findOne("{_id: #}", email).as(BasicDBObject.class);
+        return Json.toJson(user);
+	}
+    
+    /**
+     * Get users
+     * @return List<Consumer> : list of consumer
+     */
+    public JsonNode findAll(){
+		List<BasicDBObject> a = consumers.aggregate("{ $group: { _id: { email : '$_id', blck: '$blackListed', admin : '$admin' }}}")
+				.as(BasicDBObject.class);
+		ArrayList<BasicDBObject> res = new ArrayList<>();
+		for(BasicDBObject bo : a) {	
+			JsonNode j = Json.toJson(bo);
+			res.add(new BasicDBObject().append("email", j.findValue("email")).append("blacklisted", j.findValue("blck")).append("admin", j.findValue("admin")));
+		}
+		return Json.toJson(res);
+    	
+    }
+    
+    /**
+     * add user(email) to administrator
+     * @param String id : admin who add another admin
+     * @param String email : user to set admin
+     * @return boolean : success
+     */
+    public boolean setAdmin(String id,String email) {
+        //Get the user
+    	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
+    	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+        //If the user doesn't exist he is added
+        if (u != null && u2 !=null) {
+        	if(u.isAdmin())
+        		u2.setAdmin(true);
+        	consumers.update("{_id: #}", email).with(u2);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * add user(email) to the blacklist
+     * @param String id : admin who add a user to blacklist
+     * @param String email : user to blacklist
+     * @param boolean cond : value of blacklist
+     * @return boolean : success
+     */
+    public boolean setBlacklisted(String id,String email, boolean cond) {
+        //Get the user
+    	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
+    	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+        //If the user doesn't exist he is added
+        if (u != null && u2 !=null) {
+        	if(u.isAdmin())
+        		u2.setBlackLister(cond);
+        	consumers.update("{_id: #}", email).with(u2);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isAdmin(String email) {
+		//Get the user
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+		if(u != null)
+			return u.isAdmin();
+		
+		return false;
+	}
 }

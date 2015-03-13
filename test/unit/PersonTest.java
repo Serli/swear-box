@@ -8,18 +8,18 @@ import java.util.Map;
 
 import models.Consumer;
 import models.Person;
-import net.vz.mongodb.jackson.JacksonDBCollection;
 
 import org.bson.types.ObjectId;
+import org.jongo.MongoCollection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import play.modules.mongodb.jackson.MongoDB;
 import play.test.FakeApplication;
 import play.test.Helpers;
+import uk.co.panaxiom.playjongo.PlayJongo;
 import dao.ConsumerDAO;
 import dao.ConsumerDAOImpl;
 import dao.PersonDAO;
@@ -34,7 +34,7 @@ public class PersonTest{
     private PersonDAO personDAO = new PersonDAOImpl();
     private ConsumerDAO consumerDAO = new ConsumerDAOImpl();
     
-	private static JacksonDBCollection<Person, String> people;
+	private static MongoCollection consumers;// = PlayJongo.getCollection("Consumer");
     
     private static FakeApplication app;
     
@@ -44,12 +44,9 @@ public class PersonTest{
     @BeforeClass
     public static void startApp() {
     	Map<String, String> config = new HashMap<String, String>();
-        config.put("ehcacheplugin", "disabled");
-        config.put("mongodbJacksonMapperCloseOnStop", "disabled");
         app = Helpers.fakeApplication(config);
         Helpers.start(app);
-        
-        people = MongoDB.getCollection("Person", Person.class, String.class);
+        consumers = PlayJongo.getCollection("Consumer");
     }
 
     @Before
@@ -66,7 +63,7 @@ public class PersonTest{
     @Test
     public void addPerson() {
         //Get the person from the DB
-        Person pbd = people.findOneById(p.getIdPerson());
+        Person pbd = consumers.findOne("{people.idPerson: #}", p.getIdPerson()).as(Person.class);
 
         //Check if the user has the person in his list
         assertThat(pbd).isNotEqualTo(null);
@@ -77,13 +74,23 @@ public class PersonTest{
      */
     @Test
     public void deletePerson() {
-        Person pbd = people.findOneById(p.getIdPerson());
+    	Consumer c = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pbd=null;
+    	for (Person ptmp : c.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pbd=ptmp;
+    	}
 
         //Delete the person for the two users
         personDAO.delete(pbd.getIdPerson(),u.getEmail());
 
         //Test if the person doesn't exist anymore
-        Person psupp = people.findOneById(p.getIdPerson());
+        Consumer c2 = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person psupp=null;
+    	for (Person ptmp : c2.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			psupp=ptmp;
+    	}
         assertThat(psupp).isNull();
     }
 
@@ -92,13 +99,23 @@ public class PersonTest{
      */
     @Test
     public void debtPerson() {
-        Person pbd = people.findOneById(p.getIdPerson());
+    	Consumer c = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pbd=null;
+    	for (Person ptmp : c.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pbd=ptmp;
+    	}
 
         //Discharge the person for the two users
         personDAO.discharge(pbd.getIdPerson(),u.getEmail());
 
         //Test if the debt is equals to 0
-        Person pdebt = people.findOneById(p.getIdPerson());
+        Consumer c2 = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pdebt=null;
+    	for (Person ptmp : c2.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pdebt=ptmp;
+    	}
         assertThat(pdebt.getDebt()).isEqualTo(0);
     }
 
@@ -107,13 +124,23 @@ public class PersonTest{
      */
     @Test
     public void increaseDebtPerson() {
-        Person pbd = people.findOneById(p.getIdPerson());
+    	Consumer c = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pbd=null;
+    	for (Person ptmp : c.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pbd=ptmp;
+    	}
 
         //Increase the debt for the person
         personDAO.incrementDebt(pbd.getIdPerson(),u.getEmail());
 
         //Test if the debt is increased by the amount
-        Person pdebt = people.findOneById(p.getIdPerson());
+        Consumer c2 = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pdebt=null;
+    	for (Person ptmp : c2.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pdebt=ptmp;
+    	}
         assertThat(pdebt.getDebt()).isEqualTo(50);
     }
 
@@ -141,13 +168,23 @@ public class PersonTest{
      */
     @Test
     public void updateNameFirstnamePerson() {
-    	Person pbd = people.findOneById(p.getIdPerson());
+    	Consumer c = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pbd=null;
+    	for (Person ptmp : c.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pbd=ptmp;
+    	}
 
         //Update the name and the firstname of the person
         personDAO.updateNameFirstname(pbd.getIdPerson(),u.getEmail(),"toto","titi");
-
+        
         //Test if the update worked
-        Person pupdate = people.findOneById(p.getIdPerson());
+        Consumer c2 = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pupdate=null;
+    	for (Person ptmp : c2.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pupdate=ptmp;
+    	}
         assertThat(pupdate.getName()).isEqualTo("toto");
         assertThat(pupdate.getFirstname()).isEqualTo("titi");
     }
@@ -157,13 +194,23 @@ public class PersonTest{
      */
     @Test
     public void updatePicturePerson() {
-    	Person pbd = people.findOneById(p.getIdPerson());
+    	Consumer c = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pbd=null;
+    	for (Person ptmp : c.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pbd=ptmp;
+    	}
 
         //Update the picture the person
         personDAO.updatePicture(pbd.getIdPerson(),u.getEmail(),"toto");
 
         //Test the picture is updated
-        Person pupdate = people.findOneById(p.getIdPerson());
+        Consumer c2 = consumers.findOne("{_id: #}", u.getEmail()).as(Consumer.class);
+    	Person pupdate=null;
+    	for (Person ptmp : c2.getPeople()){
+    		if(ptmp.getIdPerson().equals(p.getIdPerson()))
+    			pupdate=ptmp;
+    	}
         assertThat(pupdate.getPicture()).isEqualTo("toto");
     }
 

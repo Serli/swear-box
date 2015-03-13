@@ -25,8 +25,17 @@ app.controller('statsCtrl',
 				.success(function (membs) {
 					$scope.members = membs;
 					if($scope.members.length > 0) {
-						$scope.members[0].check = true;
-						loadDefaultStats($scope.members[0].idPerson);
+						var membersToShowInChart = '';
+						var counter = 0;
+						for(var i in $scope.members) {
+							if(counter > 0) {
+								membersToShowInChart = membersToShowInChart +',';
+							}
+							membersToShowInChart = membersToShowInChart + $scope.members[i].idPerson;
+							$scope.members[i].check = true;
+							counter++;
+						}
+						loadDefaultStats(membersToShowInChart);
 					}
 					else {
 						$scope.error_title = 'Chargement des membres';
@@ -102,7 +111,7 @@ app.controller('statsCtrl',
 
 
 			/*----------------------------------------------------------------------*
-			 *---------------Function which draws the stats with svg ---------------*
+			 *---------------Function which draws the stats with D3 ----------------*
 			 *----------------------------------------------------------------------*/
 
 			function drawStatsD3(mod) {	
@@ -223,6 +232,8 @@ app.controller('statsCtrl',
 				}
 				else if(mod == 2 ) {
 
+					$('.d3-tip').remove();
+					
 					var transition = d3.select(document.getElementById('svg_id')).call(tip).transition().duration(750),
 					delay = function(d, i) { return 0; };
 
@@ -230,6 +241,10 @@ app.controller('statsCtrl',
 					.delay(delay)
 					.attr("x", function(d) { return x0(d.Date); });
 
+					d3.select(document.getElementById('svg_id')).attr("width",
+							width + margin.left + margin.right).attr("height",
+									height + margin.top + margin.bottom);
+					
 					d3.select(document.getElementById('svg_id')).selectAll("rect").remove();
 
 					date = d3.select(document.getElementById('svg_id')).selectAll(".date").data(data).enter().append("g").attr(

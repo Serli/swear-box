@@ -2,12 +2,13 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import models.Consumer;
 import models.Person;
-import models.ResultAggregation;
 import models.Statistics;
 
 import org.jongo.MongoCollection;
@@ -31,6 +32,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	private static MongoCollection statistics = PlayJongo.getCollection("Statistics");
 	
 	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
+	private static final String MONTH2[] = {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"};
 
 	/**
 	 * Add a statistic on the Statistics table
@@ -44,7 +46,6 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		for(Person p : user.getPeople()) {
 			if(p.getIdPerson().equals(idPerson)) {
 				Calendar cal = Calendar.getInstance();
-				//cal.add(Calendar.DATE,-30);
 				Statistics stats = new Statistics(new Date(cal.getTimeInMillis()),p);
 				statistics.insert(stats);
 				break;
@@ -87,14 +88,17 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		
 		/*** requete ***/
 		Date d = new Date(calFin.getTimeInMillis());
-		List<ResultAggregation> a = statistics.aggregate("{ $match: { person.idPerson : {$in : #}, date : {$gt : # }}}",ids,d)	
+		List<BasicDBObject> a = statistics.aggregate("{ $match: { person.idPerson : {$in : #}, date : {$gt : # }}}",ids,d)	
 				.and("{ $group: { _id: { perid : '$person.firstname' , vdate : { $#: '$date' }} ,click: { $sum: 1 }}}",granu)
-				.as(ResultAggregation.class);
+				.as(BasicDBObject.class);
 		
 		
 		/*** mise en forme JSON ***/
-		for(ResultAggregation ra : a) {
-			li.get(ra.getPersonId().getInt("vdate")).append(ra.getPersonId().getString("perid"), ra.getClick()+"");
+		for(BasicDBObject ra : a) {
+			JsonNode js = Json.toJson(ra);
+			System.out.println(js.findValue("perid").toString());
+			System.out.println(js.findValue("click").asInt()+"");
+			li.get(js.findValue("vdate").asInt()).append(js.findValue("perid").asText(),js.findValue("click").asInt()+"");
 		}
 		
 		if(granularity == 2) {
@@ -112,6 +116,55 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 				debut++;
 			}
 		}
+		return Json.toJson(res);
+	}
+
+
+	/**
+	 * List all the statistics
+	 */
+	@Override
+	public JsonNode list() {
+		List<BasicDBObject> a = statistics.aggregate("{ $group: { _id: { day : { $dayOfMonth: '$date' }, month : { $month: '$date' }, year : { $year: '$date' } }, nb: { $sum: 1 } }}")
+				.as(BasicDBObject.class);
+		ArrayList<BasicDBObject> res = new ArrayList<>();
+
+        Collections.sort(a, new Comparator<BasicDBObject>() {
+            public int compare(BasicDBObject o1, BasicDBObject o2) {
+            	JsonNode j = Json.toJson(o1);
+            	JsonNode j2 = Json.toJson(o2);
+            	Calendar cal = Calendar.getInstance();
+            	cal.set(j.findValue("year").asInt(), j.findValue("month").asInt(), j.findValue("day").asInt());
+           
+            	Calendar cal2 = Calendar.getInstance();
+            	cal2.set(j2.findValue("year").asInt(), j2.findValue("month").asInt(), j2.findValue("day").asInt());
+                return cal.compareTo(cal2);
+            }
+        });
+		for(BasicDBObject bo : a) {	
+			JsonNode j = Json.toJson(bo);
+			res.add(new BasicDBObject().append("date",j.findValue("day").toString()+" "+ MONTH2[j.findValue("month").asInt()-1]+" "
+					+j.findValue("year").toString()).append("nb", bo.getString("nb")));
+		}
+		return Json.toJson(res);
+	}
+	
+	
+	@Override
+	public JsonNode someStats() {
+		ArrayList<BasicDBObject> res = new ArrayList<>();
+		Long nbConsumers = consumers.count();
+		res.add(new BasicDBObject("nbConsumers", nbConsumers));
+		Long nbBlacklisted = consumers.count("{blackListed: true}");
+		res.add(new BasicDBObject("nbBlacklisted", nbBlacklisted));
+		Iterable<Consumer> a = consumers.find().as(Consumer.class);
+		int size = 0;
+		for(Consumer c : a) {
+			size+= c.getPeople().size();
+		}
+		res.add(new BasicDBObject("nbMembers", size));
+		Long nbStats = statistics.count();
+		res.add(new BasicDBObject("nbStats", nbStats));
 		return Json.toJson(res);
 	}
 }

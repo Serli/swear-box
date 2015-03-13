@@ -1,38 +1,33 @@
-@(name: String, isActive: Boolean, numPage: Integer)
+@(name: String, state: Integer, numPage: Integer)
 
 @main("ISwear-Box")  {
-  @templates.navbar(isActive, numPage)
+  @templates.navbar(state, numPage)
 } {
 
   <div class="container" ng-controller="userCtrl">
   	<div class="row">
-  		<table class="table table-hover well well-sm">
+      <div class="table-responsive">
+    		<table class="table table-hover well well-sm">
+    			<thead>
+    				<tr>
+    					<th>Photo</th>
+    					<th>Prénom</th>
+    					<th>Dette</th>
+    				</tr>
+    			</thead>
 
-  			<thead>
-  				<tr>
-  					<th>Photo</th>
-  					<th>Prénom</th>
-  					<th>Dette</th>
-  				</tr>
-  			</thead>
-
-  			<tbody ng-repeat="member in members">
-
-  				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" >
-  					<!-- Dynamic HTML part to add for every member -->
-  					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img image-click" ng-click="increase(member.idPerson)"></td>
-                      <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
-                      <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
-
-  				</tr>
-
-  			</tbody>
-  		</table>
+    			<tbody ng-repeat="member in members">
+    				<tr ng-if="($index >= numPage*itemsPerPage) && ($index < numPage*itemsPerPage+itemsPerPage)" ng-click="increase(member.idPerson)" class="item-clickable">
+    					<td><img ng-src={{member.picture}} alt="photo01" class="dimension-img"></td>
+              <td><p class="v-adjust-table-label">{{member.firstname}}</p></td>
+              <td><p class="v-adjust-table-label">{{(member.debt)/100}} €</p></td>
+    				</tr>
+    			</tbody>
+    		</table>
+      </div>
 
 	  	<div ng-if="members.length > itemsPerPage" class="h-center" >
-	  	
 			  <ul ng-repeat="i in range"  class="pagination">
- 			
         	<li ng-if="($index != numPage)">
             <a ng-click="pagination($index)" href="#">{{i}}</a>
           </li>
@@ -40,11 +35,30 @@
           <li ng-if="($index == numPage)" class="active">
             <a ng-click="pagination($index)" href="#">{{i}}</a>
           </li>
-   
     		</ul>
 	  	</div>
 
-
   	</div>
+
+    <div id="errorModal" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">X</button>
+            <label class="modal-title">{{error_title}}</label>
+          </div>
+
+          <div class="modal-body">
+            <p>{{error_message}}</p>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 }

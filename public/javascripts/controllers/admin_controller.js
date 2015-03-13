@@ -30,7 +30,9 @@ app.controller('adminCtrl',
 			$scope.amountTag = amount;
 		})
 		.error(function (error) {
-			 alert('Unable to load amount data: ' + error.message);
+	    	$scope.error_title = 'Chargement du montant de la dette';
+			$scope.error_message = "Impossible de récupérer le montant de la dette : " + error.message;
+			$('#errorModal').modal('show');
 		});
 	}	
 
@@ -47,7 +49,9 @@ app.controller('adminCtrl',
 			$scope.amount = '';
 		})
 		.error(function (error) {
-            alert('Unable to update the penalty amount: ' + error.message);
+	    	$scope.error_title = 'Mettre à jour le montant de la dette';
+			$scope.error_message = "Impossible de mettre à jour le montant de la dette : " + error.message;
+			$('#errorModal').modal('show');
         });
 	};
 	
@@ -67,7 +71,9 @@ app.controller('adminCtrl',
             getRange();
         })
         .error(function (error) {
-            alert('Unable to load members data: ' + error.message);
+	    	$scope.error_title = 'Chargement des membres';
+			$scope.error_message = "Impossible de récupérer les données des membres : " + error.message;
+			$('#errorModal').modal('show');
         });
     }
 
@@ -86,7 +92,9 @@ app.controller('adminCtrl',
 			$scope.newMember.firstname= '';
 		})
 		.error(function (error) {
-            alert('Unable to add a new member: ' + error.message);
+	    	$scope.error_title = 'Ajouter un nouveau membre';
+			$scope.error_message = "Impossible d'ajouter un nouveau membre' : " + error.message;
+			$('#errorModal').modal('show');
         });
 	};
 
@@ -105,7 +113,9 @@ app.controller('adminCtrl',
 			getMembers();
 		})
 		.error(function (error) {
-            alert('Unable to delete a member: ' + error.message);
+	    	$scope.error_title = 'Supprimer un membre';
+			$scope.error_message = "Impossible de supprimer un membre : " + error.message;
+			$('#errorModal').modal('show');
         });
 	};
 	
@@ -118,7 +128,9 @@ app.controller('adminCtrl',
 			getMembers();
 		})
 		.error(function (error) {
-            alert('Unable to discharge a member: ' + error.message);
+	    	$scope.error_title = 'Acquitter la dette';
+			$scope.error_message = "Impossible d'acquitter la dette : " + error.message;
+			$('#errorModal').modal('show');
         });
 	};
 
@@ -138,7 +150,10 @@ app.controller('adminCtrl',
 			$scope.modMember.firstname= '';
 		})
 		.error(function (error) {
-            alert('Unable to update the penalty amount: ' + error.message);
+	    	$scope.error_title = 'Mettre à jour le nom et le prénom du membre';
+			$scope.error_message = "Impossible de mettre à jour le nom et le prénom du membre : " + error.message;
+			$('#errorModal').modal('show');
+
         });
 	};
 	
@@ -161,7 +176,9 @@ app.controller('adminCtrl',
 			ChargementImage('#img'+$scope.idImage,'#span-load'+$scope.idImage);
 		})
 		.error(function (error) {
-            alert('Unable to change member picture: ' + error.message);
+	    	$scope.error_title = 'Changer de photo de profil';
+			$scope.error_message = "Impossible de changer la photo de profil : " + error.message;
+			$('#errorModal').modal('show');
         });
 	};
 

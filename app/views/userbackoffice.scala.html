@@ -1,0 +1,142 @@
+@(state: Integer, numPage: Integer)
+
+@main("ISwear-Box") {
+  @templates.navbar(state, numPage)
+} {
+	<div class="container" ng-controller="boUserCtrl">
+		<div class="row separation-actions">
+			<div class="col-sm-6">
+				<h4 class="h-center">Identifiant : {{consumer._id}}</h4>
+			</div>
+
+			<div class="col-sm-6">
+				<h4 class="h-center">Montant de la dette : {{consumer.amount}}</h4>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="h-center">
+					<ul class="list-inline">
+					  <li>
+					  	<h4>Mettre dans la liste noire</h4>
+					  </li>
+
+					  <li>
+						<h4>
+						  <input type="radio" ng-click="setBlacklisted(consumer._id)" ng-if="consumer.blackListed" checked> 
+						  <input type="radio" id="radio" ng-click="setBlacklisted(consumer._id)" ng-if="!consumer.blackListed">
+						  Oui
+						</h4>
+					  </li>
+
+					  <li>
+						<h4>
+						  <input type="radio" ng-click="unsetBlacklisted(consumer._id)" ng-if="!consumer.blackListed" checked> 
+						  <input type="radio" ng-click="unsetBlacklisted(consumer._id)" ng-if="consumer.blackListed">
+						  Non
+						</h4>
+					  </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="h-center">
+					<ul class="list-inline">
+					  <li>
+					  	<h4>Administrateur</h4>
+					  </li>
+
+					  <li ng-if="!consumer.admin">
+						<button ng-click="openSetAdminModal(consumer._id)" class="btn btn-primary btn-sm">
+							Passer l'utilisateur en administrateur
+						</button>
+					  </li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-sm-12">
+				<h4>Liste des membres :</h4>
+			</div>
+			
+			<table class="table table-hover well well-sm">
+            	<thead>
+            		<tr>
+              			<th>Photo</th>
+              			<th>ID</th>
+              			<th>Nom</th>
+              			<th>Prénom</th>
+              			<th>Dette</th>
+            		</tr>
+          		</thead>
+		        
+		        <tbody ng-repeat="member in consumer.people">
+		            <tr>
+		            	<td>
+		            		<img id="img{{member.idPerson}}" ng-src={{member.picture}} alt="photo01" class="dimension-img">
+		                </td>
+
+		                <td>
+		                	<p class="v-adjust-table-label">{{member.idPerson}}</p>
+		                </td>
+
+		                <td>
+		                	<p class="v-adjust-table-label">{{member.name}}</p>
+		                </td>
+
+		                <td>
+		                	<p class="v-adjust-table-label">{{member.firstname}}</p>
+		                </td>
+
+		                <td>
+		                	<p class="v-adjust-table-label">{{(member.debt)/100}} €</p>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+
+		<div id="errorModal" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">X</button>
+						<label class="modal-title">{{error_title}}</label>
+					</div>
+
+					<div class="modal-body">
+						<p>{{error_message}}</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="confirmModal" class="modal fade vcenter" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">X</button>
+						<label class="modal-title">{{confirm_title}}</label>
+					</div>
+
+					<div class="modal-body">
+						<p>{{confirm_message}}</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="setAdmin(consumer._id)">Oui</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+}

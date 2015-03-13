@@ -1,0 +1,69 @@
+@(state: Integer, numPage: Integer)
+
+@main("ISwear-Box") {
+	@templates.navbar(state, numPage)
+} {
+	<div class="container" ng-controller="boStatsCtrl">
+		<div class="row separation-actions">
+
+			<div id="sub-body" class="padding-charts"></div>
+
+			<div class="row separation-actions well well-sm">
+
+				<div class="col-xs-10 col-sm-offset-2 col-sm-4">
+					<h3>
+						<span class="label label-default">Nombre d'utilisateurs total : {{nbConsumers}}</span>
+					</h3>
+				</div>
+
+				<div class="col-xs-10 col-sm-6">
+					<h3>
+						<span class="label label-default ">Nombre d'utilisateurs blacklistés : {{nbBlacklisted}}</span>
+					</h3>
+				</div>
+
+				<div class="col-xs-10 col-sm-offset-2 col-sm-4">
+					<h3>
+						<span class="label label-default">Nombre de membres total : {{nbMembers}}</span>
+					</h3>
+				</div>
+
+				<div class="col-xs-10 col-sm-6">
+					<h3>
+						<span class="label label-default ">Nombre moyen de membre par famille : {{moyMembres}}</span>
+					</h3>
+				</div>
+
+				<div class="col-xs-10 col-sm-offset-2 col-sm-4">
+					<h3>
+						<span class="label label-default">Nombre de gros mots prononcés : {{nbStats}}</span>
+					</h3>
+				</div>
+
+			</div>
+
+			<div id="errorModal" class="modal fade vcenter" tabindex="-1"
+				role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<label class="modal-title">{{error_title}}</label>
+						</div>
+
+						<div class="modal-body">
+							<p>{{error_message}}</p>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+}

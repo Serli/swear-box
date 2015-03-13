@@ -1,91 +1,84 @@
-@(isActive: Boolean, numPage: Integer) @main("ISwear-Box") {
-@templates.navbar(isActive, numPage) } {
+@(state: Integer, numPage: Integer)
 
-<div  class="container" ng-controller="statsCtrl">
+@main("ISwear-Box") {
+	@templates.navbar(state, numPage)
+} {
+	<div  class="container" ng-controller="statsCtrl">
 
-	<div id="row-id" class="row">
-		
-		<div id="sub-body" class="padding-charts"></div>
+		<div id="row-id" class="row">
+			
+			<div id="sub-body" class="padding-charts"></div>
 
-		<div class="container  well well-sm">
-			<div class="col-xs-12 col-sm-6">
-				<h4 class="h-center">Membres</h4>
+			<div class="container  well well-sm">
+				<div class="col-xs-12 col-sm-6">
+					<h4 class="h-center">Membres</h4>
 
-				<form class="col-sm-12 col-md-8 col-md-offset-2 div-scrollable">
-					<div ng-repeat="member in members" class="row">
-					
-						<div ng-if="($index == 0)" class="input-group">
-							<span class="input-group-addon"> <input type="checkbox"
-								name="checkbox" id="checkbox{{member.idPerson}}"
-								class="checkbox"
-								ng-click="refreshMembersChecked(member.idPerson)"  checked/>
-							</span> <label class="form-control"  for="checkbox{{member.idPerson}}">
-								{{member.firstname}} </label>
-						</div>
+					<form class="col-sm-12 col-md-8 col-md-offset-2 div-scrollable">
+						<div ng-repeat="member in members" class="row">
 						
-						<div ng-if="($index !== 0)" class="input-group">
-							<span class="input-group-addon"> <input type="checkbox"
-								name="checkbox" id="checkbox{{member.idPerson}}"
-								class="checkbox"
-								ng-click="refreshMembersChecked(member.idPerson)" />
-							</span> <label class="form-control"  for="checkbox{{member.idPerson}}">
-								{{member.firstname}} </label>
+							<div  class="input-group">
+								<span class="input-group-addon"> <input type="checkbox"
+									name="checkbox" id="checkbox{{member.idPerson}}"
+									class="checkbox"
+									ng-click="refreshMembersChecked(member.idPerson)"  checked/>
+								</span> <label class="form-control"  for="checkbox{{member.idPerson}}">
+									{{member.firstname}} </label>
+							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
+
+				<div class="col-xs-12 col-sm-6">
+					<form class="col-sm-12 col-md-8 col-md-offset-2">
+						<h4 class="h-center">Paramètres</h4>
+						<div class="row">
+							<div class="input-group">
+								<span class="input-group-addon"> <input type="radio"
+									name="radio" id="weeks" class="radio" checked ng-click="loadStats()"/>
+								</span> <label class="form-control" for="weeks" disabled>
+									{{unit}} Semaines </label>
+							</div>
+
+							<div class="input-group">
+								<span class="input-group-addon"> <input type="radio"
+									name="radio" id="months" class="radio" ng-click="loadStats()" />
+								</span> <label class="form-control" for="months" disabled>
+									{{unit}} Mois </label>
+							</div>
+
+							<div>
+								<label class="form-control" disabled> <input type="range"
+									name="range" id="slider" class="range" min="1" max="12"
+									ng-model="unit" onChange="angular.element(this).scope().loadStats()"/>
+								</label>
+							</div>
+						</div>
+					</form>
+				</div>
+
 			</div>
 
-			<div class="col-xs-12 col-sm-6">
-				<form class="col-sm-12 col-md-8 col-md-offset-2">
-					<h4 class="h-center">Paramètres</h4>
-					<div class="row">
-						<div class="input-group">
-							<span class="input-group-addon"> <input type="radio"
-								name="radio" id="weeks" class="radio" checked ng-click="loadStats()"/>
-							</span> <label class="form-control" for="weeks" disabled>
-								{{unit}} Semaines </label>
+			<div id="errorModal" class="modal fade vcenter" tabindex="-1"
+				role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<label class="modal-title">{{error_title}}</label>
 						</div>
 
-						<div class="input-group">
-							<span class="input-group-addon"> <input type="radio"
-								name="radio" id="months" class="radio" ng-click="loadStats()" />
-							</span> <label class="form-control" for="months" disabled>
-								{{unit}} Mois </label>
+						<div class="modal-body">
+							<p>{{error_message}}</p>
 						</div>
 
-						<div>
-							<label class="form-control" disabled> <input type="range"
-								name="range" id="slider" class="range" min="1" max="12"
-								ng-model="unit" onChange="angular.element(this).scope().loadStats()"/>
-							</label>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
 						</div>
+
 					</div>
-				</form>
-			</div>
-
-		</div>
-
-		<div id="errorModal" class="modal fade vcenter" tabindex="-1"
-			role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">X</button>
-						<label class="modal-title">{{error_title}}</label>
-					</div>
-
-					<div class="modal-body">
-						<p>{{error_message}}</p>
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
-					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 }

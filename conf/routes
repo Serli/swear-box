@@ -3,27 +3,46 @@
 # ~~~~
 
 # === Home page 
-GET     /                           controllers.Welcome.index()
+GET     /                           @controllers.Welcome.index()
 GET     /user                       @controllers.Welcome.user()
 PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: String)
 
-# === Admin page
-GET     /admin                      controllers.Welcome.admin()
-GET     /amount                 	@controllers.Administration.amount()
-GET     /members                 	@controllers.Administration.listPerson()
-POST    /members            		@controllers.Administration.addPerson()
-DELETE  /members/:id                @controllers.Administration.deletePerson(id: String)
-PUT     /user                       @controllers.Administration.updateAmount()
-PUT     /members/discharge/:id      @controllers.Administration.discharge(id: String)
-PUT     /members/name/:id           @controllers.Administration.updateNameFirstname(id: String)
-PUT     /members/picture/:id		@controllers.Administration.updatePicture(id: String)
+# === Error page 
+GET     /error                      @controllers.Welcome.error()
+
+# === Configuration page
+GET     /admin                      @controllers.Welcome.admin()
+GET     /amount                 	@controllers.Configuration.amount()
+GET     /members                 	@controllers.Configuration.listPerson()
+POST    /members            		@controllers.Configuration.addPerson()
+DELETE  /members/:id                @controllers.Configuration.deletePerson(id: String)
+PUT     /user                       @controllers.Configuration.updateAmount()
+PUT     /members/discharge/:id      @controllers.Configuration.discharge(id: String)
+PUT     /members/name/:id           @controllers.Configuration.updateNameFirstname(id: String)
+PUT     /members/picture/:id		@controllers.Configuration.updatePicture(id: String)
 
 # === Help page
-GET 	/help						controllers.Welcome.help()
+GET 	/help						@controllers.Welcome.help()
 
 # === Statistics page
-GET 	/statistics					             controllers.Welcome.statistics()
+GET 	/statistics					        @controllers.Welcome.statistics()
 GET     /stats/:nb/$granularity<[1-2]+>     @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
+
+# === Back office page
+GET 	/backoffice					        @controllers.Welcome.backoffice()
+GET 	/consumers					        @controllers.Backoffice.findAll()
+
+# === Back office stats page
+GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
+GET     /stats                              @controllers.Backoffice.list()
+GET     /specific-stats                     @controllers.Backoffice.someStats()
+
+# === Back office user page
+GET 	/userbackoffice/:id 				@controllers.Welcome.userBackoffice(id: String)
+GET     /consumers/:id                      @controllers.Backoffice.findOne(id: String)
+PUT     /consumers/admin/:id                @controllers.Backoffice.setAdmin(id: String)
+PUT     /consumers/blacklist/:id            @controllers.Backoffice.setBlacklisted(id: String)
+PUT     /consumers/unblacklist/:id          @controllers.Backoffice.unsetBlacklisted(id: String)
 
 # === OAuth
 GET	  /oauth2callback?client_name=Google2Client   org.pac4j.play.CallbackController.callback()
@@ -33,7 +52,7 @@ POST  /oauth2callback                             org.pac4j.play.CallbackControl
 GET   /logout                                     org.pac4j.play.CallbackController.logoutAndRedirect()
 
 # === Mobile
-PUT     /members/image/:id		    @controllers.Administration.updateImage(id: String)
+PUT     /members/image/:id		    @controllers.Configuration.updateImage(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
