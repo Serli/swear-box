@@ -34,7 +34,7 @@ import dao.PersonDAO;
  *
  */
 @Singleton
-public class Administration extends JavaController {
+public class Configuration extends JavaController {
 
     private static final String JSON_MESSG = "Expecting Json data";
 
