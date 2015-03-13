@@ -9,7 +9,6 @@ import java.util.List;
 
 import models.Consumer;
 import models.Person;
-import models.ResultAggregation;
 import models.Statistics;
 
 import org.jongo.MongoCollection;
@@ -89,14 +88,17 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		
 		/*** requete ***/
 		Date d = new Date(calFin.getTimeInMillis());
-		List<ResultAggregation> a = statistics.aggregate("{ $match: { person.idPerson : {$in : #}, date : {$gt : # }}}",ids,d)	
+		List<BasicDBObject> a = statistics.aggregate("{ $match: { person.idPerson : {$in : #}, date : {$gt : # }}}",ids,d)	
 				.and("{ $group: { _id: { perid : '$person.firstname' , vdate : { $#: '$date' }} ,click: { $sum: 1 }}}",granu)
-				.as(ResultAggregation.class);
+				.as(BasicDBObject.class);
 		
 		
 		/*** mise en forme JSON ***/
-		for(ResultAggregation ra : a) {
-			li.get(ra.getPersonId().getInt("vdate")).append(ra.getPersonId().getString("perid"), ra.getClick()+"");
+		for(BasicDBObject ra : a) {
+			JsonNode js = Json.toJson(ra);
+			System.out.println(js.findValue("perid").toString());
+			System.out.println(js.findValue("click").asInt()+"");
+			li.get(js.findValue("vdate").asInt()).append(js.findValue("perid").asText(),js.findValue("click").asInt()+"");
 		}
 		
 		if(granularity == 2) {
