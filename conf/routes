@@ -7,16 +7,16 @@ GET     /                           @controllers.Welcome.index()
 GET     /user                       @controllers.Welcome.user()
 PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: String)
 
-# === Admin page
+# === Configuration page
 GET     /admin                      @controllers.Welcome.admin()
-GET     /amount                 	@controllers.Administration.amount()
-GET     /members                 	@controllers.Administration.listPerson()
-POST    /members            		@controllers.Administration.addPerson()
-DELETE  /members/:id                @controllers.Administration.deletePerson(id: String)
-PUT     /user                       @controllers.Administration.updateAmount()
-PUT     /members/discharge/:id      @controllers.Administration.discharge(id: String)
-PUT     /members/name/:id           @controllers.Administration.updateNameFirstname(id: String)
-PUT     /members/picture/:id		@controllers.Administration.updatePicture(id: String)
+GET     /amount                 	@controllers.Configuration.amount()
+GET     /members                 	@controllers.Configuration.listPerson()
+POST    /members            		@controllers.Configuration.addPerson()
+DELETE  /members/:id                @controllers.Configuration.deletePerson(id: String)
+PUT     /user                       @controllers.Configuration.updateAmount()
+PUT     /members/discharge/:id      @controllers.Configuration.discharge(id: String)
+PUT     /members/name/:id           @controllers.Configuration.updateNameFirstname(id: String)
+PUT     /members/picture/:id		@controllers.Configuration.updatePicture(id: String)
 
 # === Help page
 GET 	/help						@controllers.Welcome.help()
@@ -49,7 +49,7 @@ POST  /oauth2callback                             org.pac4j.play.CallbackControl
 GET   /logout                                     org.pac4j.play.CallbackController.logoutAndRedirect()
 
 # === Mobile
-PUT     /members/image/:id		    @controllers.Administration.updateImage(id: String)
+PUT     /members/image/:id		    @controllers.Configuration.updateImage(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
