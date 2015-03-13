@@ -102,11 +102,14 @@ public class Welcome extends JavaController {
 	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result increaseDebt(String id) {
-		Google2Profile googleProfile = (Google2Profile) getUserProfile();
-		String email = googleProfile.getEmail();
-		personDAO.incrementDebt(id,email);
-		statisticsDAO.add(id, email);
-		return ok();
+		if(!blackLister()){
+			Google2Profile googleProfile = (Google2Profile) getUserProfile();
+			String email = googleProfile.getEmail();
+			personDAO.incrementDebt(id,email);
+			statisticsDAO.add(id, email);
+			return ok();
+			}
+		return ok(views.html.error.render());
 	}
 
 	/**
@@ -115,7 +118,7 @@ public class Welcome extends JavaController {
 	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result admin() {
-		
+
 		if(!blackLister()){
 			return ok(views.html.admin.render(getStatus(), ADMIN_PAGE));
 		}
@@ -211,7 +214,7 @@ public class Welcome extends JavaController {
 	private static Boolean isConnected() {
 		return !(getUserProfile() == null);
 	}
-	
+
 	private Boolean blackLister(){
 		String email = getUserProfile().getEmail();
 		return consumerDAO.inBlackLister(email);

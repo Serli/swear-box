@@ -190,4 +190,14 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         }
         return false;
     }
+    
+    public boolean isAdmin(String email) {
+		//Get the user
+    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	
+		if(u != null)
+			return u.isAdmin();
+		
+		return false;
+	}
 }

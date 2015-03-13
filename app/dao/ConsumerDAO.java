@@ -80,5 +80,7 @@ public interface ConsumerDAO {
      * @return boolean : success
      */
     public boolean setBlacklisted(String id,String email, boolean cond);
+    
+    public boolean isAdmin(String email);
 
 }
