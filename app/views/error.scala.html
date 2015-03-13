@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-Vous n'etes pas autorise a utiliser cette application
-</body>
-</html>
+ @main("ISwear-Box") { @templates.navbar(0, 0) } {
+<div class="container padding-page">
+
+	<div class="panel panel-danger" role="alert">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+				Vous avez été bloqué de l'application !
+			</h3>
+
+		</div>
+		<div class="panel-body">
+			<p>
+				Pour tout renseignement veuillez contacter l'administrateur du site.</br>
+				Merci.
+			</p>
+		</div>
+
+	</div>
+
+</div>
+
+}
