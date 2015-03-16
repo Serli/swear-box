@@ -192,6 +192,10 @@ public class Home extends JavaController {
 		return redirect(routes.Home.error());
 	}
 
+	/**
+	 * get the statue
+	 * @return Integer : value of statue
+	 */
 	private Integer getStatus() {
 		Integer result;
 		if(!isConnected()) {
@@ -209,10 +213,18 @@ public class Home extends JavaController {
 		return result;
 	}
 
+	/**
+	 * get the state of the connection
+	 * @return boolean : true = connected ; false = disconnected
+	 */
 	private static Boolean isConnected() {
 		return !(getUserProfile() == null);
 	}
 
+	/**
+	 * get the value of black list
+	 * @return boolean : true = blacklisted ; false = not blacklisted
+	 */
 	private Boolean blackLister(){
 		String email = getUserProfile().getEmail();
 		return consumerDAO.inBlackLister(email);

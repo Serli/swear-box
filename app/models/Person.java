@@ -6,8 +6,7 @@ import java.io.Serializable;
 
 /**
  * Represent a family member person
- * It is linked to one or more users
- *
+ * It is linked to one users
  */
 public class Person implements Serializable {
 

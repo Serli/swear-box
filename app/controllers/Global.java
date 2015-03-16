@@ -63,6 +63,10 @@ public class Global extends GlobalSettings{
         manager.init();
     }
 
+    /**
+	 * get dependencies injector
+	 * @return injector 
+	 */
     @Override
     public <T> T getControllerInstance(Class<T> aClass) throws Exception {
         return injector.getInstance(aClass);

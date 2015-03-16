@@ -62,6 +62,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 * @param ids : members id
 	 * @param nb : number of data
 	 * @param granularity : 1 = Week, 2 = Month
+	 * @return JsonNode : stats
 	 */
 	public JsonNode list(List<String> ids, int nb, int granularity) {
 
@@ -122,6 +123,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 
 	/**
 	 * List all the statistics
+	 * @return JsonNode : stats
 	 */
 	@Override
 	public JsonNode list() {
@@ -149,7 +151,10 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		return Json.toJson(res);
 	}
 	
-	
+	/**
+     * List different stats used in the back-office
+	 * @return JsonNode : specifics stats
+     */
 	@Override
 	public JsonNode someStats() {
 		List<BasicDBObject> res = new ArrayList<>();

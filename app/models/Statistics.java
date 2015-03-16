@@ -8,8 +8,7 @@ import org.jongo.marshall.jackson.oid.Id;
 
 /**
  * Represents the pronunciation of a dirty word
- * Who uttered and when
- *
+ * Who swear and when
  */
 public class Statistics implements Serializable{
 

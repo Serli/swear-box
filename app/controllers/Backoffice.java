@@ -13,7 +13,6 @@ import dao.StatisticsDAO;
 
 /**
  * Managed actions for administration view
- *
  */
 @Singleton
 public class Backoffice extends JavaController {
@@ -24,6 +23,10 @@ public class Backoffice extends JavaController {
 	@Inject
 	private StatisticsDAO statisticsDAO;
 
+	/**
+	 * return all Consumers
+	 * @return Result(JSON) : list of consumers
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result findAll() {
 		if(isAuthorized()){
@@ -32,6 +35,11 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * return a Consumers
+	 * @param String : consumer's id
+	 * @return Result(JSON) : a single consumers
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result findOne(String email) {
 		if(isAuthorized()){
@@ -40,6 +48,11 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * set a Consumers to admin
+	 * @param String : consumer's id
+	 * @return Result : fonction result, Ok|pb
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result setAdmin(String email) {
 		if(isAuthorized()){
@@ -51,6 +64,11 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * set a Consumers to blacklist
+	 * @param String : consumer's id
+	 * @return Result : fonction result, Ok|pb
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result setBlacklisted(String email) {
 		if(isAuthorized()){
@@ -62,6 +80,11 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * unset a Consumers to blacklist
+	 * @param String : consumer's id
+	 * @return Result : fonction result, Ok|pb
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result unsetBlacklisted(String email) {
 		if(isAuthorized()){
@@ -73,6 +96,10 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * get all stats
+	 * @return Result(JSON) : stats
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result list() {
 		if(isAuthorized()){
@@ -81,6 +108,10 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * get specifics stats
+	 * @return Result(JSON) : stats
+	 */
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result someStats() {
 		if(isAuthorized()){
@@ -89,6 +120,10 @@ public class Backoffice extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * get authorization
+	 * @return boolean : true = access; false = denied
+	 */
 	private boolean isAuthorized(){
 		String email = getUserProfile().getEmail();
 		return consumerDAO.isAdmin(email);
