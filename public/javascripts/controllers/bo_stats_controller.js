@@ -99,13 +99,13 @@ app.controller('boStatsCtrl',
 				.on("brush", brushed);
 
 				var area = d3.svg.area()
-				.interpolate("monotone")
+				.interpolate("basis")
 				.x(function(d) { return x(d.date); })
 				.y0(height)
 				.y1(function(d) { return y(d.nb); });
 
 				var area2 = d3.svg.area()
-				.interpolate("monotone")
+				.interpolate("basis")
 				.x(function(d) { return x2(d.date); })
 				.y0(height2)
 				.y1(function(d) { return y2(d.nb); });
