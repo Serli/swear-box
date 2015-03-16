@@ -28,6 +28,8 @@ public final class PersonDAOImpl implements PersonDAO {
 	private static MongoCollection consumers = PlayJongo.getCollection("Consumer");
 	private static MongoCollection statistics = PlayJongo.getCollection("Statistics");
 	
+	private static final String ID = "{_id: #}";
+	
     private Cloudinary cloudinary = com.cloudinary.Singleton.getCloudinary();
 
     /**
@@ -40,11 +42,11 @@ public final class PersonDAOImpl implements PersonDAO {
         //Recording the person
 
         //Get the user
-        Consumer user = consumers.findOne("{_id: #}", id).as(Consumer.class);
+        Consumer user = consumers.findOne(ID, id).as(Consumer.class);
 
         //Link the user with the person
         user.setPerson(p);
-        consumers.update("{_id: #}", id).with(user);
+        consumers.update(ID, id).with(user);
     }
 
     /**
@@ -54,7 +56,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void delete(String id,String email){
         //Get the person and the user
-        Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+        Consumer user = consumers.findOne(ID, email).as(Consumer.class);
         
         for(Person p : user.getPeople()) {
         	if(p.getIdPerson().equals(id)) {
@@ -73,15 +75,14 @@ public final class PersonDAOImpl implements PersonDAO {
                 }
                 
                 //Update Statistics collection
-                //statistics.find("");
                 Iterable<Statistics> cursor = statistics.find("{person.idPerson: #}}",p.getIdPerson()).as(Statistics.class);
         		for(Statistics s : cursor) {
-        			statistics.remove("{_id: #}", s.get_id());
+        			statistics.remove(ID, s.get_id());
         		}
         		
         		//Update consumers collection
         		user.getPeople().remove(p);
-                consumers.update("{_id: #}", email).with(user);
+                consumers.update(ID, email).with(user);
                 
         		break;
         	}
@@ -95,7 +96,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
    public List<Person> listByUser(String emailUser){
 	   //Get the person and the user
-    	Consumer u = consumers.findOne("{_id: #}", emailUser).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, emailUser).as(Consumer.class);
     	List<Person> l = u.getPeople();
     	
         //Sort of the members list by Firstname
@@ -114,7 +115,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void discharge(String id,String email){
         //Get the person
-    	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer user = consumers.findOne(ID, email).as(Consumer.class);
 
         for(Person p : user.getPeople()) {
         	if(p.getIdPerson().equals(id)) {
@@ -124,7 +125,7 @@ public final class PersonDAOImpl implements PersonDAO {
         }
         
         //Refresh DB
-        consumers.update("{_id: #}", email).with(user);
+        consumers.update(ID, email).with(user);
     }
 
 
@@ -137,7 +138,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void updateNameFirstname(String id,String email,String vName, String vFirstname){
  	   //Get the person and the user
-    	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer user = consumers.findOne(ID, email).as(Consumer.class);
 
     	//If the user has rights
         for(Person p : user.getPeople()) {
@@ -149,7 +150,7 @@ public final class PersonDAOImpl implements PersonDAO {
         }
         
         //Refresh DB
-        consumers.update("{_id: #}", email).with(user);
+        consumers.update(ID, email).with(user);
     }
 
     /**
@@ -160,7 +161,7 @@ public final class PersonDAOImpl implements PersonDAO {
      */
     public void updatePicture(String id,String email,String vPicture){
   	   //Get the person and the user
-     	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+     	Consumer user = consumers.findOne(ID, email).as(Consumer.class);
      	
     	//If the user has rights
         for(Person p : user.getPeople()) {
@@ -182,7 +183,7 @@ public final class PersonDAOImpl implements PersonDAO {
         }
      	
         //Refresh DB
-        consumers.update("{_id: #}", email).with(user);
+        consumers.update(ID, email).with(user);
     }
     /**
      * Increase a person debt
@@ -190,7 +191,7 @@ public final class PersonDAOImpl implements PersonDAO {
      * @param String : user id
      */
     public void incrementDebt(String id,String email){
-    	Consumer user = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer user = consumers.findOne(ID, email).as(Consumer.class);
         consumers.update("{people.idPerson: #}", id).with("{$inc: {people.$.debt: #}}", user.getAmount());
     }
 

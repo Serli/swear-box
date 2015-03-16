@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import models.Consumer;
 import models.Person;
@@ -31,8 +32,8 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	private static MongoCollection consumers = PlayJongo.getCollection("Consumer");
 	private static MongoCollection statistics = PlayJongo.getCollection("Statistics");
 	
-	private static final String MONTH[] = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
-	private static final String MONTH2[] = {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"};
+	private static final String[] MONTH = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
+	private static final String[] MONTH2 = {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"};
 
 	/**
 	 * Add a statistic on the Statistics table
@@ -61,13 +62,13 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	 * @param nb : number of data
 	 * @param granularity : 1 = Week, 2 = Month
 	 */
-	public JsonNode list(String emailUser, ArrayList<String> ids, int nb, int granularity) {
+	public JsonNode list(List<String> ids, int nb, int granularity) {
 
 		/*** declaration ***/
 		Calendar calFin = Calendar.getInstance();
 		String granu = "";
-		ArrayList<BasicDBObject> li = new ArrayList<>();
-		ArrayList<BasicDBObject> res = new ArrayList<>();
+		List<BasicDBObject> li = new ArrayList<>();
+		List<BasicDBObject> res = new ArrayList<>();
 		
 		/*** instanciation ***/
 		if(granularity == 1) {
@@ -96,8 +97,6 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		/*** mise en forme JSON ***/
 		for(BasicDBObject ra : a) {
 			JsonNode js = Json.toJson(ra);
-			System.out.println(js.findValue("perid").toString());
-			System.out.println(js.findValue("click").asInt()+"");
 			li.get(js.findValue("vdate").asInt()).append(js.findValue("perid").asText(),js.findValue("click").asInt()+"");
 		}
 		
@@ -127,7 +126,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	public JsonNode list() {
 		List<BasicDBObject> a = statistics.aggregate("{ $group: { _id: { day : { $dayOfMonth: '$date' }, month : { $month: '$date' }, year : { $year: '$date' } }, nb: { $sum: 1 } }}")
 				.as(BasicDBObject.class);
-		ArrayList<BasicDBObject> res = new ArrayList<>();
+		List<BasicDBObject> res = new ArrayList<>();
 
         Collections.sort(a, new Comparator<BasicDBObject>() {
             public int compare(BasicDBObject o1, BasicDBObject o2) {

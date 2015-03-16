@@ -207,7 +207,7 @@ public class Welcome extends JavaController {
 				result = REGULAR;
 			}
 		}
-		return (result);
+		return result;
 	}
 
 	private static Boolean isConnected() {

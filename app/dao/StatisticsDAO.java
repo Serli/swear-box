@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -24,7 +24,7 @@ public interface StatisticsDAO {
 	 * @param nb : number of data
 	 * @param granularity : 1 = Week, 2 = Month
 	 */
-    public JsonNode list(String emailUser,ArrayList<String> ids, int nb, int granularity);
+    public JsonNode list(List<String> ids, int nb, int granularity);
     
 	/**
 	 * List all the statistics

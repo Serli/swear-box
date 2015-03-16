@@ -23,6 +23,8 @@ import com.mongodb.BasicDBObject;
 @Singleton
 public final class ConsumerDAOImpl implements ConsumerDAO {
 	
+	private static final String ID = "{_id: #}";
+	
 	private static MongoCollection consumers = PlayJongo.getCollection("Consumer");
     /**
      * Add a new user if he doesn't exist
@@ -30,15 +32,16 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public boolean add(String email) {
         //Get the user
-    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, email).as(Consumer.class);
     	
         //If the user doesn't exist he is added
         if (u == null) {
             u = new Consumer(email);
             
             List<String> admin = Play.application().configuration().getStringList("Admin");
-            if (admin.contains(email))
+            if (admin.contains(email)){
             	u.setAdmin(true);
+            }
             
             consumers.insert(u);
             return true;
@@ -52,11 +55,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public boolean delete(String email) {
         //Get the user
-    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, email).as(Consumer.class);
     	
         //If the user doesn't exist he is added
         if (u != null) {
-        	consumers.remove("{_id: #}", email);
+        	consumers.remove(ID, email);
             return true;
         }
         return false;
@@ -69,18 +72,18 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public void updateAmount(String email, int vAmount) {
         //Get the user
-        Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+        Consumer u = consumers.findOne(ID, email).as(Consumer.class);
         
         //If the user exists the amount is modified
         if (u != null) {
             u.setAmount(vAmount);
         }
-        consumers.update("{_id: #}", email).with(u);
+        consumers.update(ID, email).with(u);
     }
    
     public int getAmount(String email) {
         //Get the user
-    	 Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	 Consumer u = consumers.findOne(ID, email).as(Consumer.class);
         
         //If the user exists the amount is returned
         if (u != null) {
@@ -99,7 +102,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         boolean test= true;
 
         //Get the person and the user
-        Consumer user = consumers.findOne("{_id: #}", idUser).as(Consumer.class);
+        Consumer user = consumers.findOne(ID, idUser).as(Consumer.class);
 
         for(Person p : user.getPeople()) {
         	if(p.getIdPerson().equals(pe.getIdPerson())) {
@@ -111,16 +114,17 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         //Link the person to the user
         if(test){
         	user.setPerson(pe);
-        	consumers.update("{_id: #}", idUser).with(user);
+        	consumers.update(ID, idUser).with(user);
         }
     }
 
 	public boolean inBlackLister(String email) {
 		//Get the user
-    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, email).as(Consumer.class);
     	
-		if(u != null)
+		if(u != null){
 			return u.isBlackListed();
+		}
 		
 		return true;
 	}
@@ -128,7 +132,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
 	public JsonNode findOne(String email) {
 		
 		//Get the person and the user
-        BasicDBObject user = consumers.findOne("{_id: #}", email).as(BasicDBObject.class);
+        BasicDBObject user = consumers.findOne(ID, email).as(BasicDBObject.class);
         return Json.toJson(user);
 	}
     
@@ -139,7 +143,7 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     public JsonNode findAll(){
 		List<BasicDBObject> a = consumers.aggregate("{ $group: { _id: { email : '$_id', blck: '$blackListed', admin : '$admin' }}}")
 				.as(BasicDBObject.class);
-		ArrayList<BasicDBObject> res = new ArrayList<>();
+		List<BasicDBObject> res = new ArrayList<>();
 		for(BasicDBObject bo : a) {	
 			JsonNode j = Json.toJson(bo);
 			res.add(new BasicDBObject().append("email", j.findValue("email")).append("blacklisted", j.findValue("blck")).append("admin", j.findValue("admin")));
@@ -156,14 +160,15 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public boolean setAdmin(String id,String email) {
         //Get the user
-    	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
-    	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, id).as(Consumer.class);
+    	Consumer u2 = consumers.findOne(ID, email).as(Consumer.class);
     	
         //If the user doesn't exist he is added
         if (u != null && u2 !=null) {
-        	if(u.isAdmin())
+        	if(u.isAdmin()){
         		u2.setAdmin(true);
-        	consumers.update("{_id: #}", email).with(u2);
+        	}
+        	consumers.update(ID, email).with(u2);
             return true;
         }
         return false;
@@ -178,14 +183,15 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
      */
     public boolean setBlacklisted(String id,String email, boolean cond) {
         //Get the user
-    	Consumer u = consumers.findOne("{_id: #}", id).as(Consumer.class);
-    	Consumer u2 = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, id).as(Consumer.class);
+    	Consumer u2 = consumers.findOne(ID, email).as(Consumer.class);
     	
         //If the user doesn't exist he is added
         if (u != null && u2 !=null) {
-        	if(u.isAdmin())
+        	if(u.isAdmin()){
         		u2.setBlackLister(cond);
-        	consumers.update("{_id: #}", email).with(u2);
+        	}
+        	consumers.update(ID, email).with(u2);
             return true;
         }
         return false;
@@ -193,10 +199,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
     
     public boolean isAdmin(String email) {
 		//Get the user
-    	Consumer u = consumers.findOne("{_id: #}", email).as(Consumer.class);
+    	Consumer u = consumers.findOne(ID, email).as(Consumer.class);
     	
-		if(u != null)
+		if(u != null){
 			return u.isAdmin();
+		}
 		
 		return false;
 	}

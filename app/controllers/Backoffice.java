@@ -26,15 +26,17 @@ public class Backoffice extends JavaController {
 
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result findAll() {
-		if(isAuthorized())
+		if(isAuthorized()){
 			return ok(consumerDAO.findAll());
+		}
 		return badRequest();
 	}
 
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result findOne(String email) {
-		if(isAuthorized())
+		if(isAuthorized()){
 			return ok(consumerDAO.findOne(email));
+		}
 		return badRequest();
 	}
 
@@ -42,8 +44,9 @@ public class Backoffice extends JavaController {
 	public Result setAdmin(String email) {
 		if(isAuthorized()){
 			String admin = getUserProfile().getEmail();
-			if(consumerDAO.setAdmin(admin, email))
+			if(consumerDAO.setAdmin(admin, email)){
 				return ok();
+			}
 		}
 		return badRequest();
 	}
@@ -52,8 +55,9 @@ public class Backoffice extends JavaController {
 	public Result setBlacklisted(String email) {
 		if(isAuthorized()){
 			String admin = getUserProfile().getEmail();
-			if(consumerDAO.setBlacklisted(admin, email,true))
+			if(consumerDAO.setBlacklisted(admin, email,true)){
 				return ok();
+			}
 		}
 		return badRequest();
 	}
@@ -62,23 +66,26 @@ public class Backoffice extends JavaController {
 	public Result unsetBlacklisted(String email) {
 		if(isAuthorized()){
 			String admin = getUserProfile().getEmail();
-			if(consumerDAO.setBlacklisted(admin, email,false))
+			if(consumerDAO.setBlacklisted(admin, email,false)){
 				return ok();
+			}
 		}
 		return badRequest();
 	}
 
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result list() {
-		if(isAuthorized())
+		if(isAuthorized()){
 			return ok(statisticsDAO.list());
+		}
 		return badRequest();
 	}
 
 	@RequiresAuthentication(clientName = "Google2Client")
 	public Result someStats() {
-		if(isAuthorized())
+		if(isAuthorized()){
 			return ok(statisticsDAO.someStats());
+		}
 		return badRequest();
 	}
 

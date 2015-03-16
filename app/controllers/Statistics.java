@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.pac4j.play.java.JavaController;
 import org.pac4j.play.java.RequiresAuthentication;
@@ -35,12 +36,12 @@ public class Statistics extends JavaController {
 	public Result listStatistics(String ids, int nb, int granularity) {
 		if(isAuthorized()){
 			String[] idsString = ids.split(",");
-			ArrayList<String> idsLong = new ArrayList<String>();
+			List<String> idsLong = new ArrayList<String>();
 			for(int i=0;i<idsString.length;i++) {
 				idsLong.add(idsString[i]);
 			}
 			String emailUser = getUserProfile().getEmail();
-			JsonNode statistics = statisticsDAO.list(emailUser,idsLong,nb,granularity);
+			JsonNode statistics = statisticsDAO.list(idsLong,nb,granularity);
 			return ok(statistics);
 		}
 		return badRequest();

@@ -1,5 +1,6 @@
 package controllers;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,6 +38,8 @@ import dao.PersonDAO;
 public class Configuration extends JavaController {
 
 	private static final String JSON_MESSG = "Expecting Json data";
+	
+	private static final int SIZE = 200;
 
 	@Inject
 	private ConsumerDAO consumerDAO;
@@ -206,7 +209,7 @@ public class Configuration extends JavaController {
 					File f = fp.getFile();
 					Map<?,?> options = Cloudinary.asMap(
 							"transformation",
-							new Transformation().width(200).height(200).crop("scale")
+							new Transformation().width(SIZE).height(SIZE).crop("scale")
 							);
 					Map<?,?> uploadResult = cloudinary.uploader().upload(f,options);
 					String email = getUserProfile().getEmail();
@@ -241,7 +244,7 @@ public class Configuration extends JavaController {
 						byte[] data = Base64.decodeBase64(image64);
 						Map<?,?> options = Cloudinary.asMap(
 								"transformation",
-								new Transformation().width(200).height(200).crop("scale")
+								new Transformation().width(SIZE).height(SIZE).crop("scale")
 								);
 						Map<?,?> uploadResult = cloudinary.uploader().uploadLargeRaw(data,options);
 						String email = getUserProfile().getEmail();
