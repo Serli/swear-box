@@ -15,3 +15,10 @@ body {
 .table-hover>tbody>tr:hover{
 	background-color:#E1E1E1
 }
+
+.button-name-responsive {
+	white-space: nowrap;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+  	text-overflow: ellipsis; 
+}
