@@ -40,7 +40,6 @@ public class Statistics extends JavaController {
 			for(int i=0;i<idsString.length;i++) {
 				idsLong.add(idsString[i]);
 			}
-			String emailUser = getUserProfile().getEmail();
 			JsonNode statistics = statisticsDAO.list(idsLong,nb,granularity);
 			return ok(statistics);
 		}

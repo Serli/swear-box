@@ -34,6 +34,9 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	
 	private static final String[] MONTH = {"JAN", "FEV", "MAR", "AVR","MAI", "JUN", "JUL", "AOU","SEP", "OCT", "NOV", "DEC"};
 	private static final String[] MONTH2 = {"Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug","Sep", "Oct", "Nov", "Dec"};
+	private static final int GRANULARITY_WEEK = 1;
+	private static final int GRANULARITY_MONTH = 2;
+	
 
 	/**
 	 * Add a statistic on the Statistics table
@@ -71,14 +74,14 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 		List<BasicDBObject> res = new ArrayList<>();
 		
 		/*** instanciation ***/
-		if(granularity == 1) {
+		if(granularity == GRANULARITY_WEEK) {
 			calFin.add(Calendar.DATE, -nb*7);
 			granu = "week";
 			for(int i=1; i<=52; i++){
 				li.add(new BasicDBObject().append("Date", "S"+i));
 			}
 		}
-		if(granularity == 2) {
+		if(granularity == GRANULARITY_MONTH) {
 			calFin.add(Calendar.MONTH, -nb);
 			granu = "month";
 			li.add(new BasicDBObject().append("Date", "OSEF"));
@@ -100,7 +103,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 			li.get(js.findValue("vdate").asInt()).append(js.findValue("perid").asText(),js.findValue("click").asInt()+"");
 		}
 		
-		if(granularity == 2) {
+		if(granularity == GRANULARITY_MONTH) {
 			li.remove(0);
 			int debut = calFin.get(Calendar.MONTH);
 			for(int u =0 ;u<nb;u++){
@@ -108,7 +111,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 				res.add(li.get(debut % 12));
 			}
 		}
-		if(granularity == 1) {
+		if(granularity == GRANULARITY_WEEK) {
 			int debut = calFin.get(Calendar.WEEK_OF_YEAR);
 			for(int u =0 ;u<nb;u++){
 				res.add(li.get(debut % 52));
@@ -151,7 +154,7 @@ public final class StatisticsDAOImpl implements StatisticsDAO{
 	
 	@Override
 	public JsonNode someStats() {
-		ArrayList<BasicDBObject> res = new ArrayList<>();
+		List<BasicDBObject> res = new ArrayList<>();
 		Long nbConsumers = consumers.count();
 		res.add(new BasicDBObject("nbConsumers", nbConsumers));
 		Long nbBlacklisted = consumers.count("{blackListed: true}");
