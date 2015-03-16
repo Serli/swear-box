@@ -23,12 +23,12 @@ import dao.PersonDAO;
 import dao.StatisticsDAO;
 
 /**
- * Managed actions for welcome view
+ * Managed actions for Home view
  * @author Geoffrey
  *
  */
 @Singleton
-public class Welcome extends JavaController {
+public class Home extends JavaController {
 
 	private static final Integer USER_PAGE = 0;
 	private static final Integer STATISTICS_PAGE = 1;
@@ -61,9 +61,9 @@ public class Welcome extends JavaController {
 			return ok(index.render(urlGoogle, getStatus(), USER_PAGE));
 		} else {
 			if(blackLister()) {
-				return redirect(routes.Welcome.error());
+				return redirect(routes.Home.error());
 			} else {
-				return redirect(routes.Welcome.user());
+				return redirect(routes.Home.user());
 			}
 		}
 	}
@@ -93,7 +93,7 @@ public class Welcome extends JavaController {
 		}
 
 		if(blackLister()){
-			return redirect(routes.Welcome.error());
+			return redirect(routes.Home.error());
 		}
 		return ok(views.html.user.render(firstname, getStatus(), USER_PAGE));
 	}
@@ -129,7 +129,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.admin.render(getStatus(), ADMIN_PAGE));
 		}
-		return redirect(routes.Welcome.error());
+		return redirect(routes.Home.error());
 
 	}
 
@@ -151,7 +151,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.statistics.render(getStatus(), STATISTICS_PAGE));
 		}
-		return redirect(routes.Welcome.error());
+		return redirect(routes.Home.error());
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.backoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-		return redirect(routes.Welcome.error());
+		return redirect(routes.Home.error());
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.statisticsbackoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-		return redirect(routes.Welcome.error());
+		return redirect(routes.Home.error());
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class Welcome extends JavaController {
 		if(!blackLister()){
 			return ok(views.html.userbackoffice.render(getStatus(), BACKOFFICE_PAGE));
 		}
-		return redirect(routes.Welcome.error());
+		return redirect(routes.Home.error());
 	}
 
 	private Integer getStatus() {
