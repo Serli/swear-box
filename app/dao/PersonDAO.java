@@ -4,7 +4,7 @@ import java.util.List;
 import models.*;
 
 /**
- * Groups the operations on the Person table
+ * Groups the operations on the Person collection
  *
  */
 public interface PersonDAO{

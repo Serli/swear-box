@@ -17,7 +17,7 @@ import com.google.inject.Singleton;
 import com.mongodb.BasicDBObject;
 
 /**
- * Groups the operations on the Consumer table
+ * Groups the operations on the Consumer collection
  *
  */
 @Singleton

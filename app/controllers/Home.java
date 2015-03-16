@@ -24,7 +24,6 @@ import dao.StatisticsDAO;
 
 /**
  * Managed actions for Home view
- * @author Geoffrey
  *
  */
 @Singleton

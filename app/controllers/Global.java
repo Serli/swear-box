@@ -22,7 +22,6 @@ import dao.StatisticsDAOImpl;
 
 /**
  * Performs tasks in launching the application
- * @author Geoffrey
  *
  */
 public class Global extends GlobalSettings{

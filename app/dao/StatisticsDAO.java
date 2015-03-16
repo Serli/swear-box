@@ -5,8 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Groups the operations on the Statistics table
- * @author Geoffrey
+ * Groups the operations on the Statistics collection
  *
  */
 public interface StatisticsDAO {

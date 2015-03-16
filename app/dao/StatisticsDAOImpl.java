@@ -21,8 +21,7 @@ import com.google.inject.Singleton;
 import com.mongodb.BasicDBObject;
 
 /**
- * Groups the operations on the Statistics table
- * @author Geoffrey
+ * Groups the operations on the Statistics collection
  *
  */
 @Singleton

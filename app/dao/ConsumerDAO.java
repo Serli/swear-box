@@ -6,7 +6,7 @@ import models.Person;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Groups the operations on the Consumer table
+ * Groups the operations on the Consumer collection
  *
  */
 public interface ConsumerDAO {
