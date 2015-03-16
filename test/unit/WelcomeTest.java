@@ -20,7 +20,7 @@ public class WelcomeTest {
      */
     @Test
     public void renderTemplateIndex() {
-        Content html = views.html.index.render("Message test",false,0);
+        Content html = views.html.index.render("Message test",0,0);
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Message test");
     }
@@ -30,7 +30,7 @@ public class WelcomeTest {
      */
     @Test
     public void renderTemplateUser() {
-        Content html = views.html.user.render("Message test",true,0);
+        Content html = views.html.user.render("Message test",1,0);
         assertThat(contentType(html)).isEqualTo("text/html");
     }
 
