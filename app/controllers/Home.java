@@ -28,7 +28,7 @@ import dao.StatisticsDAO;
  *
  */
 @Singleton
-public class Welcome extends JavaController {
+public class Home extends JavaController {
 
 	private static final Integer USER_PAGE = 0;
 	private static final Integer STATISTICS_PAGE = 1;

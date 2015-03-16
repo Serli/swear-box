@@ -9,7 +9,7 @@ import org.junit.Test;
 import play.twirl.api.Content;
 /**
  *
- * Test actions of Controler Welcome.java
+ * Test actions of Controler Home.java
  *
  */
 public class WelcomeTest {

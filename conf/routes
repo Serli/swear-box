@@ -3,15 +3,15 @@
 # ~~~~
 
 # === Home page 
-GET     /                           @controllers.Welcome.index()
-GET     /user                       @controllers.Welcome.user()
-PUT     /members/increase/:id       @controllers.Welcome.increaseDebt(id: String)
+GET     /                           @controllers.Home.index()
+GET     /user                       @controllers.Home.user()
+PUT     /members/increase/:id       @controllers.Home.increaseDebt(id: String)
 
 # === Error page 
-GET     /error                      @controllers.Welcome.error()
+GET     /error                      @controllers.Home.error()
 
 # === Configuration page
-GET     /admin                      @controllers.Welcome.admin()
+GET     /admin                      @controllers.Home.admin()
 GET     /amount                 	@controllers.Configuration.amount()
 GET     /members                 	@controllers.Configuration.listPerson()
 POST    /members            		@controllers.Configuration.addPerson()
@@ -22,23 +22,23 @@ PUT     /members/name/:id           @controllers.Configuration.updateNameFirstna
 PUT     /members/picture/:id		@controllers.Configuration.updatePicture(id: String)
 
 # === Help page
-GET 	/help						@controllers.Welcome.help()
+GET 	/help						@controllers.Home.help()
 
 # === Statistics page
-GET 	/statistics					        @controllers.Welcome.statistics()
+GET 	/statistics					        @controllers.Home.statistics()
 GET     /stats/:nb/$granularity<[1-2]+>     @controllers.Statistics.listStatistics(ids: String, nb: Integer, granularity: Integer )
 
 # === Back office page
-GET 	/backoffice					        @controllers.Welcome.backoffice()
+GET 	/backoffice					        @controllers.Home.backoffice()
 GET 	/consumers					        @controllers.Backoffice.findAll()
 
 # === Back office stats page
-GET 	/statsbackoffice					@controllers.Welcome.statisticsBackoffice()
+GET 	/statsbackoffice					@controllers.Home.statisticsBackoffice()
 GET     /stats                              @controllers.Backoffice.list()
 GET     /specific-stats                     @controllers.Backoffice.someStats()
 
 # === Back office user page
-GET 	/userbackoffice/:id 				@controllers.Welcome.userBackoffice(id: String)
+GET 	/userbackoffice/:id 				@controllers.Home.userBackoffice(id: String)
 GET     /consumers/:id                      @controllers.Backoffice.findOne(id: String)
 PUT     /consumers/admin/:id                @controllers.Backoffice.setAdmin(id: String)
 PUT     /consumers/blacklist/:id            @controllers.Backoffice.setBlacklisted(id: String)
