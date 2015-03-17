@@ -46,6 +46,10 @@ public class Statistics extends JavaController {
 		return badRequest();
 	}
 
+	/**
+	 * get authorization
+	 * @return boolean : true = access; false = denied
+	 */
 	private boolean isAuthorized(){
 		String email = getUserProfile().getEmail();
 		return !consumerDAO.inBlackLister(email);

@@ -17,7 +17,7 @@ import com.google.inject.Singleton;
 import com.mongodb.BasicDBObject;
 
 /**
- * Groups the operations on the Consumer table
+ * Groups the operations on the Consumer collection
  *
  */
 @Singleton
@@ -81,6 +81,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         consumers.update(ID, email).with(u);
     }
    
+    /**
+     * Get the user amount
+     * @param String : User email 
+     * @return int : current amount 
+     */
     public int getAmount(String email) {
         //Get the user
     	 Consumer u = consumers.findOne(ID, email).as(Consumer.class);
@@ -118,6 +123,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         }
     }
 
+    /**
+     * Test if the user is in blacklister
+     * @param String : user id
+     * @return boolean : isBlackLister
+     */
 	public boolean inBlackLister(String email) {
 		//Get the user
     	Consumer u = consumers.findOne(ID, email).as(Consumer.class);
@@ -129,6 +139,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
 		return true;
 	}
 
+	/**
+     * Get user
+     * @param String email : id of the consumer
+     * @return JsonNode : a single consumer
+     */
 	public JsonNode findOne(String email) {
 		
 		//Get the person and the user
@@ -197,6 +212,11 @@ public final class ConsumerDAOImpl implements ConsumerDAO {
         return false;
     }
     
+    /**
+     * get the state of the value administartion
+     * @param String id : consumer's id to test
+     * @return boolean : the value
+     */
     public boolean isAdmin(String email) {
 		//Get the user
     	Consumer u = consumers.findOne(ID, email).as(Consumer.class);

@@ -6,7 +6,7 @@ import models.Person;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
- * Groups the operations on the Consumer table
+ * Groups the operations on the Consumer collection
  *
  */
 public interface ConsumerDAO {
@@ -81,6 +81,12 @@ public interface ConsumerDAO {
      */
     public boolean setBlacklisted(String id,String email, boolean cond);
     
+    
+    /**
+     * get the state of the value administartion
+     * @param String id : consumer's id to test
+     * @return boolean : the value
+     */
     public boolean isAdmin(String email);
 
 }

@@ -9,7 +9,6 @@ import org.jongo.marshall.jackson.oid.Id;
 /**
  * Represents a service user
  * It has a list of people
- *
  */
 
 public class Consumer implements Serializable{
